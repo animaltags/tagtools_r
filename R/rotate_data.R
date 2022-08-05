@@ -20,7 +20,7 @@
 #' my_events
 #' rotated_events <- rotate(my_events, full_period = c(0, 1500))
 #' rotated_events
-rotate <- function(event_times, full_period) {
+rotate_data <- function(event_times, full_period) {
   # Input checking
   # ============================================================================
   if (missing(event_times) | missing(full_period)) {

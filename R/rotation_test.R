@@ -8,9 +8,9 @@
 #' an "experimental" time-period) to its expected value during non-experimental periods. Instead of resampling random subsets of observations from the original dataset,
 #' the rotation test samples many contiguous blocks from the original data, each the same duration as the experimental period. The summary statistic,
 #' computed for these "rotated" samples, provides a distribution to which the test statistic from the data can be compared.
-#' @inheritParams rotate
+#' @inheritParams rotate_data
 #' @param exp_period A two-column vector, matrix, or data frame specifying the start and end times of the "experimental" period for the test. If a matrix or data frame is provided, one column should be start time(s) and the other end time(s). 
-#' Note that all data that falls into any experimental period will be concatenated and passed to \code{ts_fun}. If finer control is desired, consider writing your own test using the underlying function \code{rotate}.
+#' Note that all data that falls into any experimental period will be concatenated and passed to \code{ts_fun}. If finer control is desired, consider writing your own test using the underlying function \code{rotate_data}.
 #' @param n_rot Number of rotations (randomizations) to carry out. Default is \code{n_rot=10000}.
 #' @param ts_fun A function to compute the test statistic. Input provided to this function will be the times of events that occur during the "experimental" period.  The default function is \code{length} - in other words, the default test statistis is the number of events that happen during the experimental period.
 #' @param skip_sort Logical. Should times be sorted in ascending order? Default is \code{skip_sort=FALSE}.
@@ -37,7 +37,7 @@
 #'    Miller, P. J. O., Shapiro, A. D., Tyack, P. L. and Solow, A. R. (2004). Call-type matching in vocal exchanges of free-ranging resident killer whales, Orcinus orca. Anim. Behav. 67, 1099–1107.
 #'
 #'    DeRuiter, S. L. and Solow, A. R. (2008). A rotation test for behavioural point-process data. Anim. Behav. 76, 1103–1452.
-#' @seealso Advanced users seeking more flexibility may want to use the underlying function \code{\link{rotate}} to carry out customized rotation resampling. \code{\link{rotate}} generates one rotated dataset from \code{event_times} and \code{exp_period}.
+#' @seealso Advanced users seeking more flexibility may want to use the underlying function \code{\link{rotate_data}} to carry out customized rotation resampling. \code{\link{rotate_data}} generates one rotated dataset from \code{event_times} and \code{exp_period}.
 #' @examples
 #' r <- rotation_test(
 #'   event_times =
@@ -99,7 +99,7 @@ rotation_test <- function(event_times, exp_period, full_period = range(event_tim
   # find TS for n_rot rotations
   rot_stats <- numeric(length = n_rot)
   for (b in 1:n_rot) {
-    rot_events <- rotate(event_times, full_period)
+    rot_events <- rotate_data(event_times, full_period)
     rot_e_dat <- get_e_data(rot_events, exp_period = exp_period)
     rot_stats[b] <- ts_fun(rot_e_dat, ...)
   }
