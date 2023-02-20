@@ -39,13 +39,13 @@ lind <- c((N/ 2 + 1):N)
 E <- matrix(0, nrow = nrow(X), ncol = ncol(X))
 
 if (nbuffs == 0) {
-   E <- Mod(hht::HilbertTransform(X))
+   E <- Mod(hilbert_transform(X))
    E <- check_mat(E)
    return(E)
 }
 
 # first buffer
-H <- hht::HilbertTransform(X[c(1:N),])
+H <- hilbert_transform(X[c(1:N),])
 H <- check_mat(H)
 E[oind,] <- Mod(H[oind,]) 
 lastH <- H[lind,] * taper[lind,]
@@ -53,7 +53,7 @@ lastH <- H[lind,] * taper[lind,]
 # middle buffers
 for (k in c(2:(nbuffs-1))){
    kk <- (k - 1) * N / 2
-   H0 <- check_mat(hht::HilbertTransform(X[kk+iind,]))
+   H0 <- check_mat(hilbert_transform(X[kk+iind,]))
    H <- H0*taper
    E[kk+oind,] <- Mod(H[oind,]+lastH)
    lastH = H[lind,]
@@ -61,7 +61,7 @@ for (k in c(2:(nbuffs-1))){
 
 # last buffer
 kk <- (nbuffs - 1) * N / 2 
-H <- hht::HilbertTransform(X[c((kk + 1):nrow(X)),])
+H <- hilbert_transform(X[c((kk + 1):nrow(X)),])
 H <- check_mat(H)
 E[kk+oind,] <- Mod(H[oind,]*taper[oind,]+lastH)
 E[c((kk + N / 2 + 1):nrow(E)),] <- Mod(H[c((N / 2 + 1):nrow(H)),])

@@ -18,7 +18,7 @@
 #' @examples
 #' my_events <- 1500 * stats::runif(10) # 10 events at "times" between 0 and 1500
 #' my_events
-#' rotated_events <- rotate(my_events, full_period = c(0, 1500))
+#' rotated_events <- rotate_data(my_events, full_period = c(0, 1500))
 #' rotated_events
 rotate_data <- function(event_times, full_period) {
   # Input checking

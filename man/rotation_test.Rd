@@ -20,7 +20,7 @@ rotation_test(
 \item{event_times}{A vector of the times of events. Times can be given in any format. If \code{event_times} should not be sorted prior to analysis (for example, if times are given in hours of the day and the times in the dataset span several days), be sure to specify \code{skip_sort=TRUE}.}
 
 \item{exp_period}{A two-column vector, matrix, or data frame specifying the start and end times of the "experimental" period for the test. If a matrix or data frame is provided, one column should be start time(s) and the other end time(s). 
-Note that all data that falls into any experimental period will be concatenated and passed to \code{ts_fun}. If finer control is desired, consider writing your own test using the underlying function \code{rotate}.}
+Note that all data that falls into any experimental period will be concatenated and passed to \code{ts_fun}. If finer control is desired, consider writing your own test using the underlying function \code{rotate_data}.}
 
 \item{full_period}{A length two vector giving the start and end times of the full period during which events in event_times might have occurred. If missing, default is range(\code{event_times}).}
 
@@ -77,5 +77,5 @@ Miller, P. J. O., Shapiro, A. D., Tyack, P. L. and Solow, A. R. (2004). Call-typ
    DeRuiter, S. L. and Solow, A. R. (2008). A rotation test for behavioural point-process data. Anim. Behav. 76, 1103–1452.
 }
 \seealso{
-Advanced users seeking more flexibility may want to use the underlying function \code{\link{rotate}} to carry out customized rotation resampling. \code{\link{rotate}} generates one rotated dataset from \code{event_times} and \code{exp_period}.
+Advanced users seeking more flexibility may want to use the underlying function \code{\link{rotate_data}} to carry out customized rotation resampling. \code{\link{rotate_data}} generates one rotated dataset from \code{event_times} and \code{exp_period}.
 }
