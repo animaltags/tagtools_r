@@ -103,12 +103,12 @@ computed for these "rotated" samples, provides a distribution to which the test 
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">my_events</span> <span class="op">&lt;-</span> <span class="fl">1500</span> <span class="op">*</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="co"># 10 events at "times" between 0 and 1500</span></span></span>
 <span class="r-in"><span><span class="va">my_events</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  507.60596  234.37354  644.86044 1446.15376  189.07639   22.69481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  792.84258 1222.57731 1323.23760  977.62798</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  347.8652  780.5136  714.5007  267.2165  473.9056 1378.5162  659.6358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 1256.8633  411.4600  676.0925</span>
 <span class="r-in"><span><span class="va">rotated_events</span> <span class="op">&lt;-</span> <span class="fu">rotate_data</span><span class="op">(</span><span class="va">my_events</span>, full_period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rotated_events</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  211.6303  312.2906  435.2068  511.7478  678.1294  723.4265  996.6590</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 1133.9134 1281.8956 1466.6810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   20.84888   83.29451  269.02471  285.48138  323.88960  389.90246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  866.25222  987.90508 1376.60541 1457.25407</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
