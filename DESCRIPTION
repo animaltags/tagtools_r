@@ -17,7 +17,7 @@ Authors@R: c(person("Stacy", "DeRuiter",
             person("Tiago", "Marques",
             role = "aut"),
             person("(Yuqian) Eason", "Wang",
-            role = "aut"),
+            role = c("aut")),
             person("(Oghenesuvwe) Su", "Ogedegbe",
             role = "aut"))
 Description: High-resolution movement-sensor tags typically include accelerometers 
