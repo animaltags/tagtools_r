@@ -9,7 +9,7 @@
 #' @param plot_peaks A conditional input. If the input is TRUE or missing, an interactive plot is generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. If the input is FALSE, the interactive plot is not generated. Look to the console for help on how to use the plot upon running of this function.
 #' @param ... Additional inputs to be passed to FUN
 #' @export
-#' @return A list containing vectors for the start times, end times, peak times, peak maxima, thresh, and bktime. All times are presented as the sampling value.
+#' @return A data frame containing the start times, end times, peak times, peak maxima, thresh, and bktime. All times are presented as the sampling value.
 #' @note As specified above under the description for the input of plot_peaks, an interactive plot can be generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. The plot output is only given if the input for plot_peaks is specified as true or if the input is left missing/empty.
 #' @examples \dontrun{
 #' BW <- beaked_whale
@@ -35,7 +35,7 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
   
   # set default threshold level
   if (is.null(thresh) == TRUE) {
-    thresh <- stats::quantile(dnew, 0.99)
+    thresh <- as.numeric(stats::quantile(dnew, 0.99))
   }
   
   if (is.null(plot_peaks) == TRUE) {
@@ -76,7 +76,7 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
       # set default blanking time
       if (is.null(bktime)) {
         dpk <- diff(pk[, 1])
-        bktime <- stats::quantile(dpk, c(.8))
+        bktime <- as.numeric(stats::quantile(dpk, c(.8)))
       } else {
         bktime <- as.numeric(bktime * sr)
       }
@@ -139,8 +139,10 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
     }
   }
   
-  # create a list of start times, end times, peak times, peak maxima, thresh, and bktime
-  peaks <- list(start_time = start_time, end_time = end_time, peak_time = peak_time, peak_max = peak_max, thresh = thresh, bktime = bktime)
+  # create a data.frame of start times, end times, peak times, peak maxima, thresh, and bktime
+  peaks <- list(start_time = start_time, 
+                      end_time = end_time, peak_time = peak_time, 
+                      peak_max = peak_max, thresh = thresh, bktime = bktime)
   
   if (plot_peaks == TRUE) {
     # script for second run of detect_peaks that doesn't change the bktime from seconds to samples
@@ -229,8 +231,10 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
         }
       }
       
-      # create a list of start times, end times, peak times, peak maxima, thresh, and bktime
-      peaks <- list(start_time = start_time, end_time = end_time, peak_time = peak_time, peak_max = peak_max, thresh = thresh, bktime = bktime)
+      # create a data frame of start times, end times, peak times, peak maxima, thresh, and bktime
+      peaks <- list(start_time = start_time, 
+                          end_time = end_time, peak_time = peak_time, 
+                          peak_max = peak_max, thresh = thresh, bktime = bktime)
       
       graphics::plot(dnew, type = "l", col = "blue", xlim = c(0, length(dnew)), ylim = c(0, max(dnew)), ylab = "Signal Power", xlab = "Time (1/sampling_rate)")
       x <- peaks$peak_time
@@ -286,5 +290,9 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
     graphics::abline(a = thresh, b = 0, col = "red", lty = 2)
   }
   
+  #peaks <- data.frame(peaks, row.names = NULL, check.names = FALSE)
+  peaks <- as.data.frame(peaks, row.names = NULL, check.names = FALSE)
+  
   return(peaks)
 }
+
