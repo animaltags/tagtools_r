@@ -290,7 +290,6 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
     graphics::abline(a = thresh, b = 0, col = "red", lty = 2)
   }
   
-  #peaks <- data.frame(peaks, row.names = NULL, check.names = FALSE)
   peaks <- as.data.frame(peaks, row.names = NULL, check.names = FALSE)
   
   return(peaks)
