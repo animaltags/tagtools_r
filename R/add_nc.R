@@ -100,14 +100,14 @@ add_nc <- function(file, X, vname) {
         missval = NULL,
         longname = ""
       )
-      if (!file.exists(file)) {
+      #if (!file.exists(file)) {
         # if the file doesn't exist create it
-        nc_conn <- ncdf4::nc_create(file, ncv)
-      } else {
+        #nc_conn <- ncdf4::nc_create(file, ncv)
+      #} else {
         # if file already exists add variable to it
-        nc_conn <- ncdf4::nc_open(file, write = TRUE)
-        nc_conn <- ncdf4::ncvar_add(nc_conn, ncv)
-      }
+        #nc_conn <- ncdf4::nc_open(file, write = TRUE)
+        #nc_conn <- ncdf4::ncvar_add(nc_conn, ncv)
+      #}
       # then write the data into the variable ncv
       ncdf4::ncvar_put(nc_conn, ncv,
         vals = as.vector(X$data)
