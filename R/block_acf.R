@@ -5,6 +5,7 @@
 #' @param blocks A categorical variable indicating the groupings (must be the same length as resids. ACF will be computed only for data points within the same block.)
 #' @param max_lag ACF will be computed at 0-max_lag lags, ignoring all observations that span blocks. Defaults to the minimum number of observations in any block. The function will allow you to specify a max_lag longer than the shortest block if you so choose.
 #' @param make_plot Logical. Should a plot be produced? Defaults to TRUE.
+#' @return A data frame with 1 variable containing the values of ACF.
 #' @param ... Additional arguments to be passed to plot.acf
 #' @keywords correlation, visualization, model assessment
 #' @export
@@ -52,5 +53,8 @@ block_acf <- function(resids, blocks, max_lag,
     # plot block_acf
     graphics::plot(A, ...)
   }
-  return(block_acf)
+  block_acf <- data.frame(ACF = block_acf[,1])
+  
+  # Commented out since it will prints the data frame out to the screen, uncomment the return statment to use this feature. 
+#  return(block_acf)
 }
