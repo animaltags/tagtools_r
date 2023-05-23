@@ -33,8 +33,10 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
   if (length(r) == 1) {
     if (r == FALSE) {
       r <- rep.int(r, length(X))
-      zi <- ("depth" %in% tolower(names(X))) | (tolower(names(X)) == "p")
+      zi <- grepl(pattern = "depth", x = names(X), ignore.case = TRUE) | (tolower(names(X)) == "p")
       r[zi] <- TRUE
+    }else{
+      r = rep.int(r, length(X)) # for unexpected case where r = TRUE is input and there are several sensors
     }
   }
 
