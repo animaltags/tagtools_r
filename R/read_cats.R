@@ -39,18 +39,20 @@ read_cats <- function(fname, depid) {
     device_url = NULL,
     dephist_device_tzone = "0",
     dephist_device_regset = "dd-mm-yyyy HH:MM:SS",
-    dephist_device_datetime_start = as.character(V[1, 1])
+    dephist_device_datetime_start = as.character(V$Datetime)[1]
   )
 
   # time stuff
-  dT <- as.numeric(diff(V[, 1] - rep(V[1, 1], nrow(V))))
+  dT <- as.numeric(difftime(tail(V$Datetime, -1), 
+                            head(V$Datetime, -1),
+                            units = 'secs')) 
   md <- stats::median(dT)
   km <- abs(dT - md) < 0.5 * md
   if (sum(km) < 0.75 * length(dT)) {
     warning("Many gaps in sampling. Inferred sampling rate may be inaccurate.\n")
   }
   # inferred sampling rate in Hertz
-  sampling_rate <- 1 / mean(dT[km])
+  sampling_rate <- round(1 / mean(dT[km]) * 1000) / 1000
 
   # check which sensors are present
   Sens <- c("Acc", "Mag", "Gyr", "Temp", "Depth", "Light")
