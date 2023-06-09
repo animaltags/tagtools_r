@@ -4,7 +4,7 @@
 #' @param x A vector of data. This can be from any sensor and with any sampling rate.
 #' @param TH The magnitude threshold for detecting a zero-crossing. A zero-crossing is only detected when values in x pass from -TH to +TH or vice versa.
 #' @param Tmax (optional) The maximum duration in samples between threshold crossings. To be accepted as a zero-crossing, the signal must pass from below -TH to above TH, or vice versa, in no more than Tmax samples. This is useful to eliminate slow transitions. If Tmax is not given, there is no limit on the number of samples between threshold crossings.
-#' @return A list with 2 elements:
+#' @return A list with elements
 #' \itemize{
 #' \item{\strong{K: }} A vector of cues (in samples) to zero-crossings in x.
 #' \item{\strong{s: }} A vector containing the sign of each zero-crossing (1 = positive-going, -1 = negative-going). s is the same size as K. If no zero-crossings are found, K and s will be empty
@@ -40,6 +40,11 @@ zero_crossings <- function(x, TH, Tmax = NULL) {
   knl <- which(xtn > 0) + 1 # leading edges of negative threshold crossings
   knt <- which(xtn < 0) # trailing edges of negative threshold crossings
 
+  # check if there are any zero crossings
+  if (length(kpl) == 0 | length(knl) == 0 | length(kpt) == 0 | length(knt) == 0 ) {
+    return(list())
+  }
+  
   # prepare space for the results
   K <- matrix(0, nrow = (length(kpl) + length(knl)), ncol = 3)
   cnt <- 0

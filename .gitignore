@@ -20,6 +20,8 @@
 # RStudio files
 .Rproj.user/
 *.Rproj
+.DS_Store
+
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf

@@ -5,8 +5,8 @@
 #' unless a pathname is added to the beginning of fname.
 #'
 #' @param file The name of the netCDF file to which to save. If the name does not include a .nc suffix, this will be added automatically.
-#' @param X The sensor data or metadata list to be saved. a list of tag sensor and/or metadata lists. Alternatively, sensor and metadata lists may be input as multiple separate unnamed inputs. Only these kind of variables can be saved in a NetCDF file because the supporting information in these structures is needed to describe the contents of the file. For non-archive and non-portable storage of variables, consider using \code{\link{save}} or various functions to write data to text files.
-#' @param vname The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to faciliate calling this function from \code{save_nc}).
+#' @param D The sensor data or metadata list to be saved. 
+#' @param vname The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).
 #' @seealso \code{\link{save_nc}}, \code{\link{load_nc}}
 #' @examples
 #' \dontrun{
@@ -16,16 +16,16 @@
 #' }
 #' @export
 
-add_nc <- function(file, X, vname) {
+add_nc <- function(file, D, vname) {
   # input checking
-  if (!is.list(X) | "animaltag" %in% class(X)) {
+  if (!is.list(D) | "animaltag" %in% class(D)) {
     stop("add_nc can only save individual sensor or metadata structures. Use save_nc to save an mutliple data streams or a whole animaltag object.")
   }
 
   if (missing(vname)) {
-    vname <- X$name
+    vname <- D$full_name
     if (length(vname == 0)) {
-      vname <- substitute(X)
+      vname <- substitute(D)
     }
   }
 
@@ -34,19 +34,19 @@ add_nc <- function(file, X, vname) {
     file <- paste(file, ".nc", sep = "")
   }
 
-  # test if X is a metadata structure or a sensor structure
-  if (length(X$depid) == 0) {
+  # test if D is a metadata structure or a sensor structure
+  if (length(D$depid) == 0) {
     stop("Items to save to netCDF files must be tag sensor or metadata list objects.")
   }
 
-  # check that the deployment ID of X matches the one in the file if the file
+  # check that the deployment ID of D matches the one in the file if the file
   # already exists
   prev_depid <- c()
   if (file.exists(file)) {
     nc_conn <- ncdf4::nc_open(file)
     prev_depid <- ncdf4::ncatt_get(nc_conn, 0)$depid
     if (length(prev_depid) != 0) {
-      if (!identical(prev_depid, X$depid)) {
+      if (!identical(prev_depid, D$depid)) {
         e_msg <- paste("Chosen file name is already associated with deployment id: ",
           prev_depid, ". Choose a different file name.\n",
           sep = ""
@@ -68,28 +68,28 @@ add_nc <- function(file, X, vname) {
   } # end of "if file already exists" checks
 
   # now ready to save the data or metadata
-  if ("data" %in% names(X)) { # X is a sensor structure
-    if (length(X$data) == 0) {
-      # if X is empty...
+  if ("data" %in% names(D)) { # D is a sensor structure
+    if (length(D$data) == 0) {
+      # if D is empty...
       ncv <- ncdf4::ncvar_def(
         name = vname,
-        units = "", # X$meta_unit,
+        units = "", # D$meta_unit,
         dim = list(),
         missval = NULL
       )
     } else { # if there is some data
-      if (is.null(dim(X$data))) {
+      if (is.null(dim(D$data))) {
         # if data is a vector make it a column matrix
-        X$data <- matrix(X$data, nrow = length(X$data))
+        D$data <- matrix(D$data, nrow = length(D$data))
       }
       dims <- list()
       dimnames <- c("samples", "axes", "3rd dim", "4th dim")
       dimnames <- paste(vname, dimnames)
-      for (d in 1:length(dim(X$data))) {
+      for (d in 1:length(dim(D$data))) {
         dims[[d]] <- ncdf4::ncdim_def(
           name = dimnames[d],
           units = "",
-          vals = c(1:dim(X$data)[d]),
+          vals = c(1:dim(D$data)[d]),
           create_dimvar = FALSE
         )
       }
@@ -110,18 +110,18 @@ add_nc <- function(file, X, vname) {
       #}
       # then write the data into the variable ncv
       ncdf4::ncvar_put(nc_conn, ncv,
-        vals = as.vector(X$data)
+        vals = as.vector(D$data)
       ) # ,
-      # count = dim(X$data))
+      # count = dim(D$data))
     } # end of writing sensor data
 
     # add metadata (from sensor data structure)
-    i_meta <- which(names(X) != "data")
+    i_meta <- which(names(D) != "data")
     for (m in i_meta) {
       ncdf4::ncatt_put(nc_conn,
         varid = vname,
-        attname = names(X)[m],
-        attval = X[[m]]
+        attname = names(D)[m],
+        attval = D[[m]]
       )
     }
 
@@ -132,21 +132,7 @@ add_nc <- function(file, X, vname) {
       )
       warning(w_msg)
     }
-
-    if (length(prev_depid) == 0) {
-      # if this is a new file make sure the depid is specified
-      # in the variable and as a global attribute
-      ncdf4::ncatt_put(nc_conn,
-        varid = vname,
-        attname = "depid",
-        attval = X$depid
-      )
-      ncdf4::ncatt_put(nc_conn,
-        varid = 0,
-        attname = "depid",
-        attval = X$depid
-      )
-    }
+    
     # add creation data to variable
     ncdf4::ncatt_put(nc_conn,
       vname,
@@ -155,8 +141,8 @@ add_nc <- function(file, X, vname) {
     )
   } # end of "if it's a sensor data structure"
 
-  # When X is a metadata "info" structure
-  if (length(X$data) == 0) {
+  # When D is a metadata "info" structure
+  if (length(D$data) == 0) {
     if (!file.exists(file)) {
       stop("A netCDF file can not be created without at least one sensor data variable.")
     } else {
@@ -165,22 +151,35 @@ add_nc <- function(file, X, vname) {
     }
 
     # add metadata (from info/metadata data structure)
-    i_meta <- which(names(X) != "data")
-    for (m in 1:length(X)) {
+    i_meta <- which(names(D) != "data")
+    for (m in i_meta) {
       ncdf4::ncatt_put(nc_conn,
         varid = 0,
-        attname = names(X)[m],
-        attval = X[[m]],
+        attname = names(D)[m],
+        attval = D[[m]],
         prec = "text"
       )
     }
+    # add creation date (global attribute)
+    ncdf4::ncatt_put(nc_conn,
+                     varid = 0,
+                     attname = "creation_date",
+                     attval = as.character(Sys.time())
+    )
   } # end of "if metadata info structure"
-
-  # add creation date (global attribute)
+  
+  # whatever else was written, always
+  # make sure info (global attributes) includes time of creation and depid
+  # add creation data to variable
   ncdf4::ncatt_put(nc_conn,
-    varid = 0,
-    attname = "creation_date",
-    attval = as.character(Sys.time())
+                   varid = 0,
+                   attname = "creation_date",
+                   attval = as.character(Sys.time())
+  )
+  ncdf4::ncatt_put(nc_conn,
+                   varid = 0,
+                   attname = "depid",
+                   attval = D$depid
   )
 
   ncdf4::nc_close(nc_conn)

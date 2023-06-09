@@ -43,7 +43,7 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
   V <- suppressMessages(readr::read_csv(
     file = fname, col_names = TRUE,
     col_types = readr::cols(
-      `Time (UTC)` = readr::col_character(),
+     `Time (UTC)` = readr::col_character(),
       `GPS (raw) 1 [raw]` = readr::col_character(),
       `GPS (raw) 2 [raw]` = readr::col_character()
     ),
@@ -51,20 +51,22 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
     trim_ws = TRUE,
     skip = skip_samps,
     n_max = max_samps
-  ))
+  )) |>
+    as.data.frame()
   # make mus and degree symbols and superscripts not show up as black diamonds with question marks inside
   # that make R throw errors...
 
-  names(V) <- iconv(names(V), to = "iso_8859_2")
+  names(V) <- iconv(names(V), from = "UTF-8", to = "ASCII", sub = "")
 
   # add date-time in POSIX format
   di <- which(stringr::str_detect(names(V), "Date "))
   ti <- which(stringr::str_detect(names(V), "Time "))
 
-  V$Datetime <- lubridate::dmy_hms(paste(
-    dplyr::pull(V[, di]),
-    dplyr::pull(V[, ti])
-  ))
-
-  V <- cbind(V[, ncol(V)], V[, c(-di, -ti, -ncol(V))])
+  options(digits.secs = 6)
+  V$Datetime <- as.POSIXct(paste(
+    V[, di],
+    V[, ti]),
+    format = "%d.%m.%Y %H:%M:%OS", tz = 'UTC'
+    )
+  return(V)
 }
