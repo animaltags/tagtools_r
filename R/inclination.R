@@ -47,14 +47,9 @@ inclination <- function(A, M, fc = NULL) {
     M <- fir_nodelay(M, round(8 / fc), fc)
   }
   # compute magnetic field intensity
-  v <- sqrt(rowSums(M^2))
-  suppressWarnings(x <- asin(rowSums(A * M) / v))
-  signvector <- rowSums(A * M) / v
-  for (i in 1:length(x)) {
-    if (is.nan(x[i])) {
-      x[i] <- asin(1) * sign(signvector[i])
-    }
-  }
-  incl <- -x
+  vm <- sqrt(rowSums(M^2))
+  va <- sqrt(rowSums(A^2))
+  incl <- -Re(asin(rowSums(A*M) / (va*vm)))
+  
   return(incl)
 }

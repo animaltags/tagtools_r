@@ -39,7 +39,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
       r = rep.int(r, length(X)) # for unexpected case where r = TRUE is input and there are several sensors
     }
   }
-
+  
   if (missing(par_opts)) {
     par_opts <- list(mar = c(1, 5, 0, 0), oma = c(2, 0, 2, 1), las = 1, lwd = 1, cex = 0.8)
   }
@@ -53,13 +53,13 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     info <- X$info
     X <- X[names(X) != "info"]
   }
-
+  
   times <- list()
   fs <- numeric(length = length(X))
   for (s in 1:length(X)) {
     if (suppressWarnings(!missing(fsx) &
-      !sum(is.null(fsx)) &
-      !sum(is.na(fsx)))) {
+                         !sum(is.null(fsx)) &
+                         !sum(is.na(fsx)))) {
       if (length(fsx) < length(X)) {
         fsx <- rep(fsx, length.out = length(X))
       } # end of recycling fsx to length(X)
@@ -81,7 +81,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     times[[s]] <- c(-1 + (1:n_obs)) / fs[s] + offset[s]
   } # end loop over sensor streams to get times vectors
   x_lim <- range(sapply(times, range, na.rm = TRUE), na.rm = TRUE)
-
+  
   # if recording_start is given or available,
   # then use date/time objects
   # ==============================================================
@@ -104,13 +104,13 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
       date_time_axis <- FALSE
     }
   }
-
+  
   # adjust time axis units and get x axis label
   # ======================================================
   brk <- data.frame(secs = c(0, 2e3, 2e4, 5e5)) # break points for plots in seconds, mins, hours, days
   brk$units <- c("Time (sec.)", "Time (min.)", "Time (hours)", "Time (days)")
   brk$div <- c(1, 60, 3600, 24 * 3600) # divide time in sec by div to get new units
-
+  
   if (sum(grepl("POSIX", class(times[[1]])))) {
     x_lab <- "Time"
   } else {
@@ -121,15 +121,15 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     x_lim <- x_lim / as.numeric(brk[t_ix, "div"])
     x_lab <- as.character(brk[t_ix, "units"])
   }
-
+  
   # set up plot layout
   # ===============================================================
   graphics::layout(matrix(c(1:length(X)), ncol = 1),
-    widths = rep.int(1, length(X)),
-    heights = panel_heights
+                   widths = rep.int(1, length(X)),
+                   heights = panel_heights
   )
   graphics::par(par_opts)
-
+  
   # draw plot
   # ===============================================================
   for (i in 1:length(X)) {
@@ -172,7 +172,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
   }
   custom_cex <- max(graphics::par(no.readonly = TRUE)$cex, graphics::par(no.readonly = TRUE)$cex.lab)
   graphics::mtext(x_lab, side = 1, line = 2, cex = custom_cex)
-
+  
   if (interactive) {
     zoom::zm()
   }
