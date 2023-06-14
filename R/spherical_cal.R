@@ -65,9 +65,9 @@ spherical_cal <- function(X, n = NULL, method = NULL) {
   Y <- listYC$Y
   C <- listYC$C
   nn <- norm2(Y)
-  print(sprintf("Residual: %2.1f ", 100 * stats::sd(nn) / mean(nn)))
+  G$residual <- sprintf("%2.1f ", 100 * stats::sd(nn) / mean(nn))
   R <- t(Y) %*% Y
-  print(sprintf("Axial balance: %2.1f", 100 / pracma::cond(R)))
+  G$axial_balance <- sprintf("%2.1f", 100 / pracma::cond(R))
   if (length(n) != 0) {
     sf <- n / mean(nn)
     Y <- Y * sf
