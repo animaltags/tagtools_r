@@ -55,7 +55,6 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
     as.data.frame()
   # make mus and degree symbols and superscripts not show up as black diamonds with question marks inside
   # that make R throw errors...
-
   names(V) <- iconv(names(V), from = "UTF-8", to = "ASCII", sub = "")
 
   # add date-time in POSIX format

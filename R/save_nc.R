@@ -43,7 +43,18 @@ save_nc <- function(file, X, ...) {
 
   # write sensors and metadata to file
   for (k in 1:length(X)) {
-    var_name <- ifelse("full_name" %in% names(X[[k]]), X[[k]]$full_name, "info")
+    if (names(X)[k] != ''){
+      var_name <- names(X)[k]
+    }else{
+    if ("full_name" %in% names(X[[k]])){
+      var_name <- X[[k]]$full_name
+    }else{
+      if ("name" %in% names(X[[k]])){
+      var_name <- X[[k]]$name
+      }else{
+        var_name <- 'info'
+      }
+    }}
     add_nc(file, X[[k]], vname = var_name)
   }
 }
