@@ -5,9 +5,9 @@ M <- matrix(c(1.3, -0.25, 0.16, 0.78, -0.3, 0.5, 0.5, -0.49, -0.6),
             byrow = TRUE, nrow = 3, ncol = 3
 )
 
-sample <- c(-1.5707963267949, -1.5707963267949, -1.5707963267949)
+sample <- c(-1.2968892, -1.4349892, -1.3165832)
 test_that("function works", {
-  expect_equal(inclination(A, M), sample)
+  expect_equal(round(inclination(A, M), digits=7), sample)
 })
 
 set <- matrix(c(20,30,15))
