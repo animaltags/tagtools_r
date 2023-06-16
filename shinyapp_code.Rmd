@@ -1,0 +1,381 @@
+
+library(shiny)
+library(plotly)
+      # Plot M
+      updatePlotM <- function(df_m, current_range_m, num_columns_m) {
+        filtered_df <- subset(df_m, time >= current_range_m$start & time <= current_range_m$end)
+        
+        plot <- plot_ly()
+        
+        for (i in 1:num_columns_m) {
+          column_name <- paste0("value", i)
+          
+          plot <- plot %>% add_trace(
+            data = filtered_df,
+            x = ~time,
+            y = as.formula(paste0("~", column_name)),
+            name = column_name,
+            type = 'scatter',
+            mode = 'lines',
+            line = list(color = rainbow(num_columns_m)[i])
+          )
+        }
+        
+        plot <- plot %>% layout(
+          xaxis = list(range = c(current_range_m$start, current_range_m$end)),
+          yaxis = list(title = "Mag"),
+          showlegend = TRUE
+        )
+        
+        return(plot)
+      }
+      
+      # Plot A
+      updatePlotA <- function(df_a, current_range_a, num_columns_a) {
+        filtered_df <- subset(df_a, time >= current_range_a$start & time <= current_range_a$end)
+        
+        plot <- plot_ly()
+        
+        for (i in 1:num_columns_a) {
+          column_name <- paste0("value", i)
+          
+          plot <- plot %>% add_trace(
+            data = filtered_df,
+            x = ~time,
+            y = as.formula(paste0("~", column_name)),
+            name = column_name,
+            type = 'scatter',
+            mode = 'lines',
+            line = list(color = rainbow(num_columns_a)[i])
+          )
+        }
+        
+        plot <- plot %>% layout(
+          xaxis = list(range = c(current_range_a$start, current_range_a$end)),
+          yaxis = list(title = "Acc"),
+          showlegend = TRUE
+        )
+        
+        return(plot)
+      }
+      
+      # Plot P
+      updatePlotP <- function(df_p, current_range_p, num_columns_p) {
+        filtered_df <- subset(df_p, time >= current_range_p$start & time <= current_range_p$end)
+        
+        plot <- plot_ly()
+             for (i in 1:num_columns_p) {
+          column_name <- paste0("value", i)
+          
+          plot <- plot %>% add_trace(
+            data = filtered_df,
+            x = ~time,
+            y = as.formula(paste0("~", column_name)),
+            name = column_name,
+            type = 'scatter',
+            mode = 'lines',
+            line = list(color = rainbow(num_columns_p)[i])
+          )
+        }
+        
+        plot <- plot %>% layout(
+          xaxis = list(range = c(current_range_p$start, current_range_p$end)),
+          yaxis = list(title = "Depth", autorange = "reversed"),
+          showlegend = TRUE
+        )
+        
+        return(plot)
+      }
+      
+# Create a UI for the Shiny app
+ui <- fluidPage(
+  titlePanel("Time Series Graph"),
+  
+  sidebarLayout(
+    sidebarPanel(
+     fileInput("file_upload", "Upload NetCDF File"),  
+     textInput("start_time", "Start Time:", value = format(Sys.time(), "%Y-%m-%d %H:%M")),
+      textInput("duration_to_show", "Duration to Show (in minutes):", value = "5"),
+      actionButton("btn_show_graph", "Show Graph"),
+      actionButton("btn_forward", "Forward"),
+      actionButton("btn_backward", "Backward"),
+      actionButton("btn_reset", "Reset")
+    ),
+    
+    mainPanel(
+      
+      plotlyOutput("plot_a"),
+      plotlyOutput("plot_m"),
+      plotlyOutput("plot_p")
+    )
+  )
+)
+
+# Create a server for the Shiny app
+server <- function(input, output, session) {
+  current_range_m <- reactiveValues()
+  df_m <- reactiveValues()
+  num_columns_m <- reactiveValues()
+
+current_range_a <- reactiveValues()
+  df_a <- reactiveValues()
+  num_columns_a <- reactiveValues()
+
+current_range_p <- reactiveValues()
+  df_p <- reactiveValues()
+  num_columns_p <- reactiveValues()
+
+  observeEvent(input$file_upload, {
+    file_path <- input$file_upload$datapath
+    dataset <- load_nc(file_path)
+
+      
+      # Extract the start time from the datasets
+if (!is.null(dataset$M)) {
+      start_time_m <- as.POSIXct(dataset$info$dephist_device_datetime_start)
+      data_m <- dataset$M$data
+      if (is.array(data_m)) {
+        data_m <- as.matrix(data_m)
+      }
+      
+      # Calculate the time for each data point based on the sampling rate
+      sampling_rate_m <- dataset$M$sampling_rate
+      time_seq_m <- seq(0, length.out = nrow(data_m), by = 1 / sampling_rate_m)
+
+
+      df_m$data <- data.frame(time = start_time_m + time_seq_m)
+      num_columns_m$value <- ncol(data_m)
+
+      for (i in 1:num_columns_m$value) {
+        column_name <- paste0("value", i)
+        df_m$data[column_name] <- data_m[, i]
+      }
+      
+current_range_m <- reactiveValues(
+        start = start_time_m,
+        end = start_time_m + as.difftime(max(df_m$data$time) - min(df_m$data$time), units = "secs")
+      )
+}
+
+
+
+
+if (!is.null(dataset$A)|!is.null(dataset$Aw)) {
+      start_time_a <- as.POSIXct(dataset$info$dephist_device_datetime_start)
+  if (!is.null(dataset$A)) {
+
+      data_a <- dataset$A$data
+      if (is.array(data_a)) {
+        data_a <- as.matrix(data_a)
+      }}
+  if  (!is.null(dataset$Aw)) {
+
+      data_a <- dataset$Aw$data
+      if (is.array(data_a)) {
+        data_a <- as.matrix(data_a)
+      }}
+     
+
+      
+   sampling_rate_a <- dataset$A$sampling_rate
+   time_seq_a <- seq(0, length.out = nrow(data_a), by = 1 / sampling_rate_a)
+
+
+      # Create the initial data frames with timestamp and values
+      df_a$data <- data.frame(time = start_time_a + time_seq_a)
+
+      num_columns_a$value <- ncol(data_a)
+
+      for (i in 1:num_columns_a$value) {
+        column_name <- paste0("value", i)
+        df_a$data[column_name] <- data_a[, i]
+      }
+      
+      current_range_a <- reactiveValues(
+        start = start_time_a,
+        end = start_time_a + as.difftime(max(df_a$data$time) - min(df_a$data$time), units = "secs")
+      )
+      
+}
+
+
+if (!is.null(dataset$P)|!is.null(dataset$depth)) {
+      start_time_p <- as.POSIXct(dataset$info$dephist_device_datetime_start)
+  if (!is.null(dataset$P)) {
+
+      data_p <- dataset$P$data
+      if (is.array(data_p)) {
+        data_p <- as.matrix(data_p)
+      }}
+  if  (!is.null(dataset$depth)) {
+
+      data_p <- dataset$depth$data
+      if (is.array(data_p)) {
+        data_p <- as.matrix(data_p)
+      }}
+     
+      
+         
+      sampling_rate_p <- dataset$P$sampling_rate
+      time_seq_p <- seq(0, length.out = nrow(data_p), by = 1 / sampling_rate_p)
+      
+
+      df_p$data <- data.frame(time = start_time_p + time_seq_p)
+      
+      num_columns_p$value <- ncol(data_p)
+      
+
+
+      for (i in 1:num_columns_p$value) {
+        column_name <- paste0("value", i)
+        df_p$data[column_name] <- data_p[, i]
+      }
+      
+      # Initialize the current ranges as reactive values
+            
+
+      current_range_p <- reactiveValues(
+        start = start_time_p,
+        end = start_time_p + as.difftime(max(df_p$data$time) - min(df_p$data$time), units = "secs")
+      )
+      
+  }
+
+
+        output$plot_m <- renderPlotly({
+          updatePlotM(df_m$data, current_range_m, num_columns_m$value)
+
+        })
+        
+        output$plot_a <- renderPlotly({
+          updatePlotA(df_a$data, current_range_a, num_columns_a$value)
+
+        })
+        
+        output$plot_p <- renderPlotly({
+          updatePlotP(df_p$data, current_range_p, num_columns_p$value)
+
+        }) })
+        
+        # Event handlers
+        
+        # Show graph button click event
+        observeEvent(input$btn_show_graph, {
+          start_time <- as.POSIXct(input$start_time, format = "%Y-%m-%d %H:%M")
+          duration_to_show <- as.numeric(input$duration_to_show)
+          
+          current_range_m$start <- start_time
+          current_range_m$end <- start_time + as.difftime(duration_to_show * 60, units = "secs")
+          
+          current_range_a$start <- start_time
+          current_range_a$end <- start_time + as.difftime(duration_to_show * 60, units = "secs")
+          
+          current_range_p$start <- start_time
+          current_range_p$end <- start_time + as.difftime(duration_to_show * 60, units = "secs")
+
+          output$plot_m <- renderPlotly({
+          updatePlotM(df_m$data, current_range_m, num_columns_m$value)
+           })
+
+          output$plot_a <- renderPlotly({
+          updatePlotA(df_a$data, current_range_a, num_columns_a$value)
+           })
+
+          output$plot_p <- renderPlotly({
+          updatePlotP(df_p$data, current_range_p, num_columns_p$value)
+           })
+ })
+        
+        # Forward button click event
+        observeEvent(input$btn_forward, {
+          duration_to_show <- as.numeric(input$duration_to_show)
+          
+          current_range_m$start <- current_range_m$start + as.difftime(duration_to_show * 60, units = "secs")
+          current_range_m$end <- current_range_m$end + as.difftime(duration_to_show * 60, units = "secs")
+          
+          current_range_a$start <- current_range_a$start + as.difftime(duration_to_show * 60, units = "secs")
+          current_range_a$end <- current_range_a$end + as.difftime(duration_to_show * 60, units = "secs")
+          
+          current_range_p$start <- current_range_p$start + as.difftime(duration_to_show * 60, units = "secs")
+          current_range_p$end <- current_range_p$end + as.difftime(duration_to_show * 60, units = "secs")
+
+  output$plot_m <- renderPlotly({
+      updatePlotM(df_m$data, current_range_m, num_columns_m$value)
+    })
+
+  output$plot_a <- renderPlotly({
+      updatePlotA(df_a$data, current_range_a, num_columns_a$value)
+    })
+
+  output$plot_p <- renderPlotly({
+      updatePlotP(df_p$data, current_range_p, num_columns_p$value)
+    })
+
+
+        })
+        
+        # Backward button click event
+        observeEvent(input$btn_backward, {
+          duration_to_show <- as.numeric(input$duration_to_show)
+          
+          current_range_m$start <- current_range_m$start - as.difftime(duration_to_show * 60, units = "secs")
+          current_range_m$end <- current_range_m$end - as.difftime(duration_to_show * 60, units = "secs")
+          
+          current_range_a$start <- current_range_a$start - as.difftime(duration_to_show * 60, units = "secs")
+          current_range_a$end <- current_range_a$end - as.difftime(duration_to_show * 60, units = "secs")
+          
+          current_range_p$start <- current_range_p$start - as.difftime(duration_to_show * 60, units = "secs")
+          current_range_p$end <- current_range_p$end - as.difftime(duration_to_show * 60, units = "secs")
+        
+    output$plot_m <- renderPlotly({
+      updatePlotM(df_m$data, current_range_m, num_columns_m$value)
+  })
+    output$plot_p <- renderPlotly({
+      updatePlotP(df_p$data, current_range_p, num_columns_p$value)
+  })
+    output$plot_a <- renderPlotly({
+      updatePlotA(df_a$data, current_range_a, num_columns_a$value)
+
+  })
+})
+        
+        # Reset button click event
+        observeEvent(input$btn_reset, {
+          current_range_m$start <- df_m$data$time[1]
+          current_range_m$end <- df_m$data$time[nrow(df_m$data)]
+
+          
+          current_range_a$start <- df_a$data$time[1]
+          current_range_a$end <- df_a$data$time[nrow(df_a$data)]
+
+          
+          current_range_p$start <- df_p$data$time[1]
+          current_range_p$end <- df_p$data$time[nrow(df_p$data)]
+
+ output$plot_m <- renderPlotly({
+      updatePlotM(df_m$data, current_range_m, num_columns_m$value)
+    })
+
+ output$plot_a <- renderPlotly({
+      updatePlotA(df_a$data, current_range_a, num_columns_a$value)
+    })
+
+ output$plot_p <- renderPlotly({
+      updatePlotP(df_p$data, current_range_p, num_columns_p$value)
+    })
+
+
+
+        })
+        
+
+    }
+
+
+# Run the Shiny app
+shinyApp(ui = ui, server = server)
+
+
+
+
+
