@@ -5,11 +5,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^shinyapp_code$
-^quokka-bilby$
-^motivation-letter$
-^RJreferences$
-^RJournal$
+
 ^quokka-bilby\.Rmd$
 ^motivation-letter\.md$
 ^RJreferences\.Rmd$
