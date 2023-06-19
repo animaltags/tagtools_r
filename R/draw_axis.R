@@ -2,6 +2,7 @@
 #'
 #' @description This function is called by \code{\link{plott}} to add a time axis to a plot created by \code{\link{plott}}. Users are unlikely to need to call the function directly.
 #' @inheritParams graphics::axis.POSIXct
+#' @param x A date-time or date object, or other types of objects that can be converted appropriately.
 #' @param date_time Logical. Is the data being plotted date-time (POSIX) or time in seconds?
 #' @param last_panel Logical. Is this the last panel (in other words, should x axis tick labels be drawn)?
 #' @export

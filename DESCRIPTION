@@ -44,6 +44,7 @@ Imports:
     lubridate,
     matlab,
     ncdf4,
+    pander,
     plotly,
     pracma,
     readr,

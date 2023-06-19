@@ -18,6 +18,7 @@
 #' }
 #' @export
 
+
 depth_rate <- function(p, fs, fc, diver) {
   # input checking
   ##########################
