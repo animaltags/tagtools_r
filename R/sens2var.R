@@ -16,8 +16,6 @@
 #' \item{\code{sampling: }} {NULL unless input \code{regular} is TRUE. 'regular' if sampling of \code{Sx} was regular, 'irregular' if it was irregular.}
 #' }
 #' @export
-#' @examples
-#' # no example given because hard to figure out when you'll use it!
 #' @note This function is provided for the compatibility checking functionality and for parallel operation with the matlab/octave tag toolkit. However, in R loose variables in the workspace are less commonly used in R, and an R function does not return multiple objects as matlab functions can. Thus, the result of "unpacking" a sensor list is the same data...stored in different and less well documented list (pretty useless).
 #'
 
