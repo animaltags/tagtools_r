@@ -9,7 +9,6 @@
 #' @note Source: http://resource.npl.co.uk/acoustics/techguides/soundseawater/content.html#UNESCO
 #' @export
 #' @examples sound_speed(8, 1000, 34)
-#' # Returns: 1497.7 m/s
 sound_speed <- function(T, D = NULL, S = NULL) {
   if (missing(T)) {
     stop("input for T required")

@@ -17,7 +17,6 @@
 #'   byrow = TRUE, nrow = 3, ncol = 3
 #' )
 #' incl <- inclination(A, M)
-#' # Results: incl = -0.91595 radians.
 #' }
 inclination <- function(A, M, fc = NULL) {
   # input checks-----------------------------------------------------------

@@ -9,17 +9,10 @@
 #' @param n_out is an optional length for the output data. If n_out is not given, the output data length will be the input data length * fs_out/fs_in.
 #' @return Y is a sensor structure, vector or matrix of interpolated data with the same number of columns as X.
 #' @examples 
-#'          plott(X = list(harbor_seal$P), fsx = 5) 
-#'          # get an idea of what the data looks like
+#'          plott(X = list(harbor_seal$P), fsx = 5)
 #'          P_dec <- decdc(harbor_seal$P, 5)
-#'          
-#'          # note: you would not really want to decimate and then linearly interpolate. 
-#'          # only doing so here to create an example from existing datasets 
-#'          # that have uniform sampling rates across sensors
-#'          
 #'          P_interp <- interp2length(X = P_dec, Z = harbor_seal$A)
-#'          plott(X = list(P_interp$data), fsx = 1) 
-#'          # compare to original plot. should be pretty close 
+#'          plott(X = list(P_interp$data), fsx = 1)
 #' @export
 
 interp2length <- function(X, Z, fs_in = NULL, fs_out = NULL, n_out = NULL) {

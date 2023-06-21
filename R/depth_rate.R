@@ -14,7 +14,6 @@
 #'   fs = beaked_whale$P$sampling_rate,
 #'   r = c(1, 0), panel_labels = c("Depth\n(m)", "Vertical Velocity\n(m/s)")
 #' )
-#' # plot of dive profile and depth rate
 #' }
 #' @export
 

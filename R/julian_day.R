@@ -14,8 +14,8 @@
 #' @param m A single month or vector of months
 #' @return See the description section for details on the return.
 #' @export
-#' @examples julian_day(y = 2016, d = 12, m = 10) # Returns: 286
-#' julian_day(y = 2016, 286) # Returns: "2016-10-12"
+#' @examples julian_day(y = 2016, d = 12, m = 10)
+#' julian_day(y = 2016, 286)
 
 julian_day <- function(y = NULL, m = NULL, d = NULL) {
   if (nargs() == 0) {

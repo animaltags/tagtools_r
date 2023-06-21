@@ -17,8 +17,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' # example will only work if data matrix Aw is in your workspace.
-#' # A <- sens_struct(data=Aw,sampling_rate=fs,depid='md13_134a', type='acc')
+#' A <- sens_struct(data=Aw,sampling_rate=fs,depid='md13_134a', type='acc')
 #' }
 #'
 sens_struct <- function(data, sampling_rate = NULL, T = NULL,
