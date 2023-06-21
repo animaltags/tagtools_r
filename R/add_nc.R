@@ -8,8 +8,12 @@
 #' @param D The sensor data or metadata list to be saved. 
 #' @param vname The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).
 #' @seealso \code{\link{save_nc}}, \code{\link{load_nc}}
-#' @examples add_nc('dog17_124a',A)
 #' @export
+#' @examples 
+#' \dontrun{
+#' add_nc('dog17_124a',A)
+#' }
+
 
 add_nc <- function(file, D, vname) {
   # input checking
