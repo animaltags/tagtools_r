@@ -24,5 +24,3 @@ cline(x=ChickWeight$Time, y=ChickWeight$weight,
       color_vector=c('black', 'grey20', 
                      'grey50', 'grey70'))
 }
-\keyword{time-series}
-\keyword{visualization,}

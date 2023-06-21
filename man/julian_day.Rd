@@ -29,6 +29,6 @@ returns the date vector [year,month,day] for each year, day pair.
 returns the Julian day number for each year, month, day.
 }
 \examples{
-julian_day(y = 2016, d = 12, m = 10) # Returns: 286
-julian_day(y = 2016, 286) # Returns: "2016-10-12"
+julian_day(y = 2016, d = 12, m = 10)
+julian_day(y = 2016, 286)
 }

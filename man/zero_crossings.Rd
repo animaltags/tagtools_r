@@ -14,7 +14,7 @@ zero_crossings(x, TH, Tmax = NULL)
 \item{Tmax}{(optional) The maximum duration in samples between threshold crossings. To be accepted as a zero-crossing, the signal must pass from below -TH to above TH, or vice versa, in no more than Tmax samples. This is useful to eliminate slow transitions. If Tmax is not given, there is no limit on the number of samples between threshold crossings.}
 }
 \value{
-A list with 2 elements:
+A list with elements
 \itemize{
 \item{\strong{K: }} A vector of cues (in samples) to zero-crossings in x.
 \item{\strong{s: }} A vector containing the sign of each zero-crossing (1 = positive-going, -1 = negative-going). s is the same size as K. If no zero-crossings are found, K and s will be empty
@@ -36,7 +36,6 @@ There are numerous other sources of error so use at your own risk!
 \examples{
 \dontrun{
 R <- zero_crossings(sin(2 * pi * 0.033 * c(1:100)), 0.3)
-# Returns: K = c(15.143, 30.286, 45.429, 60.628, 75.771, 90.914)
 s <- c(-1, 1, -1, 1, -1, 1)
 }
 

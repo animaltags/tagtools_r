@@ -25,8 +25,6 @@ Warning: this will overwrite any previous NetCDF file with the same name. The fi
 \examples{
 \dontrun{
 save_nc("dog17_124a", A, M, P, info)
-# or equivalently:
 save_nc("dog17_124a", X = list(A, M, P, info))
-# generates a file dog17_124a.nc and adds variables A, M and P, and a metadata structure.
 }
 }

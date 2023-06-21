@@ -17,7 +17,6 @@ col_line(formula, color, data = NULL, ...)
 }
 \value{
 a ggplot object with the requested plot
-#' @export
 }
 \description{
 This function is used to plot two dimensional lines with each individual line possessing a different color.

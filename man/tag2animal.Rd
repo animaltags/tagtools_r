@@ -40,12 +40,6 @@ animal at the end of the move (angles are in radians).
 The first row of OTAB must have cue1 and cue2 equal to 0 as this is the initial
 orientation of the tag on the animal. Subsequent rows (if any) of OTAB describe
 }
-\examples{
-\dontrun{
-# See animaltags.org for examples of how to use this function.
-}
-
-}
 \seealso{
 [prh_predictor1], [prh_predictor2]
 }

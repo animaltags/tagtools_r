@@ -18,5 +18,4 @@ This function is used to compute the row-wise vector norm of X if X is a matrix.
 \examples{
 sampleMatrix <- matrix(c(0.2, 0.4, -0.7, -0.3, 1.1, 0.1), byrow = TRUE, nrow = 2, ncol = 3)
 norm2(X = sampleMatrix)
-# Result: c(0.83066, 1.14455)
 }
