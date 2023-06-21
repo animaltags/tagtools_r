@@ -16,7 +16,7 @@ test_that("function works", {
 
 
 
-test_that("function does not works", {
+test_that("error reported", {
   expect_error(a2pr(test_matrix_2), "non-numeric argument to binary operator")
 })
 

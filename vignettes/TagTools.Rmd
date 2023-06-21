@@ -121,7 +121,8 @@ This is the first vignette for which we can include a really compelling graphic 
 library(tagtools)
 cats_file_path <- system.file("extdata", "cats_test_raw.nc", package = "tagtools", mustWork = TRUE)
 MN <- load_nc(cats_file_path)
-plott(X = list(Depth = MN$Depth, Acceleration = MN$Acc, Gyroscope = MN$Gyr), interactive = FALSE)
+
+plott(X = list(Depth = MN$P, Acceleration = MN$A, Gyroscope = MN$G), interactive = FALSE)
 ```
 
 

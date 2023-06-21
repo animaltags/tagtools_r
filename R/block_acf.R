@@ -7,7 +7,6 @@
 #' @param make_plot Logical. Should a plot be produced? Defaults to TRUE.
 #' @return A data frame with 1 variable containing the values of ACF.
 #' @param ... Additional arguments to be passed to plot.acf
-#' @keywords correlation, visualization, model assessment
 #' @export
 #' @examples
 #' block_acf(

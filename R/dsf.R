@@ -16,7 +16,8 @@
 #' @note Data selection: This function works best if the sensor matrix, A, covers an interval in which propulsion is the main activity. This could be a complete dive or an interval of running or flapping flight. The interval length should be at least Nfft/sampling_rate seconds, i.e., 20 s for the default FFT length.
 #' @export
 #' @examples
-#' # coming soon!
+#' dsf(MX$A)
+#' 
 dsf <- function(A, sampling_rate = NULL, fc = NULL, Nfft = NULL) {
   if (is.list(A) & utils::hasName(A, "data") & utils::hasName(A, "sampling_rate")) {
     AA <- A

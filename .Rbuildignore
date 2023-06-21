@@ -6,3 +6,13 @@
 ^docs$
 ^pkgdown$
 ^vignettes/articles$
+^quokka-bilby\.Rmd$
+^motivation-letter\.md$
+^RJreferences\.Rmd$
+^RJournal\.sty$
+^shinyapp_code\.Rmd$
+^RJreferences\.bib$
+^penguins\.png$
+^cran-comments\.md$
+^LICENSE\.md$
+^Detectors.Rmd

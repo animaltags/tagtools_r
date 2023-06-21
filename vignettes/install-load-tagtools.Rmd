@@ -27,7 +27,7 @@ In this vignette you will complete the first important setup steps of installing
 # Installing tagtools for R
 
 ## Prerequisites
-Before you begin, you must have R and---recommended---RStudio installed on your computer. You can download this software at [RStudio.com](https://www.rstudio.com/products/rstudio/#rstudio-desktop) (you only need the free one). 
+Before you begin, you must have R and---recommended---RStudio installed on your computer. You can download this software at [RStudio.com](https://posit.co/products/open-source/rstudio/#rstudio-desktop) (you only need the free one). 
 
 Alternatively, you *can* work in [RStudio.cloud](https://rstudio.cloud). This is free too, and it is nice that no download is required. The drawback is that, with your free RStudio.cloud account, you are limited at a certain number of project-hours per month, RAM, and CPU. One who does a lot of work in RStudio, several hours a day, will run out of hours within a week or two. The desktop version has fewer restraints. 
 
@@ -43,8 +43,8 @@ If you want or need to install `devtools`, or want more information about it, se
 The code below gives the devtools command to install. Click "Code" at the right to open the chunk, then you should be able to copy-paste the code into your R console. **However**, be careful when copy-pasting special characters such as \_underscores\_, and 'quotes'. If you get an error, one thing to check is that you have just a single, simple underscore, and `'straight quotes'`, whether `'single'` or `"double"` (rather than “smart quotes”). 
 
 ```{r, eval = FALSE}
-devtools::install_github('stacyderuiter/TagTools/R/tagtools',
-                         build_vignettes = TRUE)
+devtools::install_github('animaltags/tagtools_r',
+                         build_vignettes = FALSE)
 ```
 
 If you are asked something like "These packages have more recent versions available", it is no harm to update them all, and to "install from sources the packages which need compilation". 

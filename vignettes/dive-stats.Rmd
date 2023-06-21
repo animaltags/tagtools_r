@@ -39,8 +39,10 @@ ZC_file_path <- system.file("extdata", "zc11_267a.nc", package = "tagtools", mus
 ZC <- load_nc(ZC_file_path)
 ```
 
+ 
 ```{r, eval = TRUE, echo = FALSE}
 ZC_file_path <- system.file("extdata", "zc11_267a.nc", package = "tagtools", mustWork = TRUE)
+
 ZC <- load_nc(ZC_file_path)
 ```
 

@@ -27,10 +27,6 @@
 #' case the structure elements 'frame' and 'name' will be changed. The OTAB will also
 #' be added to the structure.
 #' @export
-#' @examples
-#' \dontrun{
-#' # See animaltags.org for examples of how to use this function.
-#' }
 #'
 tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
   #*******************************************

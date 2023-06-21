@@ -8,12 +8,7 @@
 #' @param D The sensor data or metadata list to be saved. 
 #' @param vname The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).
 #' @seealso \code{\link{save_nc}}, \code{\link{load_nc}}
-#' @examples
-#' \dontrun{
-#' # if A is in workspace,
-#' # add_nc('dog17_124a',A)
-#' # generates a file dog17_124a.nc (if it does not already exist) and adds a variable A.
-#' }
+#' @examples add_nc('dog17_124a',A)
 #' @export
 
 add_nc <- function(file, D, vname) {
@@ -100,14 +95,14 @@ add_nc <- function(file, D, vname) {
         missval = NULL,
         longname = ""
       )
-      if (!file.exists(file)) {
+      #if (!file.exists(file)) {
         # if the file doesn't exist create it
-        nc_conn <- ncdf4::nc_create(file, ncv)
-      } else {
+        #nc_conn <- ncdf4::nc_create(file, ncv)
+      #} else {
         # if file already exists add variable to it
-        nc_conn <- ncdf4::nc_open(file, write = TRUE)
-        nc_conn <- ncdf4::ncvar_add(nc_conn, ncv)
-      }
+        #nc_conn <- ncdf4::nc_open(file, write = TRUE)
+        #nc_conn <- ncdf4::ncvar_add(nc_conn, ncv)
+      #}
       # then write the data into the variable ncv
       ncdf4::ncvar_put(nc_conn, ncv,
         vals = as.vector(D$data)

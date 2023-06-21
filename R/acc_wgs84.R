@@ -7,7 +7,6 @@
 #' @note Source: http://solid_earth.ou.edu/notes/potential/igf.htm
 #' @export
 #' @examples acc_wgs84(50)
-#' # Returns: 9.8107 $m/s^2$
 acc_wgs84 <- function(latitude) {
   if (missing(latitude)) {
     stop("input for latitude is required")

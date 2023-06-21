@@ -44,7 +44,7 @@ MN <- load_nc(cats_file_path)
 The tag toolbox has a function for plotting tag sensor data without getting it out of the structure:
 
 ```{r, eval=FALSE, echo = TRUE}
-plott(X = list(Depth = MN$Depth, Acceleration = MN$Acc, Gyroscope = MN$Gyr), interactive = FALSE)
+plott(X = list(Depth = MN$P, Acceleration = MN$A, Gyroscope = MN$G), interactive = FALSE)
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#plott1"> Show/Hide Results </button>  
@@ -74,7 +74,7 @@ For more features and info, run the help function `?` with plott:
 Not all tags have a way to start logging as soon as the tag has been deployed on the animal. Often data logging is started by a time trigger or alarm, and the researcher has to make a guess as to when the tag will be deployed to set its start time appropriately.  Often this means that a tag is logging data before it is put on an animal. By the same token, tags have no means of detecting when they release from the tagged  animal. As a consequence, they may continue to log data after they release. In most cases, the logged data from before and after deployment has no use. To reduce the data to just the periods when the tag is on the animal, use the tool `crop()`:
 
 ```{r, echo = TRUE, eval=FALSE}
-Pc = crop(MN$Depth)
+Pc = crop(MN$P)
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#crop1"> Show/Hide Results </button>  
@@ -99,7 +99,7 @@ plott(X = list(Depth = Pc))
 <button class="btn btn-primary" data-toggle="collapse" data-target="#plott2"> Show/Hide Results </button>  
 <div id="plott2" class="collapse"> 
 ```{r, eval = TRUE, echo = FALSE}
-Pc <- crop_to(X=MN$Depth, tcues=c(111195040, 155520000))
+Pc <- crop_to(X=MN$P, tcues=c(974,1800))
 plott(X=list(Depth = Pc))
 ```
 
@@ -110,7 +110,7 @@ If all has gone well, your plott should be absolutely beautiful.
 As an alternative to `crop`, if you already know the start and end times (with appropriate units) that you would like to crop the data to, you can use `crop_to`. For instance, to get back something like what you just did with `crop` from the same depth data:
 
 ```{r, echo=TRUE, eval = FALSE}
-Pc <- crop_to(X=MN$Depth, tcues=c(111195040, 155520000))
+Pc <- crop_to(X=MN$P, tcues=c(974, 1800))
 ```
 
 The resulting sensor data list also contains fields that document what you just did. They should look like:

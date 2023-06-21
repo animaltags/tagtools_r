@@ -15,7 +15,7 @@
 #' BW <- beaked_whale
 #' detect_peaks(data = BW$A$data, sr = BW$A$sampling_rate, 
 #' FUN = njerk, thresh = NULL, bktime = NULL, 
-#' plot_peaks = NULL, fs = BW$A$sampling_rate)
+#' plot_peaks = NULL, sampling_rate = BW$A$sampling_rate)
 #' }
 detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plot_peaks = NULL, ...) {
   if (missing(data) | missing(sr)) {
