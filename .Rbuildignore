@@ -12,3 +12,7 @@
 ^RJournal\.sty$
 ^shinyapp_code\.Rmd$
 ^RJreferences\.bib$
+^penguins\.png$
+^cran-comments\.md$
+^LICENSE\.md$
+^Detectors.Rmd
