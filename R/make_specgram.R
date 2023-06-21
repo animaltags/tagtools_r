@@ -30,9 +30,7 @@
 #' nfft <- 256
 #' numoverlap <- 128
 #' window <- signal::hanning(nfft)
-#' # Spectrogram plot
 #' make_specgram(x, nfft, fs, window, numoverlap)
-#' # or calculate and don't plot
 #' S <- make_specgram(x, nfft, fs, window, numoverlap, draw_plot = FALSE)
 #' }
 #' @export

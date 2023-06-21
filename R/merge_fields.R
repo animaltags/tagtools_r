@@ -8,7 +8,6 @@
 #' @examples s1 <- list(a = 1, b = c(2, 3, 4))
 #' s2 <- list(b = 3, c = "cat")
 #' s <- merge_fields(s1, s2)
-#' s # yields list( a = 1, b = c(2,3,4), c = 'cat')
 
 merge_fields <- function(s1, s2) {
   if (missing(s1) | missing(s2)) {

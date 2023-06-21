@@ -8,7 +8,6 @@
 #' @examples
 #' v <- matrix(c(1, 3, 4, 4, 20, -10, 5, 6, 6, 7), ncol = 1)
 #' w <- median_filter(v, n = 3)
-#' # Returns: w = c(1, 3, 4, 4, 4, 5, 5, 6, 6, 7)
 #' @export
 
 median_filter <- function(X, n, noend = TRUE) {

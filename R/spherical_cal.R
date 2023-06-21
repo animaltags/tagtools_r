@@ -31,6 +31,9 @@
 #' field data. This function is only usable for field sensors.
 #' It will not work for gyroscope data.
 #' @export
+#' @examples
+#' spherical_cal(MN$Acc$data)
+#' 
 
 spherical_cal <- function(X, n = NULL, method = NULL) {
   G <- c()

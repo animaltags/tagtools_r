@@ -14,7 +14,6 @@
 #'   byrow = TRUE, nrow = 3, ncol = 3
 #' )
 #' msa(A = sampleMatrix, ref = 1)
-#' # Results: c(0.122497, 0.019804, 0.24499)
 msa <- function(A, ref) {
   # input checks-----------------------------------------------------------
   if (missing(ref)) {

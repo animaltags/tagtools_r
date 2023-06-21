@@ -6,7 +6,7 @@
 #' @param data data.frame or tibble in which variables x, y, and c are found.
 #' @param ... Additional inputs to be passed to gf_path()
 #' @return a ggplot object with the requested plot
-#' #' @export
+#' @export
 
 col_line <- function(formula, color, data = NULL, ...) {
   ggformula::gf_path(formula, color = color, 
