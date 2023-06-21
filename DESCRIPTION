@@ -61,3 +61,4 @@ Suggests:
     knitr,
     ggplot2
 VignetteBuilder: knitr
+Config/Needs/website: rmarkdown
