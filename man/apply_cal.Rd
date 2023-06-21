@@ -24,4 +24,5 @@ Given an appropriate set of calibration constants and information, this function
 \examples{
 apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
 
+
 }

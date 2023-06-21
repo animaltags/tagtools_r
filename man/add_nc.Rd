@@ -19,9 +19,10 @@ it is created. The file is assumed to be in the current working directory
 unless a pathname is added to the beginning of fname.
 }
 \examples{
+
 \dontrun{
 add_nc('dog17_124a',A)
-}
+
 }
 \seealso{
 \code{\link{save_nc}}, \code{\link{load_nc}}
