@@ -5,7 +5,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-
+^vignettes/articles$
 ^quokka-bilby\.Rmd$
 ^motivation-letter\.md$
 ^RJreferences\.Rmd$
