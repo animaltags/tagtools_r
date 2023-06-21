@@ -26,5 +26,4 @@ After Kinsler and Frey pp. 159-160.
 }
 \examples{
 mean_absorption(c(25e3, 60e3), 1000, c(0, 700))
-# Returns: 7.728188 dB/m
 }

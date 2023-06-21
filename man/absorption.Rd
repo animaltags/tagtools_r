@@ -26,5 +26,4 @@ After Kinsler and Frey pp. 159-160
 }
 \examples{
 absorption(140e3, 13, 10)
-# Returns: 0.04354982 dB/m
 }

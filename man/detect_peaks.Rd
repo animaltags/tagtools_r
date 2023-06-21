@@ -30,7 +30,7 @@ detect_peaks(
 \item{...}{Additional inputs to be passed to FUN}
 }
 \value{
-A list containing vectors for the start times, end times, peak times, peak maxima, thresh, and bktime. All times are presented as the sampling value.
+A data frame containing the start times, end times, peak times, peak maxima, thresh, and bktime. All times are presented as the sampling value.
 }
 \description{
 This function detects peaks in time series data that exceed a specified threshold and returns each peak's start time, end time, maximum peak value, time of the maximum peak value, threshold level, and blanking time.
@@ -43,6 +43,6 @@ As specified above under the description for the input of plot_peaks, an interac
 BW <- beaked_whale
 detect_peaks(data = BW$A$data, sr = BW$A$sampling_rate, 
 FUN = njerk, thresh = NULL, bktime = NULL, 
-plot_peaks = NULL, fs = BW$A$sampling_rate)
+plot_peaks = NULL, sampling_rate = BW$A$sampling_rate)
 }
 }

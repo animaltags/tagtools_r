@@ -47,3 +47,7 @@ For this reason it is most suitable for bench calibrations rather than
 field data. This function is only usable for field sensors.
 It will not work for gyroscope data.
 }
+\examples{
+spherical_cal(MN$Acc$data)
+
+}

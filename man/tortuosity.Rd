@@ -28,7 +28,7 @@ BW <- beaked_whale
 T <- ptrack(
   A = BW$A$data, M = BW$M$data, s = 3,
   sampling_rate = BW$A$sampling_rate,
-  fc = NULL, include_pe = TRUE
+  fc = NULL, return_pe = TRUE
 )$T
 t <- tortuosity(T, sampling_rate = BW$A$sampling_rate, intvl = 25)
 }

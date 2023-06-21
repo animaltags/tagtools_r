@@ -20,5 +20,4 @@ Source: http://solid_earth.ou.edu/notes/potential/igf.htm
 }
 \examples{
 acc_wgs84(50)
-# Returns: 9.8107 $m/s^2$
 }

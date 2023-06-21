@@ -19,10 +19,8 @@ This function is used to low pass filter (smooth) a regularly-sampled time serie
 }
 \examples{
 \dontrun{
-# noisy stuff
 y1 <- sin((2 * pi * 0.05) \%*\% t(c(1:100))) + cos((2 * pi * 0.25) \%*\% t(c(1:100)))
 plot(x = c(1:length(y1)), y = y1)
-# smooth it out
 y2 <- smooth(x, n = 4)
 plot(x = c(1:length(y2)), y = y2)
 }

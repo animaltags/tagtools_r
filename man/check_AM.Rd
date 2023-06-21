@@ -50,6 +50,5 @@ AMcheck <- check_AM(
   M = matrix(c(22, -22, 14), nrow = 1),
   fs = 1
 )
-# returns AMcheck$fstr = 1.0002, 34.11744 and AMcheck$incl = 0.20181 radians
 }
 }

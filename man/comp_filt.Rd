@@ -24,7 +24,7 @@ Possible input combinations: comp_filt(X,sampling_rate,fc) if X is a vector or m
 }
 \examples{
 \dontrun{
-Xf <- comp_filt(X = beaked_whale$A$data, sampling_rate = beaked_whale$A$sampling_rate, fc = .8)
+Xf <- comp_filt(X = beaked_whale$A$data, sampling_rate = beaked_whale$A$sampling_rate, fc = .15)
 xf <- list(Xf1 = Xf[[1]], Xf2 = Xf[[2]])
 plott(xf, beaked_whale$A$sampling_rate)
 }

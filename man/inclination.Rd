@@ -33,6 +33,5 @@ M <- matrix(c(1.3, -0.25, 0.16, 0.78, -0.3, 0.5, 0.5, -0.49, -0.6),
   byrow = TRUE, nrow = 3, ncol = 3
 )
 incl <- inclination(A, M)
-# Results: incl = -0.91595 radians.
 }
 }

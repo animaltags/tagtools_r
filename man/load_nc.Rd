@@ -19,8 +19,7 @@ This function loads a tag dataset from a netCDF file (this is an archival file f
 }
 \examples{
 \dontrun{
-# Note: must have the file testset1.nc saved in current working directory for this to work
-# load_nc('testset1.nc')
+load_nc('testset1.nc')
 }
 
 }

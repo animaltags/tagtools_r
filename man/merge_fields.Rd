@@ -21,5 +21,4 @@ This function is used to merge the fields of two lists. If there are duplicate f
 s1 <- list(a = 1, b = c(2, 3, 4))
 s2 <- list(b = 3, c = "cat")
 s <- merge_fields(s1, s2)
-s # yields list( a = 1, b = c(2,3,4), c = 'cat')
 }

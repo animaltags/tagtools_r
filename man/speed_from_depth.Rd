@@ -40,6 +40,8 @@ This function is used to estimate the forward speed of a diving animal by first 
 Output sampling rate is the same as the input sampling rate. If A and p are input and A has a higher sampling rate, then p and the output are interpolated to match A using \code{\link[tagtools]{interp2length}} .
 
 Frame: This function assumes a [north,east,up] navigation frame and a [forward,right,up] local frame. In these frames, a positive pitch angle is an anti-clockwise rotation around the y-axis. A descending animal will have a negative pitch angle.
+
+Forward velocity for animals could be negative if its vertical velocity is negative and pitch angle is positive, or, its vertical velocity is positive and pitch angle is negative. One could avoid getting negative forward velocity by taking the absolute value of the output.
 }
 \examples{
 s <- speed_from_depth(harbor_seal$P, harbor_seal$A)
