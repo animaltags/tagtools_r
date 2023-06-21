@@ -43,8 +43,8 @@ read_cats <- function(fname, depid) {
   )
 
   # time stuff
-  dT <- as.numeric(difftime(tail(V$Datetime, -1), 
-                            head(V$Datetime, -1),
+  dT <- as.numeric(difftime(utils::tail(V$Datetime, -1), 
+                            utils::head(V$Datetime, -1),
                             units = 'secs')) 
   md <- stats::median(dT)
   km <- abs(dT - md) < 0.5 * md
