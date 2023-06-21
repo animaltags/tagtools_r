@@ -27,6 +27,9 @@
 #' case the structure elements 'frame' and 'name' will be changed. The OTAB will also
 #' be added to the structure.
 #' @export
+#' @examples
+#' Aw <- tag2animal(beaked_whale$A, OTAB = matrix(c(0,0,0.1, 0.04, -0.2), nrow = 1))
+#' 
 #'
 tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
   #*******************************************
@@ -39,7 +42,7 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
     stop("input sampling_rate is require for tag2animal conversion, unless X is an animaltags data structure")
   }
 
-  if (is.list(X)) { # get sampling_rate and data from X is X is animaltags sensor structure
+  if (is.list(X)) { # get sampling_rate and data from X if X is animaltags sensor structure
     sampling_rate <- X$sampling_rate
     Xa <- X
     X <- X$data
@@ -89,7 +92,7 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
       prh[, col] <- stats::approx(PTAB[, 1], PTAB[, col], t)
     }
   } else { # if OTAB has only one row
-    prh <- OTAB[, 3:5]
+    prh <- matrix(OTAB[, 3:5], nrow = 1)
   }
 
   #*******************************************
@@ -102,7 +105,7 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
   #*******************************************
   # Add metadata to Xa, if structure output needed
   #*******************************************
-  if (~ is.null(Xa)) {
+  if (is.list(Xa)) {
     Xa$otab <- matrix(t(OTAB), ncol = 1)
     Xa$frame <- "animal"
     Xa$name <- paste(Xa$name, "a", sep = "")
