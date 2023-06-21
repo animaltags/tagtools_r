@@ -89,7 +89,8 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     if (exists("info")) {
       recording_start <- info$dephist_device_datetime_start
     }
-    if (class(recording_start) == "character") {
+
+    if (inherits(recording_start, "character")) {
       # try to coerce recording start time to POSIX if needed
       recording_start <- lubridate::ymd_hms(recording_start, tz = "GMT")
     }

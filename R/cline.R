@@ -5,7 +5,6 @@
 #' @param y y positions of points to be plotted
 #' @param z a factor, the same length as x and y. Line segments in the resulting plot will be colored according to the levels of z.
 #' @param color_vector a list of colors to use (length should match the number of levels in z).
-#' @keywords visualization, time-series
 #' @export
 #' @examples
 #' cline(x=ChickWeight$Time, y=ChickWeight$weight, 

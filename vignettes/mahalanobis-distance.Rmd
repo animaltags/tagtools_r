@@ -63,7 +63,7 @@ plott(X = list(Depth = zc$P$data, Accel = zc$A$data), fsx = zc$P$sampling_rate, 
 
 </div>
 
-1. How might you use Mahalanobis distance to summarise the multivariate tag data into a single data stream? What input variables might you choose to try to quantify how the whale might have changed its behavior in response to sonar sounds? (If you need more context, you can check out the paper at http://rsbl.royalsocietypublishing.org/content/9/4/20130223.)
+1. How might you use Mahalanobis distance to summarise the multivariate tag data into a single data stream? What input variables might you choose to try to quantify how the whale might have changed its behavior in response to sonar sounds? (If you need more context, you can check out the paper at https://royalsocietypublishing.org/doi/10.1098/rsbl.2013.0223.)
 
 2. Use the tag tool function m_dist to compute the Mahalanobis distance using your chosen inputs, using the model below as a guide (note that these choices of inputs are kind of ridiculous---do better!). You will have to choose an averaging window length and a between-window overlap. You can use the experiment start and end times provided. How would you justify these choices?
 

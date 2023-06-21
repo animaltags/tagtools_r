@@ -208,7 +208,7 @@ If the field strength is okay for `A` and `M` but the inclination angle is wrong
 ```{r, echo = FALSE, eval = TRUE}
 axis_table <- data.frame(`Sensor axis` = c('x', 'y', 'z'),
                          `Tag axis` = c('-x', 'z', 'y'))
-pander::pander(axis_table)
+knitr::kable(axis_table)
 ```
 
 You could make these corrections to `Mf` one-by-one, but it is probably more convenient to do them all at once. To make this happen, define a 'map' matrix that summarizes the changes:

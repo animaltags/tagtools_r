@@ -257,7 +257,7 @@ Now find the whale's vertical speed in m/sec:
 v <- depth_rate(sw$P)	     
 ```
 
-And plot it. Feel free to convert to your favorite graphics system - I love [ggformula](https://cran.r-project.org/web/packages/ggformula/vignettes/ggformula-blog.html)...
+And plot it. Feel free to convert to your favorite graphics system - I love [ggformula](https://cran.r-project.org/web/packages/ggformula/vignettes/ggformula.html)...
 
 ```{r, eval = FALSE, echo = TRUE}
 plot(v, pitch_s*180/pi, type = 'p', pch = 16,
