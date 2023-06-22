@@ -33,7 +33,8 @@ For this example, you will load in the data file from a CATs tag. The data file 
 
 ```{r, eval=TRUE, echo=TRUE}
 library(tagtools) # always start with this
-cats_file_path <- system.file("extdata", "cats_test_raw.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+cats_file_path <- ""
 MN <- load_nc(cats_file_path)
 ```
 

@@ -40,7 +40,10 @@ For this practical we will use data from a tag attached to the back of a sperm w
 
 ```{r, echo = TRUE, eval = TRUE}
 library(tagtools)
-sw_file_path <- system.file("extdata", "rawtestset3.nc", package = "tagtools", mustWork = TRUE)
+
+#if you want to run this example, download the "rawtestset3.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+
+sw_file_path <- ""
 sw <- load_nc(sw_file_path)
 ```
 
