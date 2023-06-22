@@ -18,7 +18,7 @@
 #' @seealso \code{\link{a2pr}}
 #' @export
 #' @examples \dontrun{m2h_out <- m2h(M = matrix(c(22, -24, 14), nrow = 1), 
-#'                         A = matrix(c(-0.3, 0.52, 0.8), nrow = 1))
+#'                         A = matrix(c(-0.3, 0.52, 0.8), nrow = 1))}
 
 m2h <- function(M, A, sampling_rate=NULL, fc = NULL) {
   if (is.list(M) & is.list(A)) {
