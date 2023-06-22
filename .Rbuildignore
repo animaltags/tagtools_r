@@ -16,3 +16,4 @@
 ^cran-comments\.md$
 ^LICENSE\.md$
 ^Detectors.Rmd$
+^vignettes/articles/nc_files$
