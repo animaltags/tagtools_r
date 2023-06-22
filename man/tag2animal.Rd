@@ -40,6 +40,11 @@ animal at the end of the move (angles are in radians).
 The first row of OTAB must have cue1 and cue2 equal to 0 as this is the initial
 orientation of the tag on the animal. Subsequent rows (if any) of OTAB describe
 }
+\examples{
+Aw <- tag2animal(beaked_whale$A, OTAB = matrix(c(0,0,0.1, 0.04, -0.2), nrow = 1))
+
+
+}
 \seealso{
 [prh_predictor1], [prh_predictor2]
 }
