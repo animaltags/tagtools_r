@@ -41,12 +41,13 @@ Use `load_nc()` to read `testset5.nc`, which is from a pilot whale in the Canary
 
 ```{r, eval = FALSE, echo = TRUE}
 library(tagtools)
-sw_file_path <- system.file("extdata", "testset5.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "testset5.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+sw_file_path <- ""
 sw <- load_nc(sw_file_path)
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-sw_file_path <- system.file("extdata", "testset5.nc", package = "tagtools", mustWork = TRUE)
+sw_file_path <- ""
 sw <- load_nc(sw_file_path)
 ```
 

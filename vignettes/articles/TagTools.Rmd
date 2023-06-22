@@ -119,7 +119,8 @@ This is the first vignette for which we can include a really compelling graphic 
 
 ```{r, echo = FALSE, eval = TRUE}
 library(tagtools)
-cats_file_path <- system.file("extdata", "cats_test_raw.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+cats_file_path <- ""
 MN <- load_nc(cats_file_path)
 
 plott(X = list(Depth = MN$P, Acceleration = MN$A, Gyroscope = MN$G), interactive = FALSE)
@@ -138,7 +139,8 @@ plott(X = list(Depth = MN$P, Acceleration = MN$A, Gyroscope = MN$G), interactive
 You'll find some common sources of error in accelerometer and magnetometer data, and see some ways that these errors can be corrected. Quality checking is fairly easy for pressure (depth) data from aquatic mammals because we know they will breathe at the surface. Data from accelerometers and magnetometers are more difficult. For one thing, there are three axes, and also we don’t have such an intuitive feel for what they should look like. However, fortunately, there are some quality checks we can do with `A` and `M` data that help to catch and correct problems.
 
 ```{r, echo = FALSE, eval = TRUE}
-sw_file_path <- system.file("extdata", "rawtestset3.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "rawtestset3.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+sw_file_path <- ""
 sw <- load_nc(sw_file_path)
 AMcheck <- check_AM(sw$A, sw$M)
 sampling_rate <- sw$A$sampling_rate # get the sampling rate for plotting
@@ -156,7 +158,8 @@ plott(X = list(`Field strength (micro-teslas)` = AMcheck$fstr, `Inclination angl
 You'll correct data that was not oriented properly into the animal's frame of reference. For tags placed on free-swimming animals, the tag axes will not generally coincide with the animal's axes. The tag `A` and `M` data will therefore tell you how the tag, not the animal, is oriented. This can be corrected if you know the orientation of the tag on the animal (the pitch, roll and heading of the tag when the animal is horizontal and pointing north). Three steps are needed to do this: First the tag orientation on the whale is inferred by looking at accelerometer values when the animal is near the surface. The orientation may change if the tag moves or slides during a deployment and so we make an 'orientation table' that describes the sequence of orientations of the tag. This table is then used to convert tag frame measurements into animal frame.  
 
 ```{r, echo = FALSE, eval = TRUE}
-sw_file_path <- system.file("extdata", "testset5.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "testset5.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+sw_file_path <- ""
 sw <- load_nc(sw_file_path)
 # something cool once PRH_predictor works :(
 ```
@@ -176,7 +179,8 @@ These three vignettes are particularly interrelated, so we do recommend doing th
 You'll use complementary filters on acceleration data taken from a beaked whale. This will separate intervals of movements into distinct frequency bands, i.e., posture (low frequency) and strikes/flinches (high frequency), in order to gain insight about the movements of the animal. 
 
 ```{r, echo = FALSE, eval = TRUE}
-bw_file_path <- system.file("extdata", "testset1.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "testset1.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+bw_file_path <- ""
 bw <- load_nc(bw_file_path)
 fc <- 0.3814753*.7
 Af <- comp_filt(bw$A, fc = fc) 
@@ -200,7 +204,8 @@ plott(X = list(`Depth (m)` = bw$P$data,
 We work with acceleration data all the time, and you know acceleration is the second derivative of position. Take a third derivative and you'll have what is called the jerk, which can be used effectively as a high-pass filter. This will also illuminate the particular value of having high-resolution data (especially data with a lot of high-frequency content). 
 
 ```{r, echo = FALSE, eval = TRUE}
-bw_file_path <- system.file("extdata", "testset1.nc", package = 'tagtools', mustWork = TRUE)
+#if you want to run this example, download the "testset1.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+bw_file_path <- ""
 bw <- load_nc(bw_file_path)
 J <- njerk(bw$A)
 fs <- bw$A$sampling_rate
@@ -245,7 +250,8 @@ These vignettes are a bit of a hodge-podge: all things that you can do now once 
 This is a longer vignette---not shortened from the older practical. You will dead-reckon the travel path of an animal based on estimates of forward speed... and without any knowledge of currents (thus, an estimate of where the animal might have traveled relative to an object "dead in the water"). Large errors result. But with the help of some correction, a more full picture of animal movement can emerge, as compared to what we could have gathered simply using GPS data.  
 
 ```{r, echo = FALSE, eval = TRUE}
-d7_file_path <- system.file("extdata", "testset7.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "testset7.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+d7_file_path <- ""
 d7 <- load_nc(d7_file_path)
 sampling_rate <- d7$P$sampling_rate
 POSLLF <- lalo2llf(trk = d7$POS$data[,c(2:3)])
@@ -276,7 +282,8 @@ col_line3(x = FT$easting, y = FT$northing,
 This vignette starts with a quick review, where you'll find and correct for a few different sources of error in some depth data. Then, you'll locate the beginnings and endings of dives, and plot these beginnings and endings on a depth profile using the function `find_dives`. You'll also do some simple analysis, like calculating the mean dive depth.
 
 ```{r, echo = FALSE, eval = TRUE}
-MN_file_path <- system.file("extdata", "mn12_186a_raw.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "mn12_186a_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+MN_file_path <- ""
 MN <- load_nc(MN_file_path)
 Pc = crop_to(X = MN$P, sampling_rate = 1, tcues = c(0, 25306), T = NULL)
 Pcm = median_filter(Pc,n=3)
@@ -299,7 +306,8 @@ points(d$end/(3600*24),rep(0,nrow(d)),col='red', pch=17)
 This vignette also has a nice review of some previous concepts---cropping data, calibrating data, and then finding dives. After that, you'll use the function `dive_stats` to efficiently compute summary statistics on dives from a depth profile. 
 
 ```{r, echo = FALSE, eval = TRUE}
-ZC_file_path <- system.file("extdata", "zc11_267a.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+ZC_file_path <- ""
 ZC <- load_nc(ZC_file_path)
 ZPCr = crop_to(ZC$P, sampling_rate = ZC$P$sampling_rate, tcues = c(9424, 64027), T = NULL)
 mindepth <- 50 
@@ -319,7 +327,8 @@ head(ds)
 You'll use a statistical method to test whether a hypothesis holds up under scrutiny, using a dataset from(?) a beloved lake creature. It's nice to do this one after `find-dives`, since you'll use similar techniques from this one. 
 
 ```{r, echo = FALSE, eval = TRUE}
-nessie_file_path <- system.file("extdata", "nessie.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "nessie.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+nessie_file_path <- ""
 nessie <- load_nc(nessie_file_path)
 th <- 0.6
 # find dives
@@ -347,7 +356,8 @@ print(RTR)
 You'll compare data to other data to see how out of the ordinary it is, using a dataset from a whale that underwent controlled exposure to military sonar. 
 
 ```{r, echo = FALSE, eval = TRUE}
-ZC_file_path <- system.file("extdata", "zc11_267a.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+ZC_file_path <- ""
 zc <- load_nc(ZC_file_path)
 plott(X = list(Depth = zc$P$data, Accel = zc$A$data), fsx = zc$P$sampling_rate, interactive = FALSE)
 ```

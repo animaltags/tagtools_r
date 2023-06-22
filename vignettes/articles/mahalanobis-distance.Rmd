@@ -45,7 +45,8 @@ Consider again the dataset zc11_267a. It is built into the `tagtools` package, s
 
 ```{r, echo = TRUE, eval = FALSE}
 library(tagtools)
-ZC_file_path <- system.file("extdata", "zc11_267a.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+ZC_file_path <- ""
 zc <- load_nc(ZC_file_path)
 str(zc, max.level = 1)
 plott(X = list(Depth = zc$P$data, Accel = zc$A$data), fsx = zc$P$sampling_rate, interactive = TRUE)
@@ -55,7 +56,7 @@ plott(X = list(Depth = zc$P$data, Accel = zc$A$data), fsx = zc$P$sampling_rate, 
 <div id="load_inspect_zc" class="collapse">
 
 ```{r, echo = FALSE, eval = TRUE}
-ZC_file_path <- system.file("extdata", "zc11_267a.nc", package = "tagtools", mustWork = TRUE)
+ZC_file_path <- ""
 zc <- load_nc(ZC_file_path)
 str(zc, max.level = 1)
 plott(X = list(Depth = zc$P$data, Accel = zc$A$data), fsx = zc$P$sampling_rate, interactive = FALSE)
