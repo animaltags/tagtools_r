@@ -37,7 +37,8 @@ Unfortunately several of the tag sensors malfunctioned, but we were able to salv
 
 ```{r, echo = TRUE, eval = FALSE}
 library(tagtools)
-nessie_file_path <- system.file("extdata", "nessie.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "nessie.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+nessie_file_path <- ""
 nessie <- load_nc(nessie_file_path)
 str(nessie, max.level = 1)
 ```
@@ -46,7 +47,7 @@ str(nessie, max.level = 1)
 <div id="load_nessie_nc" class="collapse">
 
 ```{r, echo = FALSE, eval = TRUE}
-nessie_file_path <- system.file("extdata", "nessie.nc", package = "tagtools", mustWork = TRUE)
+nessie_file_path <- ""
 nessie <- load_nc(nessie_file_path)
 str(nessie, max.level = 1)
 ```

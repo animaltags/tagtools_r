@@ -32,7 +32,8 @@ Additionally, be careful when copy-pasting special characters such as \_undersco
 # Load and Explore Data
 
 ```{r, echo = FALSE, eval = TRUE}
-d7_file_path <- system.file("extdata", "testset7.nc", package = "tagtools", mustWork = TRUE)
+#if you want to run this example, download the "testset7.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
+d7_file_path <- ""
 d7 <- load_nc(d7_file_path)
 ```
 
@@ -85,7 +86,7 @@ Plot the pressure and accelerometer data with `plott()` to get a sense for what 
 
 ```{r, eval = FALSE, echo = TRUE}
 library(tagtools)
-d7_file_path <- system.file("extdata", "testset7.nc", package = "tagtools", mustWork = TRUE)
+d7_file_path <- ""
 d7 <- load_nc(d7_file_path)
 sampling_rate <- d7$P$sampling_rate
 plott(X = list(Depth = d7$P, Acceleration = d7$Aa), fsx = sampling_rate, interactive = TRUE)
