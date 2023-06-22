@@ -5,11 +5,11 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^vignettes/articles$
 ^quokka-bilby\.Rmd$
 ^motivation-letter\.md$
 ^RJreferences\.Rmd$
 ^RJournal\.sty$
+^vignettes/articles$
 ^shinyapp_code\.Rmd$
 ^RJreferences\.bib$
 ^penguins\.png$

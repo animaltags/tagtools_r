@@ -31,7 +31,7 @@ For this vignette we will use the NetCDF file `cats_test_raw.nc`.
 
 ```{r}
 library(tagtools)
-cats_file_path <- system.file("extdata", "cats_test_raw.nc", package = "tagtools", mustWork = TRUE)
+cats_file_path <- system.file("nc_files", "cats_test_raw.nc", package = "tagtools", mustWork = TRUE)
 MN <- load_nc(cats_file_path)
 ```
 
