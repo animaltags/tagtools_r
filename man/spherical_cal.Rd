@@ -48,6 +48,6 @@ field data. This function is only usable for field sensors.
 It will not work for gyroscope data.
 }
 \examples{
-spherical_cal(harbor_seal$A$data)
+ s <- spherical_cal(harbor_seal$A$data)
 
 }
