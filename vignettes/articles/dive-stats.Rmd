@@ -38,7 +38,7 @@ library(tagtools)
 
 #if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
-ZC_file_path <- ""
+ZC_file_path <- "nc_files/zc11_267a.nc"
 ZC <- load_nc(ZC_file_path)
 ```
 

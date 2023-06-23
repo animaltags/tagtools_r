@@ -43,7 +43,7 @@ library(tagtools)
 
 #if you want to run this example, download the "rawtestset3.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
-sw_file_path <- ""
+sw_file_path <- "nc_files/rawtestset3.nc"
 sw <- load_nc(sw_file_path)
 ```
 

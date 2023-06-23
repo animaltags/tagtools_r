@@ -37,7 +37,7 @@ Write `testset1` to the object `bw`, for "beaked whale". Then use `plott()` to i
 library(tagtools)
 #if you want to run this example, download the "testset1.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
-bw_file_path <- ""
+bw_file_path <- "nc_files/testset1.nc"
 bw <- load_nc(bw_file_path)
 plott(X = list(Depth = bw$P, Acc = bw$A, Mag = bw$M))
 ```
@@ -46,7 +46,7 @@ plott(X = list(Depth = bw$P, Acc = bw$A, Mag = bw$M))
 <div id="plott_bw" class="collapse"> 
 
 ```{r, echo = FALSE, eval = TRUE}
-bw_file_path <- system.file("extdata", "testset1.nc", package = "tagtools", mustWork = TRUE)
+bw_file_path <- "nc_files/testset1.nc"
 bw <- load_nc(bw_file_path)
 plott(X = list(Depth = bw$P, Acc = bw$A, Mag = bw$M))
 ```

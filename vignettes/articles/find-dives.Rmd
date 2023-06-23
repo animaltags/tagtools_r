@@ -41,12 +41,12 @@ library(tagtools)
 #if you want to run this example, download the "mn12_186a_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
 
-MN_file_path <- ""
+MN_file_path <- "nc_files/mn12_186a_raw.nc"
 MN <- load_nc(MN_file_path)
 ```
 
 ```{r, echo = FALSE, eval = TRUE}
-MN_file_path <- ""
+MN_file_path <- "nc_files/mn12_186a_raw.nc"
 MN <- load_nc(MN_file_path)
 ```
 
