@@ -14,7 +14,7 @@ This is a utility function used by rotation_test, but advanced users may wish to
     
     <a class="navbar-brand me-2" href="../index.html">tagtools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,12 +105,12 @@ computed for these "rotated" samples, provides a distribution to which the test 
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">my_events</span> <span class="op">&lt;-</span> <span class="fl">1500</span> <span class="op">*</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="co"># 10 events at "times" between 0 and 1500</span></span></span>
 <span class="r-in"><span><span class="va">my_events</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1263.8746  278.5163  578.6725  862.1950 1063.0913  443.6164  738.6576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8]  403.3145 1415.6815  112.2250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  700.3796  824.1559  351.9395 1296.1793 1180.5162  247.9480 1316.5622</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8]  517.7959  171.6060  778.6419</span>
 <span class="r-in"><span><span class="va">rotated_events</span> <span class="op">&lt;-</span> <span class="fu">rotate_data</span><span class="op">(</span><span class="va">my_events</span>, full_period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rotated_events</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   57.20749   97.50939  232.56544  392.55051  516.08793  716.98424</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  917.76751 1069.57443 1266.11797 1432.40920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0.627441   76.969379  180.960917  346.817350  529.400970  607.663324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  653.177272 1009.537610 1125.200683 1145.583601</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
