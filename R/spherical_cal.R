@@ -32,8 +32,9 @@
 #' It will not work for gyroscope data.
 #' @export
 #' @examples
+#' \dontrun{
 #' spherical_cal(harbor_seal$A$data)
-#' 
+#' }
 
 spherical_cal <- function(X, n = NULL, method = NULL) {
   G <- c()
