@@ -2,6 +2,14 @@
 
 This repository contains an R package with the R version of the animaltag tool kit. 
 
+Install from CRAN by:
+
+`install.packages("tagtools")`
+
+Install a development version from github by running:
+
+`remotes::install_github("animaltags/tagtools_r")`
+
 Documentation and vignettes are available at: https://animaltags.github.io/tagtools_r/
 
 High-resolution movement-sensor tags typically include accelerometers 
