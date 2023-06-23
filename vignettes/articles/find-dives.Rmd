@@ -31,22 +31,18 @@ Additionally, be careful when copy-pasting special characters such as \_undersco
 
 # Load the test data set
 
-Load the test dataset `mn12_186a_raw.nc`. This dataset has already been converted from the source file that was offloaded from the tag into a NetCDF file. In doing so, some metadata was gleaned from the file and added to the data. Other metadata was added by hand. This dataset is built into the `tagtools` package, so you can access it using `system.file`. 
+Load the test dataset `mn12_186a_raw.nc`. This dataset has already been converted from the source file that was offloaded from the tag into a NetCDF file. In doing so, some metadata was gleaned from the file and added to the data. Other metadata was added by hand. If you want to run this example, download the "mn12_186a_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files 
 
 Use load_nc to load a NetCDF file:
 
 ```{r, echo = TRUE, eval = FALSE}
 library(tagtools)
-
-#if you want to run this example, download the "mn12_186a_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
-
-
-MN_file_path <- ""
+MN_file_path <- "nc_files/mn12_186a_raw.nc"
 MN <- load_nc(MN_file_path)
 ```
 
 ```{r, echo = FALSE, eval = TRUE}
-MN_file_path <- ""
+MN_file_path <- "nc_files/mn12_186a_raw.nc"
 MN <- load_nc(MN_file_path)
 ```
 

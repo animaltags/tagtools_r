@@ -27,12 +27,11 @@ These vignettes assume that you have R/Rstudio installed on your machine, some b
 
 # Setup: write "cats_test_raw.nc", and load it as a large list, `MN`
 
-For this vignette we will use the NetCDF file `cats_test_raw.nc`. 
+For this vignette we will use the NetCDF file `cats_test_raw.nc`. If you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
 ```{r}
 library(tagtools)
-#if you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
-cats_file_path <- ""
+cats_file_path <- "nc_files/cats_test_raw.nc"
 MN <- load_nc(cats_file_path)
 ```
 

@@ -32,14 +32,13 @@ Additionally, be careful when copy-pasting special characters such as \_undersco
 # Setup
 If you've finished `complementary-filtering` within the same R session, skip to [Acceleration transients, jerk and dynamic acceleration]. If not, you'll want to do this first section. 
 
-For this practical we will use data from a suction cup tag attached to the back of a beaked whale. This dataset is built into the `tagtools` package, so you can access it using `system.file`.  
+For this practical we will use data from a suction cup tag attached to the back of a beaked whale. If you want to run this example, download the "testset1.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files  
 
 Write `testset1.nc` to the object `bw`, for "beaked whale". Then use `plott()` to get a look at it.
 
 ```{r, echo = TRUE, eval = FALSE}
 library(tagtools)
-#if you want to run this example, download the "testset1.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
-bw_file_path <- ""
+bw_file_path <- "nc_files/testset1.nc"
 bw <- load_nc(bw_file_path)
 plott(X = list(Depth = bw$P, Acc = bw$A, Mag = bw$M))
 ```
@@ -48,7 +47,7 @@ plott(X = list(Depth = bw$P, Acc = bw$A, Mag = bw$M))
 <div id="plott_bw" class="collapse">
 
 ```{r, echo = FALSE, eval = TRUE}
-bw_file_path <- ""
+bw_file_path <- "nc_files/testset1.nc"
 bw <- load_nc(bw_file_path)
 plott(X = list(Depth = bw$P, Acc = bw$A, Mag = bw$M))
 ```

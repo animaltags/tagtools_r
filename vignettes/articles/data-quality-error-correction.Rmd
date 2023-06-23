@@ -36,14 +36,11 @@ Biologging data are not always ready-to-use when you read them off the tag. Some
 Our objective here is to estimate the orientation of an animal (its pitch, roll and heading) as a function of time. To do so we first need to check and correct errors in `A` and `M`.
 
 ## Data quality checks
-For this practical we will use data from a tag attached to the back of a sperm whale. This dataset is built into the `tagtools` package, so you can access it using `system.file`.  
+For this practical we will use data from a tag attached to the back of a sperm whale. If you want to run this example, download the "rawtestset3.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files  
 
 ```{r, echo = TRUE, eval = TRUE}
 library(tagtools)
-
-#if you want to run this example, download the "rawtestset3.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
-
-sw_file_path <- ""
+sw_file_path <- "nc_files/rawtestset3.nc"
 sw <- load_nc(sw_file_path)
 ```
 

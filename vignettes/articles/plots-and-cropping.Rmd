@@ -32,12 +32,11 @@ Additionally, be careful when copy-pasting special characters such as \_undersco
 # Setup: load "cats_test_raw.nc" as a large list, `MN`
 If you've already completed `load-tag-data` within the same R session, you can skip down a bit to [Exploratory data plots]. If not, don't worry! We'll catch you up with code below. 
 
-For this example, we will make use of a CATS tag data file that is already stored in a .nc file called 'cats_test_raw.nc'. This dataset is built into the `tagtools` package, so you can access it using `system.file`. 
+For this example, we will make use of a CATS tag data file that is already stored in a .nc file called 'cats_test_raw.nc'. If you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
 ```{r, echo = TRUE, eval = TRUE, results='hide'}
 library(tagtools)
-#if you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
-cats_file_path <- ""
+cats_file_path <- "nc_files/cats_test_raw.nc"
 MN <- load_nc(cats_file_path)
 ```
 
