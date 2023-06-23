@@ -31,13 +31,10 @@ Additionally, be careful when copy-pasting special characters such as \_undersco
 
 # Finding dives and summarising them
 
-Consider a dataset from a DTAG attached to a Cuvier’s beaked whale, *Ziphius cavirostris*. Load the data from file zc11_267a.nc. This dataset is built into the `tagtools` package, so you can access it using `system.file`.
+Consider a dataset from a DTAG attached to a Cuvier’s beaked whale, *Ziphius cavirostris*. Load the data from file zc11_267a.nc. If you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 library(tagtools)
-
-#if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
-
 ZC_file_path <- "nc_files/zc11_267a.nc"
 ZC <- load_nc(ZC_file_path)
 ```

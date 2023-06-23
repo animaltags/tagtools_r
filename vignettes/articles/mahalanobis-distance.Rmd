@@ -41,11 +41,10 @@ See [this blog post](https://blogs.sas.com/content/iml/2012/02/15/what-is-mahala
 
 # Load & inspect data
 
-Consider again the dataset zc11_267a. It is built into the `tagtools` package, so you can access it using `system.file`.
+Consider again the dataset zc11_267a. If you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
 ```{r, echo = TRUE, eval = FALSE}
 library(tagtools)
-#if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 ZC_file_path <- "nc_files/zc11_267a.nc"
 zc <- load_nc(ZC_file_path)
 str(zc, max.level = 1)

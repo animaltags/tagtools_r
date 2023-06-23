@@ -31,13 +31,12 @@ Additionally, be careful when copy-pasting special characters such as \_undersco
 
 We were very fortunate to obtain a number of test datasets from different sources that we have permission to make publicly available with the tag tool kit. One dataset (obtained from anonymous Scottish contacts) is particularly exciting and possibly unique in the world: a fragment of tag data obtained from a high-resolution movement tag deployed on Nessie, the Loch Ness Monster. 
 
-Unfortunately several of the tag sensors malfunctioned, but we were able to salvage some dive depth data to be used in this example. The dataset is called `nessie.nc`. It is built into the `tagtools` package, so you can access it using `system.file`.
+Unfortunately several of the tag sensors malfunctioned, but we were able to salvage some dive depth data to be used in this example. The dataset is called `nessie.nc`. If you want to run this example, download the "nessie.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 
 1. Read in the data: 
 
 ```{r, echo = TRUE, eval = FALSE}
 library(tagtools)
-#if you want to run this example, download the "nessie.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 nessie_file_path <- "nc_files/nessie.nc"
 nessie <- load_nc(nessie_file_path)
 str(nessie, max.level = 1)
@@ -47,7 +46,7 @@ str(nessie, max.level = 1)
 <div id="load_nessie_nc" class="collapse">
 
 ```{r, echo = FALSE, eval = TRUE}
-nessie_file_path <- ""
+nessie_file_path <- "nc_files/nessie.nc"
 nessie <- load_nc(nessie_file_path)
 str(nessie, max.level = 1)
 ```

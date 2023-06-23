@@ -29,11 +29,10 @@ These vignettes assume that you have some basic experience working with R/Rstudi
 # Loading an .nc File
 
 ##  Load the test data set
-For this example, you will load in the data file from a CATs tag. The data file is already stored in a .nc file called 'cats_test_raw.nc'. This dataset is built into the `tagtools` package, so you can access it using `system.file`. Click Code at the right to see how.
+For this example, you will load in the data file from a CATs tag. The data file is already stored in a .nc file called 'cats_test_raw.nc'. If you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files. Click Code at the right to see how.
 
 ```{r, eval=TRUE, echo=TRUE}
 library(tagtools) # always start with this
-#if you want to run this example, download the "cats_test_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 cats_file_path <- "nc_files/cats_test_raw.nc"
 MN <- load_nc(cats_file_path)
 ```
