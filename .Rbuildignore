@@ -5,15 +5,9 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^quokka-bilby\.Rmd$
-^motivation-letter\.md$
-^RJreferences\.Rmd$
-^RJournal\.sty$
 ^vignettes/articles$
-^shinyapp_code\.Rmd$
-^RJreferences\.bib$
-^penguins\.png$
 ^cran-comments\.md$
 ^LICENSE\.md$
 ^Detectors.Rmd$
 ^vignettes/articles/nc_files$
+^development$
