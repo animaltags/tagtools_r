@@ -11,7 +11,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' fix_offset_3d(harbor_seal$A)
+#' s <- fix_offset_3d(harbor_seal$A)
 #' }
 fix_offset_3d <- function(X) {
   poly1 <- matrix(1, 3, 1)

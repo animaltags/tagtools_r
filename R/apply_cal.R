@@ -12,7 +12,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
+#' t <- apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
 #' }
 
 apply_cal <- function(X, cal, T = NULL) {

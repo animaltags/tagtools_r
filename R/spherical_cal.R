@@ -33,7 +33,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' spherical_cal(harbor_seal$A$data)
+#' p <- spherical_cal(harbor_seal$A$data)
 #' }
 
 spherical_cal <- function(X, n = NULL, method = NULL) {
