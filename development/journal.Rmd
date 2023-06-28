@@ -74,14 +74,14 @@ find_dives(p = BW$P$data, sampling_rate = BW$P$sampling_rate, mindepth = 5, surf
 ```
 
 # Calibration
-	Due to the nature of the tags in use, some calibration must be carried out on the data collected to ensure accuracy of calculations. This varies between cropping data to high activity sections, and fixing offset 
+	Biologging tags, such as accelerometers, and gyroscopes, provide strong insight into the behavior of animals, but their measurements can be influenced by various external factors such as environmental conditions and sensor bias. As such, calibration is required to correct any errors or inconsistencies in the collected data. By comparing the measurements obtained from the biologging tags with known data, researchers can adjust the readings to improve accuracy of recorded data. This improves the process of analysis and interpretion of the data, which will result in more accurate conclusions to be drawn about the species being studied. 
 
 
 # Plotting 
 	The main use of our package is to provide a comprehensive set of options for visualizing various behavioral metrics, such as activity levels, movement patterns, dive depths and duration. This streamlines the analysis process and helps researchers to better understand animal behavior. An important first step in tag data analysis is to plot the data.  Surprisingly, some of the most useful types of figures can be particularly hard to produce.  Examples include time-series plots that show several tag-sensor data streams in plot panels stacked atop one another, with all panels sharing a common time scale; or plots where sensor data from many exemplars of an event of interest are overlaid, in order to compare behavior between events. The resulting figures often prove crucially convincing to summarize results and complement statistical analysis in scientific publications. Unfortunately, since they are difficult to produce, creating them slows the pace of analysis (or they may even be neglected entirely).
 
 # Sound processing 
-	The package also undertakes some sound processing by way of measuring spectrum levels, plotting spectrograms and obtaining audio in the form of wav files. 
+	The package also undertakes some sound processing by way of measuring spectrum levels, plotting spectrograms and obtaining audio in the form of wav files. Sound speed is measured to ascertain the depth and position of the animal. 
 
 # Summary
 
