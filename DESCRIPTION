@@ -16,7 +16,7 @@ Authors@R: c(person("Stacy", "DeRuiter",
             role = "aut"),
             person("Tiago", "Marques",
             role = "aut"),
-            person("(Yuqian) Eason", "Wang",
+            person("Yuqian", "Wang",
             role = c("aut")),
             person("(Oghenesuvwe) Su", "Ogedegbe",
             role = "aut"))
@@ -60,5 +60,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+URL: https://animaltags.org/
 Config/Needs/website: rmarkdown
 Config/testthat/edition: 3
