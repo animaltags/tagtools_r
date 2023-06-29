@@ -1,6 +1,6 @@
 ---
 title: "ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics"
-date: "26-06-2023"
+date: "06-26-2023"
 abstract: >
   An abstract of less than 150 words.
 draft: true
@@ -48,6 +48,8 @@ Bio-logging studies, where data are collected using animal-borne devices, contin
 
 High-resolution multi-sensor tags typically include accelerometers that are used to measure body orientation, sudden movement, changes in speed, and to estimate energy expenditure. These tags also use magnetometers to measure direction of travel, and pressure sensors to measure dive depth in aquatic or marine animals. A subset of tags also include sensors for speed, turning rate (gyroscopes), and sound (hydrophones), increasing researchers’ ability to directly and indirectly assess impact from disturbances. These tags offer exciting opportunities to observe animal behavior in unprecedented detail and to quantify the consequences of human disturbance. However, analyses of the data are time-consuming and rely on a small cadre of highly-skilled scientists, creating a bottleneck in dissemination of these key findings. 
 
+
+\cite{Wilmers_The_2015} 
 # Processing
 
 For calculations pertaining to data collected, we have a host of functions available to process the data for different purposes. Processing methods will include automated calibration of sensors; detection of dive start- and end-times; calculation of a common suite of dive parameters (depth, duration, kinematic parameters, etc.); parameterization of movement patterns (residence index, straightness of movement, tortuosity etc.) and acceleration (MSA, ODBA, norm-jerk);  and calculation of acoustic characteristics (various standard measures of intensity, duration, bandwidth, and frequency characteristics for echolocation clicks or other sounds of interest). As a standout of these functions, we have find_dives. This function is used to find the time cues for the start and end of either dives in a depth record or flights in an altitude record. The simulated quantities used to do this are: 
@@ -68,10 +70,7 @@ Using the dataset beaked_whale from the package as BW and
 T as find_dives(p = BW$P$data, sampling_rate = BW$P$sampling_rate, mindepth = 5, surface = 2, findall = FALSE), the result produced are:
 
 
-```{r}
-BW <- beaked_whale
-find_dives(p = BW$P$data, sampling_rate = BW$P$sampling_rate, mindepth = 5, surface = 2, findall = FALSE)
-```
+
 
 # Calibration
 	Biologging tags, such as accelerometers, and gyroscopes, provide strong insight into the behavior of animals, but their measurements can be influenced by various external factors such as environmental conditions and sensor bias. As such, calibration is required to correct any errors or inconsistencies in the collected data. By comparing the measurements obtained from the biologging tags with known data, researchers can adjust the readings to improve accuracy of recorded data. This improves the process of analysis and interpretion of the data, which will result in more accurate conclusions to be drawn about the species being studied. 
