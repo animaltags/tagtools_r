@@ -28,13 +28,14 @@ output:
   rjtools::rjournal_web_article:
     self_contained: yes
     toc: no
-bibliography: RJreferences.bib
+bibliography: references.bib
 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tagtools)
+library(tinytex)
 library(plotly)
 library(stats)
 library(ggplot2)
@@ -46,10 +47,8 @@ Bio-logging studies, where data are collected using animal-borne devices, contin
 
 # Background
 
-High-resolution multi-sensor tags typically include accelerometers that are used to measure body orientation, sudden movement, changes in speed, and to estimate energy expenditure. These tags also use magnetometers to measure direction of travel, and pressure sensors to measure dive depth in aquatic or marine animals. A subset of tags also include sensors for speed, turning rate (gyroscopes), and sound (hydrophones), increasing researchers’ ability to directly and indirectly assess impact from disturbances. These tags offer exciting opportunities to observe animal behavior in unprecedented detail and to quantify the consequences of human disturbance. However, analyses of the data are time-consuming and rely on a small cadre of highly-skilled scientists, creating a bottleneck in dissemination of these key findings. 
+High-resolution multi-sensor tags typically include accelerometers that are used to measure body orientation, sudden movement, changes in speed, and to estimate energy expenditure. These tags also use magnetometers to measure direction of travel, and pressure sensors to measure dive depth in aquatic or marine animals. A subset of tags also include sensors for speed, turning rate (gyroscopes), and sound (hydrophones), increasing researchers’ ability to directly and indirectly assess impact from disturbances. These tags offer exciting opportunities to observe animal behavior in unprecedented detail and to quantify the consequences of human disturbance. However, analyses of the data are time-consuming and rely on a small cadre of highly-skilled scientists, creating a bottleneck in dissemination of these key findings.[@wilmers_golden_2015] 
 
-
-\cite{Wilmers_The_2015} 
 # Processing
 
 For calculations pertaining to data collected, we have a host of functions available to process the data for different purposes. Processing methods will include automated calibration of sensors; detection of dive start- and end-times; calculation of a common suite of dive parameters (depth, duration, kinematic parameters, etc.); parameterization of movement patterns (residence index, straightness of movement, tortuosity etc.) and acceleration (MSA, ODBA, norm-jerk);  and calculation of acoustic characteristics (various standard measures of intensity, duration, bandwidth, and frequency characteristics for echolocation clicks or other sounds of interest). As a standout of these functions, we have find_dives. This function is used to find the time cues for the start and end of either dives in a depth record or flights in an altitude record. The simulated quantities used to do this are: 
