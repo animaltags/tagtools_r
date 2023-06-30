@@ -23,17 +23,11 @@ Authors@R: c(person("Stacy", "DeRuiter",
 Description: High-resolution movement-sensor tags typically include accelerometers 
     to measure body posture and sudden movements or changes in speed, 
     magnetometers to measure direction of travel, and pressure sensors
-    to measure dive depth in aquatic or marine animals. 
-    A subset of tags include sensors for speed, turning rate (gyroscopes), and sound. 
-    This package provides software tools to facilitate calibration, processing, 
-    and analysis of such data. Tools are provided for: data import/export; 
+    to measure dive depth in aquatic or marine animals. The sensors in these tags usually sample many times per second. Some tags include sensors for speed, turning rate (gyroscopes), and sound. This package provides software tools to facilitate calibration, processing, and analysis of such data. Tools are provided for: data import/export; 
     calibration (from raw data to calibrated data in scientific units); 
     visualization (for example, multi-panel time-series plots); 
-    data processing (such as event detection and calculation of derived metrics like jerk and 
-    dynamic acceleration); dive detection and dive parameter calculation; 
-    integration of movement data with other sensors such as acoustics or cameras; 
-    integration of position data from onboard GPS, visual observations, etc. with movement data; 
-    and statistical analysis (for example, track reconstruction, a rotation test, and Mahalanobis distance analysis).
+    data processing (such as event detection, calculation of derived metrics like jerk and 
+    dynamic acceleration, dive detection, and dive parameter calculation); and statistical analysis (for example, track reconstruction, a rotation test, and Mahalanobis distance analysis).
 Depends: R (>= 3.4)
 Imports:
     CircStats,
