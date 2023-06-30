@@ -10,3 +10,4 @@
 ^LICENSE\.md$
 ^vignettes/articles/nc_files$
 ^development$
+^CRAN-SUBMISSION$
