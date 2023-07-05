@@ -10,9 +10,8 @@
 #' @seealso \code{\link{save_nc}}, \code{\link{load_nc}}
 #' @export
 #' @examples 
-#' \dontrun{
-#' add_nc('dog17_124a',A)
-#' }
+#' add_nc("beaked_whale", njerk(BW$A), "Jerk")
+#' 
 
 
 add_nc <- function(file, D, vname) {

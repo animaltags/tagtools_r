@@ -14,13 +14,11 @@
 #' @seealso \code{\link[tagtools]{htrack}}, \code{\link[tagtools]{fit_tracks}}, \code{\link{track3D}}
 #' @export
 #' @examples
-#' \dontrun{
 #' BW <- beaked_whale
 #' list <- ptrack(A = BW$A$data, M = BW$M$data, s = 3, 
 #' sampling_rate = BW$A$sampling_rate, fc = NULL, 
 #' return_pe = TRUE)
-#' plot(list$T$easting, list$T$northing, xlab = "Easting, m", ylab = "Northing, m")
-#' }
+#' plot(list$track$easting, list$track$northing, xlab = "Easting, m", ylab = "Northing, m")
 #'
 ptrack <- function(A, M, s, sampling_rate = NULL, fc = 0.2, return_pe = FALSE) {
   # input checks----------------------------------------------------------
@@ -47,21 +45,21 @@ ptrack <- function(A, M, s, sampling_rate = NULL, fc = 0.2, return_pe = FALSE) {
   }
 
   kg <- stats::complete.cases(cbind(A, M))
-  T <- matrix(nrow = nrow(A), ncol = 3)
+  track <- matrix(nrow = nrow(A), ncol = 3)
   if (length(s) > 1) {
     s <- s[kg]
   }
   W <- body_axes(A[kg, ], M[kg, ], sampling_rate, fc)
-  T[kg, ] <- apply((s * W$x), 1, cumsum)
-  T <- data.frame(T)
-  # T <- T[,c(1:2)]
-  names(T) <- c("northing", "easting", "dunno")
+  track[kg, ] <- apply((s * W$x), 1, cumsum)
+  track <- data.frame(track)
+  # track <- track[,c(1:2)]
+  names(track) <- c("northing", "easting", "dunno")
 
   if (return_pe == TRUE) {
     pe <- matrix(nrow = nrow(A), ncol = 1)
     pitch <- a2pr(A[kg, ], sampling_rate, fc)$p
     pe[kg] <- -cumsum((s / sampling_rate) * sin(pitch))
-    return(list(T = T, pe = pe))
+    return(list(track = track, pe = pe))
   }
-  return(T)
+  return(track)
 }

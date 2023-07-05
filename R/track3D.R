@@ -34,13 +34,12 @@
 #' @note This function output can be quite sensitive to the inputs used, namely those that define the relative weight given to the existing data, in particular regarding (x,y)=(lat,long); increasing q3p, the (x,y) state variance, will increase the weight given to independent observations of (x,y), say from GPS readings
 #' @export
 #' @examples
-#' \dontrun{
 #' p <- a2pr(A = beaked_whale$A$data)
 #' h <- m2h(M = beaked_whale$M$data, A = beaked_whale$A$data)
 #' track <- track3D(z = beaked_whale$P$data, phi = p$p, 
 #' psi = h$h, sf = beaked_whale$A$sampling_rate, 
 #' r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.6e-05, 
-#' tagonx = 1000, tagony = 1000, enforce = T, x = NA, y = NA)
+#' tagonx = 1000, tagony = 1000, enforce = TRUE, x = NA, y = NA)
 #' par(mfrow = c(2, 1), mar = c(4, 4, 0.5, 0.5))
 #' plot(-beaked_whale$P$data, pch = ".", ylab = "Depth (m)", 
 #' xlab = "Time")
@@ -50,9 +49,8 @@
 #' track$fit.ry[c(1, length(track$fit.rx))], pch = 21, bg = 5:6)
 #' legend("bottomright", cex = 0.7, legend = c("Start", "End"), 
 #' col = c(5, 6), pt.bg = c(5, 6), pch = c(21, 21))
-#' }
 #'
-track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.6e-05, tagonx, tagony, enforce = T, x, y) {
+track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.6e-05, tagonx, tagony, enforce = TRUE, x, y) {
   #-------------------------------------------------------
   #-------------------------------------------------------
   # The underlying state space model being fitted to the data is described in
@@ -81,11 +79,11 @@ track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.
   # measurement error in depth when there's no x,y observations
   r1 <- r
   #  measurement error in depth, x and y (for when there's no x,y observations)
-  #  r2= matrix(c(0.001,0,0,0,5,0,0,0,5),3,3,byrow=T)
+  #  r2= matrix(c(0.001,0,0,0,5,0,0,0,5),3,3,byrow=TRUE)
   #  the line above was hardwiring r when there were observations in x,y
   #  even if one changed the argument r, this line below does not
   #  hardwire the value of 0.001 for depth observation error
-  r2 <- matrix(c(r, 0, 0, 0, 5, 0, 0, 0, 5), 3, 3, byrow = T)
+  r2 <- matrix(c(r, 0, 0, 0, 5, 0, 0, 0, 5), 3, 3, byrow = TRUE)
   # state error in speed
   q1 <- (q1p / sf)^2
   # state error in depth
@@ -108,13 +106,13 @@ track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.
   # for pitch and depth?
   shatm <- matrix(c(1, z[1], tagonx, tagony), 4, 1)
   # state noise matrix
-  Q <- matrix(c(q1, 0, 0, 0, 0, q2, 0, 0, 0, 0, q3, 0, 0, 0, 0, q3), 4, 4, byrow = T)
+  Q <- matrix(c(q1, 0, 0, 0, 0, q2, 0, 0, 0, 0, q3, 0, 0, 0, 0, q3), 4, 4, byrow = TRUE)
   # observation matrix (a vector here)
   H1 <- matrix(c(0, 1, 0, 0), 1, 4)
-  H2 <- matrix(c(0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), 3, 4, byrow = T)
+  H2 <- matrix(c(0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), 3, 4, byrow = TRUE)
   # initial state covariance matrix
   # says how much we trust initial values of s and p?
-  Pm <- matrix(c(0.01, 0, 0, 0, 0, r, 0, 0, 0, 0, 0.01, 0, 0, 0, 0, 0.01), 4, 4, byrow = T)
+  Pm <- matrix(c(0.01, 0, 0, 0, 0, r, 0, 0, 0, 0, 0.01, 0, 0, 0, 0, 0.01), 4, 4, byrow = TRUE)
   # place to store state predictions
   skal <- matrix(0, nrow = 4, ncol = n)
   # object for storing the kalman a posteriori state covariance (2x2xn)
@@ -127,7 +125,7 @@ track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.
   # implementing the kalman Filter
   for (i in 1:n) {
     # make state transition matrix
-    Ak <- matrix(c(1, 0, 0, 0, Gt.2.1[i], 1, 0, 0, Gt.3.1[i], 0, 1, 0, Gt.4.1[i], 0, 0, 1), 4, 4, byrow = T)
+    Ak <- matrix(c(1, 0, 0, 0, Gt.2.1[i], 1, 0, 0, Gt.3.1[i], 0, 1, 0, Gt.4.1[i], 0, 0, 1), 4, 4, byrow = TRUE)
     # after the initial state only
     # (hence this bit is ONLY not evaluated for the inital state)
     if (i > 1) {
@@ -154,7 +152,7 @@ track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.
     }
     # forcing speed and depth always to be positive
     # TAM?: must be a smarter way to do this ????
-    if (enforce == T) {
+    if (enforce == TRUE) {
       shat[1:2] <- ifelse(shat[1:2] < 0, 0, shat[1:2])
     }
     # a posteriori state cov
@@ -177,7 +175,7 @@ track3D <- function(z, phi, psi, sf, r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.
   # so now we are moving backwards
   for (i in n:2) {
     # make state transition matrix
-    Ak <- matrix(c(1, 0, 0, 0, Gt.2.1[i - 1], 1, 0, 0, Gt.3.1[i - 1], 0, 1, 0, Gt.4.1[i - 1], 0, 0, 1), 4, 4, byrow = T)
+    Ak <- matrix(c(1, 0, 0, 0, Gt.2.1[i - 1], 1, 0, 0, Gt.3.1[i - 1], 0, 1, 0, Gt.4.1[i - 1], 0, 0, 1), 4, 4, byrow = TRUE)
     # smoother gain - equation 8.69 in Gannot & Yeredor 2008
     K <- Ps[, , i - 1] %*% t(Ak) %*% solve(Pms[, , i])
     # smooth state - (supposedly) equation 8.68 in Gannot & Yeredor 2008
