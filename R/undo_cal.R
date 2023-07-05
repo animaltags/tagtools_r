@@ -2,16 +2,14 @@
 #'
 #' This function is used to undo any calibration steps that have been applied to sensor data. This will reverse any re-mapping, scaling and offset adjustments that have been applied to the data, reverting the sensor data to the state it was when read in from the source (excluding any filtering or decimation steps).
 #' @param X A sensor list or set of sensor lists in the tag frame, i.e., with calibrations applied.
-#' @param T A vector of temperature measurements with the same number of samples and sampling rate as the data in the input sensor data structure X. T indicates the temperature experienced by the sensor during data collection (not necessarily the ambient temperature experienced by the animal), and may affect calibration because many sensors’ output values change depending on the temperature.
+#' @param temperature A vector of temperature measurements with the same number of samples and sampling rate as the data in the input sensor data structure X. The temperature parameter indicates the temperature experienced by the sensor during data collection (not necessarily the ambient temperature experienced by the animal), and may affect calibration because many sensors’ output values change depending on the temperature.
 #' @return A sensor list or set of sensor lists reverted to the sensor frame, i.e., without calibrations.
-#' @examples
-#' \dontrun{
-#' BW <- beaked_whale
-#' undo_cal(BW)
-#' }
 #' @export
-
-undo_cal <- function(X, T) {
+#' @examples
+#' BW <- beaked_whale
+#' no_cal <- undo_cal(BW)
+#'
+undo_cal <- function(X, temperature) {
   if (missing(X)) {
     stop("Need X to continue")
   }
@@ -24,14 +22,14 @@ undo_cal <- function(X, T) {
       if (identical(f[k], "info")) {
         next
       }
-      X[[k]] <- undo_cal1(X[[k]], T)
+      X[[k]] <- undo_cal1(X[[k]], temperature)
     }
   } else {
-    X <- undo_cal1(X, T)
+    X <- undo_cal1(X, temperature)
   }
   return(X)
 }
-undo_cal1 <- function(X, T) {
+undo_cal1 <- function(X, temperature) {
   if ("cal_map" %in% names(X)) {
     X$data <- X$data %*% solve(X$map)
     X$cal_map <- diag(ncol(X$data))
@@ -40,13 +38,13 @@ undo_cal1 <- function(X, T) {
     X$data <- X$data %*% solve(X$cross)
     X$cal_cross <- diag(ncol(X$data))
   }
-  if ((!missing(T) && !is.null(T) && length(T) != 0) && ("cal_tcomp" %in% names(X)) && (nrow(T) == nrow(X$data))) {
+  if ((!missing(temperature) && !is.null(temperature) && length(temperature) != 0) && ("cal_tcomp" %in% names(X)) && (nrow(temperature) == nrow(X$data))) {
     if (!("cal_tref" %in% names(X))) {
       tref <- 0
     } else {
       tref <- X$cal_tref
     }
-    X$data <- X$data - (T - tref) %*% X$tcomp
+    X$data <- X$data - (temperature - tref) %*% X$tcomp
     X$cal_tcomp <- matrix(0, 1, ncol(X))
   }
   if ("cal_poly" %in% names(X)) {
