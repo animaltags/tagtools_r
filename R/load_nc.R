@@ -6,9 +6,8 @@
 #' @return An \code{animaltag} object (a list) containing sensor and metadata structures. The item names in X will be the same as the names of the variables in the NetCDF file (plus an "info" one), e.g., if the file contains A and P, output object X will have fields X$A, X$P and X$info (the file metadata).
 #' @export
 #' @examples
-#' \dontrun{
-#' load_nc('testset1.nc')
-#' }
+#' hold <- system.file("extdata","beaked_whale.nc", package = "tagtools", mustWork = TRUE)
+#' load_nc(hold)
 #'
 load_nc <- function(file, which_vars = NULL) {
   if (!grepl(".nc", file)) {

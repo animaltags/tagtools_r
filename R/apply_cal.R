@@ -11,9 +11,8 @@
 #' @return A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed.
 #' @export
 #' @examples
-#' \dontrun{
 #' t <- apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
-#' }
+#' 
 
 apply_cal <- function(X, cal, T = NULL) {
   if (!is.list(cal)) {

@@ -29,13 +29,11 @@
 #'  Frame: This function assumes a [north,east,up] navigation frame and a
 #'  [forward,right,up] local frame.
 #' @examples
-#' \dontrun{
 #' AMcheck <- check_AM(
 #'   A = matrix(c(-0.3, 0.52, 0.8), nrow = 1),
 #'   M = matrix(c(22, -22, 14), nrow = 1),
 #'   fs = 1
 #' )
-#' }
 #' @export
 check_AM <- function(A, M = NULL, fs = NULL, find_incl = TRUE) {
   fc <- 5 # low pass filter frequency in Hz

@@ -10,10 +10,8 @@
 #' 		 storage of variables, consider using \code{\link{save}} or various functions to write data to text files.
 #' @param ... Additional sensor or metadata lists, if user has not bundled them all into a list already but is providing individual structures.
 #' @examples
-#' \dontrun{
-#' save_nc("dog17_124a", A, M, P, info)
-#' save_nc("dog17_124a", X = list(A, M, P, info))
-#' }
+#' save_nc("beaked_whale", BW)
+#' 
 #' @export
 
 save_nc <- function(file, X, ...) {
