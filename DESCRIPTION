@@ -23,17 +23,11 @@ Authors@R: c(person("Stacy", "DeRuiter",
 Description: High-resolution movement-sensor tags typically include accelerometers 
     to measure body posture and sudden movements or changes in speed, 
     magnetometers to measure direction of travel, and pressure sensors
-    to measure dive depth in aquatic or marine animals. 
-    A subset of tags include sensors for speed, turning rate (gyroscopes), and sound. 
-    This package provides software tools to facilitate calibration, processing, 
-    and analysis of such data. Tools are provided for: Data Import/export, 
-    Calibration (from raw data to calibrated data in scientific units), 
-    Visualization (e.g., time-series plots, multiple events overlaid, long-term spectral averages), 
-    Data Processing (e.g., event detection, derived metrics like jerk and 
-    dynamic acceleration, Dive detection and dive parameter calculation, 
-    Integrating movement data with other sensors eg acoustic or camera, 
-    integrating position data from onboard GPS, visual observations, etc. with movement data, 
-    and statistical Analysis (e.g., track reconstruction, Mahalanobis distance analysis).
+    to measure dive depth in aquatic or marine animals. The sensors in these tags usually sample many times per second. Some tags include sensors for speed, turning rate (gyroscopes), and sound. This package provides software tools to facilitate calibration, processing, and analysis of such data. Tools are provided for: data import/export; 
+    calibration (from raw data to calibrated data in scientific units); 
+    visualization (for example, multi-panel time-series plots); 
+    data processing (such as event detection, calculation of derived metrics like jerk and 
+    dynamic acceleration, dive detection, and dive parameter calculation); and statistical analysis (for example, track reconstruction, a rotation test, and Mahalanobis distance analysis).
 Depends: R (>= 3.4)
 Imports:
     CircStats,
@@ -61,6 +55,6 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 URL: https://animaltags.org, https://animaltags.github.io/tagtools_r/index.html
-BugReports: https://github.com/animaltags/tagtools_r/issuespp
+BugReports: https://github.com/animaltags/tagtools_r/issues
 Config/Needs/website: rmarkdown
 Config/testthat/edition: 3
