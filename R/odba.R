@@ -13,12 +13,10 @@
 #' @note If applying the default (FIR filtering) method to calculate odba, use the inputs A, sampling_rate, and fh. When applying the 'vedba' or 'wilson' method, use the inputs A, n, and method.
 #' @export
 #' @examples
-#' \dontrun{
 #' BW <- beaked_whale
-#' e <- odba(A = BW$A$data, sampling_rate = BW$A$sampling_rate, fh = 4)
+#' e <- odba(A = BW$A$data, sampling_rate = BW$A$sampling_rate, fh = 0.05)
 #' ba <- list(e = e)
 #' plott(ba, BW$A$sampling_rate)
-#' }
 #'
 odba <- function(A, sampling_rate = NULL, fh = NULL, method = "fir", n = NULL) {
   if (is.list(A)) {

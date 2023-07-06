@@ -7,12 +7,12 @@
 #' @param owner (optional) String with initials of the tag data owner
 #' @return A list containing metadata for a tag deployment. It's recommended to name this output "info" and save it as part of a netCDF tag data archive file (along with the tag sensor data).
 #' @export
-#' @examples \dontrun{
-#' info <- make_info("zc19_365a", "dtag", "zc", "sdr")
-#' }
+#' @examples
+#' info <- make_info("d4_template", "dtag4", "zc", "sdr")
+#'
 make_info <- function(depid, tagtype, species, owner) {
   if (missing(tagtype)) {
-    stop("Required inputs tagtype for make_info is missing. You may want to edit the research and/or species .csv files, stored in the inst folder with the tagtools R package.")
+    tagtype <- dtag4  #defaults to 4 if missing
   }
 
   if (missing(species) | missing(owner)) {

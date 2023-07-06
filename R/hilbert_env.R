@@ -11,14 +11,13 @@
 #' and the same number of samples per signal. It has the same units as
 #' X but being an envelope, all values are >=0.
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' s <- matrix(sin(0.1 * c(1:10000)), ncol = 1) *
 #'  matrix(sin(0.001 * c(1:10000)), ncol = 1)
 #' E <- hilbert_env(s)
 #' plot(c(1:length(s)), s, col = 'grey34')
 #' lines(c(1:length(E)), E, col = 'black')
-#' }
-
+#' 
 
 hilbert_env <- function(X, N = 1024) {
 # note: N must be even

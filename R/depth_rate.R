@@ -8,13 +8,12 @@
 #' @param depth (optional) The behavior of animals. Required only if dealing with animals not behave descent but ascent. 
 #' @return v, The vertical velocity with the same sampling rate as p. v is a vector with the same dimensions as p. The unit of v depends on the unit of p. For example, if p is in meters, v is in meters/second
 #' @note The low-pass filter is a symmetric FIR with length 4fs/fc. The group delay of the filters is removed. Usually, the function handles data pertaining to diving animals, where data is measured as the depth beneath the water surface. For ascending data coming from birds and alike data, setting depth = FALSE will help calculating the right vertical velocity.  
-#' @examples \dontrun{
+#' @examples
 #' v <- depth_rate(p = beaked_whale$P)
 #' plott(list(beaked_whale$P$data, v),
 #'   fs = beaked_whale$P$sampling_rate,
 #'   r = c(1, 0), panel_labels = c("Depth\n(m)", "Vertical Velocity\n(m/s)")
 #' )
-#' }
 #' @export
 
 

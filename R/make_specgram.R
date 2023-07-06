@@ -20,7 +20,6 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' x <- signal::chirp(seq(from = 0, by = 0.001, to = 2),
 #'   f0 = 0,
 #'   t1 = 2,
@@ -32,8 +31,8 @@
 #' window <- signal::hanning(nfft)
 #' make_specgram(x, nfft, fs, window, numoverlap)
 #' S <- make_specgram(x, nfft, fs, window, numoverlap, draw_plot = FALSE)
-#' }
 #' @export
+#' 
 make_specgram <- function(x, nfft = 256, fs = 2,
                           window = signal::hanning(nfft),
                           noverlap = length(window) / 2,
