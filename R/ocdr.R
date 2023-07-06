@@ -13,12 +13,10 @@
 #' @note Frame: This function assumes a [north,east,up] navigation frame and a [forward,right,up] local frame. In these frames, a positive pitch angle is an anti-clockwise rotation around the y-axis. A descending animal will have a negative pitch angle.
 #' @export
 #' @examples
-#' \dontrun{
 #' HS <- harbor_seal
 #' s <- ocdr(p = HS$P$data, A = HS$A$data, sampling_rate = HS$P$sampling_rate, fc = NULL, plim = NULL)
 #' speed <- list(s = s)
 #' plott(speed, HS$P$sampling_rate)
-#' }
 #'
 ocdr <- function(p, A, sampling_rate, fc, plim) {
   if (missing(A) | missing(p)) {

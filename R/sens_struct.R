@@ -16,9 +16,8 @@
 #' @return A sensor list with field \code{data} containing the data and with metadata fields pre-populated from the sensor_names.csv file. Change these manually as needed (or specify the relevant inputs to \code{sens_struct}) to the correct values.
 #' @export
 #' @examples
-#' \dontrun{
-#' A <- sens_struct(data=Aw,sampling_rate=fs,depid='md13_134a', type='acc')
-#' }
+#' HB <- harbor_seal
+#' A <- sens_struct(data=HB$A$data,sampling_rate=3,depid='md13_134a', type='acc')
 #'
 sens_struct <- function(data, sampling_rate = NULL, T = NULL,
                         depid, type,

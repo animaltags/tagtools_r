@@ -248,16 +248,16 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
     
     # create a plot which allows for the thresh and bktime to be manipulated
     graphics::plot(dnew, type = "l", col = "blue", xlim = c(0, length(dnew)), ylim = c(0, max(dnew)), ylab = "Signal Power", xlab = "Time (1/sampling_rate)")
-    print("GRAPH HELP:")
-    print("For changing only the thresh level, click once within the plot and then push enter")
-    print(" to specify the y-value at which your new thresh level will be.")
-    print("For changing just the bktime value, click twice within the plot and then push enter")
-    print(" to specify the length for which your bktime will be.")
-    print("To change both the bktime and the thresh, click three times within the plot:")
-    print(" the first click will change the thresh level,")
-    print(" the second and third clicks will change the bktime.")
-    print("To return your results without changing the thresh and bktime from their default")
-    print(" values, simply push enter.")
+    message("GRAPH HELP:")
+    message("For changing only the thresh level, click once within the plot and then push enter")
+    message(" to specify the y-value at which your new thresh level will be.")
+    message("For changing just the bktime value, click twice within the plot and then push enter")
+    message(" to specify the length for which your bktime will be.")
+    message("To change both the bktime and the thresh, click three times within the plot:")
+    message(" the first click will change the thresh level,")
+    message(" the second and third clicks will change the bktime.")
+    message("To return your results without changing the thresh and bktime from their default")
+    message(" values, simply push enter.")
     x <- peaks$peak_time
     y <- peaks$peak_max
     graphics::par(new = TRUE)

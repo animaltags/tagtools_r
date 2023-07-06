@@ -15,10 +15,10 @@
 #' There are numerous other sources of error so use at your own risk!
 #' @seealso \code{\link[tagtools]{ptrack}}, \code{\link[tagtools]{fit_tracks}}, \code{\link{track3D}}
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' bwhtrack <- htrack(A = beaked_whale$A, M = beaked_whale$M, s = 4)
 #' plot(bwhtrack$easting, bwhtrack$northing, xlab = "Easting, m", ylab = "Northing, m")
-#' }
+#'
 
 htrack <- function(A, M, s, sampling_rate = NULL, fc = 0.2) {
   #*******************************

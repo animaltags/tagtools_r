@@ -10,14 +10,11 @@
 #' }
 #' @note This function requires a lot of data as it is looking for extreme values in each axis. A minimum data size of 1000 samples should be used. This function is only usable for field sensors. It will not work for gyroscope data.
 #' @examples
-#' \dontrun{
 #' BW <- beaked_whale
 #' plot(x = c(1:length(BW$M$data)), y = BW$M$data)
-#' # see what the data looks like first
 #' rcal <- rough_cal_3d(BW$M$data, fstr = 38.2)
 #' cal <- list(x = c(1:length(rcal$X)), y = rcal$X)
 #' plot(cal)
-#' }
 #' @export
 
 rough_cal_3d <- function(X, fstr) {
