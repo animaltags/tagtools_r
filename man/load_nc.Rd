@@ -18,8 +18,7 @@ An \code{animaltag} object (a list) containing sensor and metadata structures. T
 This function loads a tag dataset from a netCDF file (this is an archival file format supported by the tagtools package and suitable for submission to online data archives).
 }
 \examples{
-\dontrun{
-load_nc('testset1.nc')
-}
+hold <- system.file("extdata","beaked_whale.nc", package = "tagtools", mustWork = TRUE)
+load_nc(hold)
 
 }

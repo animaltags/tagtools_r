@@ -21,10 +21,8 @@ This function is used to rotate triaxial vector measurements from one frame to a
 Frame: This function makes no assumptions about frame.
 }
 \examples{
-\dontrun{
 x <- (pi / 180) * matrix(c(25, -60, 33), ncol = 3)
 Q <- euler2rotmat(x[, 1], x[, 2], x[, 3])
 V <- rotate_vecs(c(0.77, -0.6, -0.22), Q)
-}
 
 }

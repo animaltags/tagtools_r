@@ -26,7 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/acceleration-filtering.html">Complementary filtering for acceleration: low- &amp; high-frequency</a>
     <a class="dropdown-item" href="../articles/data-quality-error-correction.html">Data quality &amp; error correction</a>
-    <a class="dropdown-item" href="../articles/detectors.html">Detectors</a>
+    <a class="dropdown-item" href="../articles/Detectors.html">Detectors</a>
     <a class="dropdown-item" href="../articles/dive-stats.html">Using dive_stats</a>
     <a class="dropdown-item" href="../articles/find-dives.html">Using find_dives</a>
     <a class="dropdown-item" href="../articles/fine-scale-tracking.html">Fine-scale tracking</a>
@@ -48,7 +48,13 @@
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/animaltags/tagtools_r/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -56,7 +62,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Detect peaks in signal vector data</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/animaltags/tagtools_r/blob/HEAD/R/detect_peaks.R" class="external-link"><code>R/detect_peaks.R</code></a></small>
       <div class="d-none name"><code>detect_peaks.Rd</code></div>
     </div>
 
@@ -73,6 +79,7 @@
 <span>  thresh <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bktime <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot_peaks <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -103,6 +110,10 @@
 <dd><p>A conditional input. If the input is TRUE or missing, an interactive plot is generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. If the input is FALSE, the interactive plot is not generated. Look to the console for help on how to use the plot upon running of this function.</p></dd>
 
 
+<dt>quiet</dt>
+<dd><p>If quiet is true, do not print to the screen</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional inputs to be passed to FUN</p></dd>
 
@@ -120,12 +131,26 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">BW</span> <span class="op">&lt;-</span> <span class="va">beaked_whale</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">BW</span> <span class="op">&lt;-</span> <span class="va">beaked_whale</span></span></span>
 <span class="r-in"><span><span class="fu">detect_peaks</span><span class="op">(</span>data <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">A</span><span class="op">$</span><span class="va">data</span>, sr <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">A</span><span class="op">$</span><span class="va">sampling_rate</span>, </span></span>
 <span class="r-in"><span>FUN <span class="op">=</span> <span class="va">njerk</span>, thresh <span class="op">=</span> <span class="cn">NULL</span>, bktime <span class="op">=</span> <span class="cn">NULL</span>, </span></span>
-<span class="r-in"><span>plot_peaks <span class="op">=</span> <span class="cn">NULL</span>, sampling_rate <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">A</span><span class="op">$</span><span class="va">sampling_rate</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span>plot_peaks <span class="op">=</span> <span class="cn">NULL</span>, sampling_rate <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">A</span><span class="op">$</span><span class="va">sampling_rate</span>, quiet<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="detect_peaks-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="detect_peaks-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    start_time end_time peak_time  peak_max    thresh bktime</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         176      177       176 0.6430418 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         745      752       745 0.5283571 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        1051     1115      1114 1.4400981 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        1223     1335      1224 0.7419494 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        1462     1567      1462 0.7495490 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        1712     1863      1768 0.7573250 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        1996     1996      1996 0.6457465 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        3923     3950      3923 0.5477980 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        4061     4061      4061 0.5163881 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       4185     4185      4185 0.5174222 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       5308     5308      5308 0.5044518 0.5039995  104.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       5502     5502      5502 0.5258842 0.5039995  104.8</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -133,7 +158,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Stacy DeRuiter, Mark Johnson, David Sweeney, Ye Joo McNamara-Oh, Samuel Fynewever, (Oghenkevwe) Racheal Tejevbo, Tiago Marques, (Yuqian) Eason Wang, (Oghenesuvwe) Su Ogedegbe.</p>
+  <p></p><p>Developed by Stacy DeRuiter, Mark Johnson, David Sweeney, Ye Joo McNamara-Oh, Samuel Fynewever, (Oghenkevwe) Racheal Tejevbo, Tiago Marques, Yuqian Wang, (Oghenesuvwe) Su Ogedegbe.</p>
 </div>
 
 <div class="pkgdown-footer-right">

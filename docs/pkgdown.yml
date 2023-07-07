@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   acceleration-filtering: acceleration-filtering.html
   data-quality-error-correction: data-quality-error-correction.html
-  detectors: detectors.html
+  Detectors: Detectors.html
   dive-stats: dive-stats.html
   find-dives: find-dives.html
   fine-scale-tracking: fine-scale-tracking.html
@@ -18,5 +18,5 @@ articles:
   tag-to-whale-frame: tag-to-whale-frame.html
   TagTools: TagTools.html
   vectors-vs-structures: vectors-vs-structures.html
-last_built: 2023-06-23T18:49Z
+last_built: 2023-07-07T18:36Z
 

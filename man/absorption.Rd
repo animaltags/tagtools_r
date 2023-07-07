@@ -4,12 +4,12 @@
 \alias{absorption}
 \title{Calculates the absorption coefficient for sound in seawater}
 \usage{
-absorption(f, T, d)
+absorption(freq, temperature, d)
 }
 \arguments{
-\item{f}{frequency in Hz}
+\item{freq}{frequency in Hz}
 
-\item{T}{temperature in degrees C}
+\item{temperature}{temperature in degrees C}
 
 \item{d}{depth in meters}
 }

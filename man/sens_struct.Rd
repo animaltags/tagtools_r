@@ -14,7 +14,8 @@ sens_struct(
   frame = NULL,
   name = NULL,
   start_offset = 0,
-  start_offset_units = "second"
+  start_offset_units = "second",
+  quiet = FALSE
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ matches type, a warning will be given. type can be in upper or lower case.}
 \item{start_offset}{(optional) offset in start time for this sensor relative to start of tag recording. Defaults to 0.}
 
 \item{start_offset_units}{(optional) units of start_offset. default is 'second'.}
+
+\item{quiet}{prints to screen if quiet is set to false}
 }
 \value{
 A sensor list with field \code{data} containing the data and with metadata fields pre-populated from the sensor_names.csv file. Change these manually as needed (or specify the relevant inputs to \code{sens_struct}) to the correct values.
@@ -48,8 +51,7 @@ A sensor list with field \code{data} containing the data and with metadata field
 Generate a sensor structure from a sensor data vector or matrix.
 }
 \examples{
-\dontrun{
-A <- sens_struct(data=Aw,sampling_rate=fs,depid='md13_134a', type='acc')
-}
+HB <- harbor_seal
+A <- sens_struct(data=HB$A$data,sampling_rate=3,depid='md13_134a', type='acc', quiet=TRUE)
 
 }

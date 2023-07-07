@@ -4,10 +4,10 @@
 \alias{sound_speed}
 \title{Sound speed estimation}
 \usage{
-sound_speed(T, D = NULL, S = NULL)
+sound_speed(temperature, D = NULL, S = NULL)
 }
 \arguments{
-\item{T}{The temperature in degrees C}
+\item{temperature}{The temperature in degrees C}
 
 \item{D}{(optional) The depth in meters (defaults to 1 m)}
 

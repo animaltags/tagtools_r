@@ -32,10 +32,9 @@ Moreover, if there is net flow in the medium, the animal will be advected by the
 There are numerous other sources of error so use at your own risk!
 }
 \examples{
-\dontrun{
 bwhtrack <- htrack(A = beaked_whale$A, M = beaked_whale$M, s = 4)
 plot(bwhtrack$easting, bwhtrack$northing, xlab = "Easting, m", ylab = "Northing, m")
-}
+
 }
 \seealso{
 \code{\link[tagtools]{ptrack}}, \code{\link[tagtools]{fit_tracks}}, \code{\link{track3D}}

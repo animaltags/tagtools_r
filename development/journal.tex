@@ -1,0 +1,92 @@
+% !TeX root = RJwrapper.tex
+\title{ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics}
+
+
+\author{by Yuqian wang and Oghenesuvwe Ogedegbe}
+
+\maketitle
+
+\abstract{%
+An abstract of less than 150 words.
+}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Bio-logging studies, where data are collected using animal-borne devices, continue to grow rapidly in numbers and in scope. Data from high-resolution tags are essential for assessing marine mammal behavior in relation to acoustic disturbance, as well as for acquiring baseline behavior for environmental risk models. A subset of these tags include sensors for speed, turning rate (gyroscopes), and sound, increasing the array of inferences that can be drawn about the context and energetic cost of responses to disturbance. While these tags offer exciting opportunities to observe animal behavior in unprecedented detail, there is a desperate need for freely-available, easy-to-use, flexible software tools along with appropriate training to facilitate analysis and interpretation of the resulting data.
+
+\hypertarget{background}{%
+\section{Background}\label{background}}
+
+High-resolution multi-sensor tags typically include accelerometers that are used to measure body orientation, sudden movement, changes in speed, and to estimate energy expenditure. These tags also use magnetometers to measure direction of travel, and pressure sensors to measure dive depth in aquatic or marine animals. A subset of tags also include sensors for speed, turning rate (gyroscopes), and sound (hydrophones), increasing researchers' ability to directly and indirectly assess impact from disturbances. These tags offer exciting opportunities to observe animal behavior in unprecedented detail and to quantify the consequences of human disturbance. However, analyses of the data are time-consuming and rely on a small cadre of highly-skilled scientists, creating a bottleneck in dissemination of these key findings.
+
+\citep{Wilmers:2015}
+\# Processing
+
+For calculations pertaining to data collected, we have a host of functions available to process the data for different purposes. Processing methods will include automated calibration of sensors; detection of dive start- and end-times; calculation of a common suite of dive parameters (depth, duration, kinematic parameters, etc.); parameterization of movement patterns (residence index, straightness of movement, tortuosity etc.) and acceleration (MSA, ODBA, norm-jerk); and calculation of acoustic characteristics (various standard measures of intensity, duration, bandwidth, and frequency characteristics for echolocation clicks or other sounds of interest). As a standout of these functions, we have find\_dives. This function is used to find the time cues for the start and end of either dives in a depth record or flights in an altitude record. The simulated quantities used to do this are:
+
+p: A depth or altitude time series (a sensor data list or a vector) in meters.
+sampling\_rate: The sampling rate of the sensor data in Hz (samples per second).
+mindepth: The threshold in meters at which to recognize a dive or flight. Dives shallow or flights lower than mindepth will be ignored.
+surface (optional): The threshold in meters at which the animal is presumed to have reached the surface. Default value is 1. A smaller value can be used if the dive/altitude data are very accurate and you need to detect shallow dives/flights.
+findall (optional) When TRUE, forces the algorithm to include incomplete dives at the start and end of the record. Default is FALSE which only recognizes complete dives.
+
+Find\_dives creates a data frame with one row for each dive or flight found. The columns of T are:
+start (time in seconds of the start of each dive/flight)
+end (time in seconds of the start of each dive/flight)
+max (maximum depth/altitude reached in each dive/flight)
+tmax(time in seconds at which the animal reaches the max depth/altitude).
+
+Using the dataset beaked\_whale from the package as BW and
+T as find\_dives(p = BW\(P\)data, sampling\_rate = BW\(P\)sampling\_rate, mindepth = 5, surface = 2, findall = FALSE), the result produced are:
+
+\hypertarget{calibration}{%
+\section{Calibration}\label{calibration}}
+
+\begin{verbatim}
+Biologging tags, such as accelerometers, and gyroscopes, provide strong insight into the behavior of animals, but their measurements can be influenced by various external factors such as environmental conditions and sensor bias. As such, calibration is required to correct any errors or inconsistencies in the collected data. By comparing the measurements obtained from the biologging tags with known data, researchers can adjust the readings to improve accuracy of recorded data. This improves the process of analysis and interpretion of the data, which will result in more accurate conclusions to be drawn about the species being studied. 
+\end{verbatim}
+
+\hypertarget{plotting}{%
+\section{Plotting}\label{plotting}}
+
+\begin{verbatim}
+The main use of our package is to provide a comprehensive set of options for visualizing various behavioral metrics, such as activity levels, movement patterns, dive depths and duration. This streamlines the analysis process and helps researchers to better understand animal behavior. An important first step in tag data analysis is to plot the data.  Surprisingly, some of the most useful types of figures can be particularly hard to produce.  Examples include time-series plots that show several tag-sensor data streams in plot panels stacked atop one another, with all panels sharing a common time scale; or plots where sensor data from many exemplars of an event of interest are overlaid, in order to compare behavior between events. The resulting figures often prove crucially convincing to summarize results and complement statistical analysis in scientific publications. Unfortunately, since they are difficult to produce, creating them slows the pace of analysis (or they may even be neglected entirely).
+\end{verbatim}
+
+\hypertarget{sound-processing}{%
+\section{Sound processing}\label{sound-processing}}
+
+\begin{verbatim}
+The package also undertakes some sound processing by way of measuring spectrum levels, plotting spectrograms and obtaining audio in the form of wav files. Sound speed is measured to ascertain the depth and position of the animal. 
+\end{verbatim}
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+We have displayed various tooltips that are available in the package \pkg{ToOoOlTiPs}.
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\bibliography{RJreferences.bib}
+
+\address{%
+Yuqian wang\\
+Calvin University\\%
+Department of Letter Q\\ Somewhere, Australia\\
+%
+\url{https://www.britannica.com/animal/quokka}\\%
+\textit{ORCiD: \href{https://orcid.org/0000-1721-1511-1101}{0000-1721-1511-1101}}\\%
+\href{mailto:qquo@ulm.edu}{\nolinkurl{qquo@ulm.edu}}%
+}
+
+\address{%
+Oghenesuvwe Ogedegbe\\
+Calvin University\\%
+Department of Letter Q, Somewhere, Australia\\ Department of Marsupials, Somewhere, Australia\\
+%
+\url{https://www.britannica.com/animal/bilby}\\%
+\textit{ORCiD: \href{https://orcid.org/0000-0002-0912-0225}{0000-0002-0912-0225}}\\%
+\href{mailto:bbil@ulm.edu}{\nolinkurl{bbil@ulm.edu}}%
+}

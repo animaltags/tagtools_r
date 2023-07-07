@@ -4,7 +4,7 @@
 \alias{crop}
 \title{Interactive data cropping tool.}
 \usage{
-crop(X, sampling_rate = NULL, T = NULL)
+crop(X, sampling_rate = NULL, T = NULL, quiet = FALSE)
 }
 \arguments{
 \item{X}{A sensor list, vector or matrix. X can be regularly or irregularly sampled data in any frame and unit.}
@@ -12,6 +12,8 @@ crop(X, sampling_rate = NULL, T = NULL)
 \item{sampling_rate}{The sampling rate of X in Hz. This is only needed if X is not a sensor list. If X is regularly sampled, sampling_rate is one number.}
 
 \item{T}{A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled.}
+
+\item{quiet}{If quiet is false, print to the screen}
 }
 \value{
 A list with 3 elements:
@@ -29,7 +31,7 @@ Possible input combinations include: crop(X) if X is a sensor list, crop(X, samp
 }
 \examples{
 data <- beaked_whale
-Pc <- crop(data$P) # interactively select a section of data
+Pc <- crop(data$P, quiet=TRUE) 
 Ydata <- Pc$data
 plot(-Ydata)
 }

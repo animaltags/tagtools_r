@@ -15,6 +15,9 @@ cline(x, y, z, color_vector)
 
 \item{color_vector}{a list of colors to use (length should match the number of levels in z).}
 }
+\value{
+adds colored lines to a graph
+}
 \description{
 This function adds colored line segments to an existing plot.  The line is plotted at points specified by inputs x and y, and colored according to factor input z (with one color for each level of z).
 }

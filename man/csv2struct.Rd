@@ -23,9 +23,7 @@ but is always saved as a string in the structure - it is up to downstream
 users of the metadata to parse/decode the entries.
 }
 \examples{
-\dontrun{
-S <- csv2struct('testset1')
-}
-
+hold <- system.file("extdata","metadata_example.csv", package = "tagtools", mustWork = TRUE)
+S <- csv2struct(hold)
 
 }

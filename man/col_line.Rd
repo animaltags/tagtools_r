@@ -15,6 +15,9 @@ col_line(x, y, color, ...)
 
 \item{...}{Additional inputs for plot()}
 }
+\value{
+a graph with a colored line
+}
 \description{
 This function is used to plot two dimensional lines with each individual line possessing a different color.
 }

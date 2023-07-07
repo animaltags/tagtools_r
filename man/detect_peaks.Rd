@@ -11,6 +11,7 @@ detect_peaks(
   thresh = NULL,
   bktime = NULL,
   plot_peaks = NULL,
+  quiet = FALSE,
   ...
 )
 }
@@ -27,6 +28,8 @@ detect_peaks(
 
 \item{plot_peaks}{A conditional input. If the input is TRUE or missing, an interactive plot is generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. If the input is FALSE, the interactive plot is not generated. Look to the console for help on how to use the plot upon running of this function.}
 
+\item{quiet}{If quiet is true, do not print to the screen}
+
 \item{...}{Additional inputs to be passed to FUN}
 }
 \value{
@@ -39,10 +42,9 @@ This function detects peaks in time series data that exceed a specified threshol
 As specified above under the description for the input of plot_peaks, an interactive plot can be generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. The plot output is only given if the input for plot_peaks is specified as true or if the input is left missing/empty.
 }
 \examples{
-\dontrun{
 BW <- beaked_whale
 detect_peaks(data = BW$A$data, sr = BW$A$sampling_rate, 
 FUN = njerk, thresh = NULL, bktime = NULL, 
-plot_peaks = NULL, sampling_rate = BW$A$sampling_rate)
-}
+plot_peaks = NULL, sampling_rate = BW$A$sampling_rate, quiet=TRUE)
+
 }
