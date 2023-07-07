@@ -13,24 +13,26 @@
 #' @param name (optional) "full name" to assign to the variable. Default determined by matching \code{type} to defaults in sensor_names.csv/
 #' @param start_offset (optional) offset in start time for this sensor relative to start of tag recording. Defaults to 0.
 #' @param start_offset_units (optional) units of start_offset. default is 'second'.
+#' @param quiet prints to screen if quiet is set to false
 #' @return A sensor list with field \code{data} containing the data and with metadata fields pre-populated from the sensor_names.csv file. Change these manually as needed (or specify the relevant inputs to \code{sens_struct}) to the correct values.
 #' @export
 #' @examples
 #' HB <- harbor_seal
-#' A <- sens_struct(data=HB$A$data,sampling_rate=3,depid='md13_134a', type='acc')
+#' A <- sens_struct(data=HB$A$data,sampling_rate=3,depid='md13_134a', type='acc', quiet=TRUE)
 #'
 sens_struct <- function(data, sampling_rate = NULL, T = NULL,
                         depid, type,
                         unit = NULL, frame = NULL, name = NULL,
-                        start_offset = 0, start_offset_units = "second") {
+                        start_offset = 0, start_offset_units = "second", quiet=FALSE) {
   sens_names <- utils::read.csv(system.file("extdata", "sensor_names.csv", package = "tagtools"),
     stringsAsFactors = FALSE
   )
   if (missing(data) | missing(type) | missing(depid)) {
+    if (!quiet){
     cat(
       "Not enough inputs to sens_struct. Pre-defined sensor types are:\n",
       as.character(sens_names[, "name"])
-    )
+    )}
     stop("Please check inputs to sens_struct.")
     X <- NULL
   }

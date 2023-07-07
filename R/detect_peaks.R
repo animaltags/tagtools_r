@@ -7,17 +7,18 @@
 #' @param thresh The threshold level above which peaks in signal are detected. Inputs must be in the same units as the signal. If the input for thresh is missing/empty, the default level is the 0.99 quantile
 #' @param bktime The specified length of time (seconds) between signal values detected above the threshold value (from the moment the first peak recedes below the threshold level to the moment the second peak surpasses the threshold level) that is required for each value to be considered a separate and unique peak. If the input for bktime is missing/empty the default value for the blanking time is set as the .80 quantile of the vector of time differences for signal values above the specified threshold.
 #' @param plot_peaks A conditional input. If the input is TRUE or missing, an interactive plot is generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. If the input is FALSE, the interactive plot is not generated. Look to the console for help on how to use the plot upon running of this function.
+#' @param quiet If quiet is true, do not print to the screen
 #' @param ... Additional inputs to be passed to FUN
 #' @export
 #' @return A data frame containing the start times, end times, peak times, peak maxima, thresh, and bktime. All times are presented as the sampling value.
 #' @note As specified above under the description for the input of plot_peaks, an interactive plot can be generated, allowing the user to manipulate the thresh and bktime values and observe the changes in peak detection. The plot output is only given if the input for plot_peaks is specified as true or if the input is left missing/empty.
-#' @examples \dontrun{
+#' @examples 
 #' BW <- beaked_whale
 #' detect_peaks(data = BW$A$data, sr = BW$A$sampling_rate, 
 #' FUN = njerk, thresh = NULL, bktime = NULL, 
-#' plot_peaks = NULL, sampling_rate = BW$A$sampling_rate)
-#' }
-detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plot_peaks = NULL, ...) {
+#' plot_peaks = NULL, sampling_rate = BW$A$sampling_rate, quiet=TRUE)
+#' 
+detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plot_peaks = NULL, quiet=FALSE, ...) {
   if (missing(data) | missing(sr)) {
     stop("inputs for data and sr are both required")
   }
@@ -248,6 +249,7 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
     
     # create a plot which allows for the thresh and bktime to be manipulated
     graphics::plot(dnew, type = "l", col = "blue", xlim = c(0, length(dnew)), ylim = c(0, max(dnew)), ylab = "Signal Power", xlab = "Time (1/sampling_rate)")
+    if (!quiet){
     message("GRAPH HELP:")
     message("For changing only the thresh level, click once within the plot and then push enter")
     message(" to specify the y-value at which your new thresh level will be.")
@@ -258,6 +260,7 @@ detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plo
     message(" the second and third clicks will change the bktime.")
     message("To return your results without changing the thresh and bktime from their default")
     message(" values, simply push enter.")
+    }
     x <- peaks$peak_time
     y <- peaks$peak_max
     graphics::par(new = TRUE)

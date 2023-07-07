@@ -6,6 +6,7 @@
 #' @param X A sensor list, vector or matrix. X can be regularly or irregularly sampled data in any frame and unit.
 #' @param sampling_rate The sampling rate of X in Hz. This is only needed if X is not a sensor list. If X is regularly sampled, sampling_rate is one number.
 #' @param T A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled.
+#' @param quiet If quiet is false, print to the screen
 #' @return A list with 3 elements:
 #' \itemize{
 #'  \item{\strong{Y: }} A sensor list, vector or matrix containing the cropped data segment. If the input is a sensor list, the output will also be. The output has the same units, frame and sampling characteristics as the input.
@@ -13,12 +14,12 @@
 #'  \item{\strong{tcues: }} tcues is a two-element vector containing the start and end time cue in seconds of the data segment kept, i.e., tcues = c(start_time, end_time).
 #' }
 #' @examples data <- beaked_whale
-#' Pc <- crop(data$P) # interactively select a section of data
+#' Pc <- crop(data$P, quiet=TRUE) 
 #' Ydata <- Pc$data
 #' plot(-Ydata)
 #' @export
 
-crop <- function(X, sampling_rate = NULL, T = NULL) {
+crop <- function(X, sampling_rate = NULL, T = NULL, quiet=FALSE) {
   if (missing(X)) {
     stop("X is a required input")
   }
@@ -50,7 +51,9 @@ crop <- function(X, sampling_rate = NULL, T = NULL) {
     graphics::matplot((c(1:nrow(x)) / sampling_rate), x, type = "l", xlab = "Time (seconds)")
     graphics::matplot((c(1:nrow(x)) / sampling_rate), x, type = "l", xlab = "Time (seconds)", ylim = c(floor(graphics::par("usr")[3]), ceiling(graphics::par("usr")[4])))
   }
-  print("Position your cursor and then click once followed by clicking FINISH to change the start, or click twice in the same spot followed by clicking FINISH to change the end. If you wish to change both the start and end click once at the start time desired and twice at the end time desired.")
+  if (!quiet){
+    print("Position your cursor and then click once followed by clicking FINISH to change the start, or click twice in the same spot followed by clicking FINISH to change the end. If you wish to change both the start and end click once at the start time desired and twice at the end time desired.")
+  }
   if (length(T) > 1) {
     tcues <- c(min(T), max(T))
   } else {

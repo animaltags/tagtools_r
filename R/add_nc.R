@@ -11,9 +11,15 @@
 #' @seealso \code{\link{save_nc}}, \code{\link{load_nc}}
 #' @export
 #' @examples 
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
 #' BW <- beaked_whale
 #' add_nc("beaked_whale", njerk(BW$A), "Jerk")
 #' 
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 
 
 add_nc <- function(file, D, vname) {
