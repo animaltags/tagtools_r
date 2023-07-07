@@ -4,6 +4,7 @@
 #' @param x is a vector with the horizontal axis coordinates of each value in R.
 #' @param y is a vector with the vertical axis coordinates of each value in R.
 #' @param R is a matrix of measurements to display. The values in R are converted to colours in the current colormap and caxis. R must be length(x) by length(y). Use NaN to have a patch not display.
+#' @return an image plot on an irregular grid
 #' @export
 
 image_irreg <- function(x, y, R) {

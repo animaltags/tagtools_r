@@ -40,6 +40,8 @@
 #' psi = h$h, sf = beaked_whale$A$sampling_rate, 
 #' r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.6e-05, 
 #' tagonx = 1000, tagony = 1000, enforce = TRUE, x = NA, y = NA)
+#' oldpar <- par(no.readonly = TRUE)
+#' on.exit(par(oldpar))  
 #' par(mfrow = c(2, 1), mar = c(4, 4, 0.5, 0.5))
 #' plot(-beaked_whale$P$data, pch = ".", ylab = "Depth (m)", 
 #' xlab = "Time")

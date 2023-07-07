@@ -20,7 +20,7 @@
 #'   byrow = TRUE, nrow = 3
 #' )
 #' list <- a2pr(samplematrix)
-#' }
+#' 
 
 a2pr <- function(A, sampling_rate = NULL, fc = NULL) {
   # input checks-----------------------------------------------------------

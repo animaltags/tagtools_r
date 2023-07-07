@@ -12,7 +12,7 @@
 #'
 make_info <- function(depid, tagtype, species, owner) {
   if (missing(tagtype)) {
-    tagtype <- dtag4  #defaults to 4 if missing
+    stop("Required inputs tagtype for make_info is missing. You may want to edit the research and/or species .csv files, stored in the inst folder with the tagtools R package.")
   }
 
   if (missing(species) | missing(owner)) {
