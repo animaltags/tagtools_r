@@ -11,7 +11,7 @@ sample <- data.frame(
 test_that("function works", {
   expect_equal(ptrack(A = BW$A$data, M = BW$M$data, s = 3, 
                       sampling_rate = BW$A$sampling_rate, fc = NULL, 
-                      return_pe = TRUE)$T %>% "["(.,1:10,), sample)
+                      return_pe = TRUE)$track %>% "["(.,1:10,), sample)
 })
 
 
