@@ -6,7 +6,7 @@
 #' @return A list with 2 elements:
 #' \itemize{
 #'  \item{\strong{X: }} A sensor structure or matrix containing the adjusted triaxial sensor measurements. It is the same size and has the same sampling rate and units as the input data. If the input is a sensor structure, the output will be also.
-#'  \item{\strong{G: }} A calibration structure containing one field: G.poly. The first column of G.poly is the three scale factors applied to the columns of X. The second column of G.poly is the offset added to each column of X after scaling.
+#'  \item{\strong{G: }} A list of calibration information containing one field: G$poly, a 3x2 matrix. Rows correspond to X,Y,Z axes. with one column for each of the X, Y, Z axes. The first column of G$poly contains scale factors and second column of G$poly is the offset added to each column of X after scaling. 
 #' }
 #' @note This function requires a lot of data as it is looking for extreme values in each axis. A minimum data size of 1000 samples should be used. This function is only usable for field sensors. It will not work for gyroscope data.
 #' @examples
