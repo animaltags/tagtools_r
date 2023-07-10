@@ -20,6 +20,9 @@
 #' @export
 
 crop <- function(X, sampling_rate = NULL, T = NULL, quiet=FALSE) {
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
+  
   if (missing(X)) {
     stop("X is a required input")
   }

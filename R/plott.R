@@ -30,6 +30,9 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
                   panel_heights = rep.int(1, length(X)),
                   panel_labels = names(X), line_colors,
                   interactive = FALSE, par_opts, ...) {
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
+  
   if (length(r) == 1) {
     if (r == FALSE) {
       r <- rep.int(r, length(X))

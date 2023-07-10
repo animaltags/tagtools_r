@@ -19,6 +19,9 @@
 #' plot_peaks = NULL, sampling_rate = BW$A$sampling_rate, quiet=TRUE)
 #' 
 detect_peaks <- function(data, sr, FUN = NULL, thresh = NULL, bktime = NULL, plot_peaks = NULL, quiet=FALSE, ...) {
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
+  
   if (missing(data) | missing(sr)) {
     stop("inputs for data and sr are both required")
   }
