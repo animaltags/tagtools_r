@@ -21,6 +21,7 @@
 .Rproj.user/
 *.Rproj
 .DS_Store
+inst/.DS_Store
 
 # produced vignettes
 vignettes/*.html
