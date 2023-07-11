@@ -4,12 +4,12 @@
 #' 
 #' @param X A sensor list, vector, or matrix. X can be regularly or irregularly samples data in any frame and unit.
 #' @param sampling_rate The sampling rate of X in Hz. This is only needed if X is not a sensor structure.
-#' @param T A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled. 
+#' @param times A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled. 
 #' @param tcues A two-element vector containing the start and end time cues in seconds of the data segment to keep (i.e., tcues <- c(start_time, end_time)).
 #' @return Cropped data in the same format as X, unless X is irregularly sampled and NOT a sensor list. In that case, the function returns a list with 2 elements:
 #' \itemize{
 #'  \item{\strong{X: }} A sensor list, vector or matrix containing the cropped data segment. If the input is a sensor list, the output will also be. The output has the same units, frame and sampling characteristics as the input.
-#'  \item{\strong{T: }} A vector of sampling times for Y. This is only returned if X is irregularly sampled and X is not a sensor list. (If X is a sensor list, the sampling times are stored in the list.)
+#'  \item{\strong{times: }} A vector of sampling times for Y. This is only returned if X is irregularly sampled and X is not a sensor list. (If X is a sensor list, the sampling times are stored in the list.)
 #' }
 #' @examples 
 #'          d <- find_dives(beaked_whale$P,300) 
@@ -17,8 +17,8 @@
 #'          plott(X = list(P2), r=c(1), panel_labels=c('Depth'))
 #' @export
 
-crop_to <- function(X, sampling_rate = NULL, tcues, T = NULL) {
-  T <- c()
+crop_to <- function(X, sampling_rate = NULL, tcues, times = NULL) {
+  times <- c()
   if (is.list(X)) {
     if (missing(tcues)) {
       stop("input for tcues is required for crop_to\n")
@@ -45,9 +45,9 @@ crop_to <- function(X, sampling_rate = NULL, tcues, T = NULL) {
   }
   tcues <- sort(tcues)
   
-  if (!is.null(T)) {    #irregularly sampled data
-    k <- which(T >= tcues[1] & T <= tcues[2])
-    T <- T[k] - tcues[1]
+  if (!is.null(times)) {    #irregularly sampled data
+    k <- which(times >= tcues[1] & times <= tcues[2])
+    times <- times[k] - tcues[1]
   } else {
     k <- c(max(round(tcues[1] * sampling_rate), 1):min(round(tcues[2] * sampling_rate), nrow(x)))
   }
@@ -56,8 +56,8 @@ crop_to <- function(X, sampling_rate = NULL, tcues, T = NULL) {
     stop('No data points observed between requested time cues.\n')
   }
   if ((k[1] <= 1) & (k[length(k)] >= nrow(x))) {
-    if (!is.null(T)){
-      return(list(X = X, T = T))
+    if (!is.null(times)){
+      return(list(X = X, times = times))
     }else{
       return(X)
     }
@@ -65,15 +65,15 @@ crop_to <- function(X, sampling_rate = NULL, tcues, T = NULL) {
   
   if (!is.list(X)) {
     X <- x[k, ]
-    if (!is.null(T)){
-      return(list(X = X, T = T))
+    if (!is.null(times)){
+      return(list(X = X, times = times))
     }else{
       return(X)
     }
   }
   
-  if (length(T) > 1) {
-    X$data <- cbind(T, x[k, ])
+  if (length(times) > 1) {
+    X$data <- cbind(times, x[k, ])
   } else {
     X$data <- x[k, ]
   }

@@ -6,13 +6,13 @@
 #' @param mindepth The threshold in meters at which to recognize a dive or flight. Dives shallow or flights lower than mindepth will be ignored.
 #' @param surface (optional) The threshold in meters at which the animal is presumed to have reached the surface. Default value is 1. A smaller value can be used if the dive/altitude data are very accurate and you need to detect shallow dives/flights.
 #' @param findall (optional) When TRUE, forces the algorithm to include incomplete dives at the start and end of the record. Default is FALSE which only recognizes complete dives.
-#' @return T is a data frame with one row for each dive/flight found. The columns of T are: start (time in seconds of the start of each dive/flight), end (time in seconds of the start of each dive/flight), max (maximum depth/altitude reached in each dive/flight), tmax	(time in seconds at which the animal reaches the max depth/altitude).
+#' @return dives is a data frame with one row for each dive/flight found. The columns of dives are: start (time in seconds of the start of each dive/flight), end (time in seconds of the start of each dive/flight), max (maximum depth/altitude reached in each dive/flight), tmax	(time in seconds at which the animal reaches the max depth/altitude).
 #' @export
 #' @examples
 #' BW <- beaked_whale
-#' T <- find_dives(p = BW$P$data, 
+#' dives <- find_dives(p = BW$P$data, 
 #' sampling_rate = BW$P$sampling_rate, 
-#' mindepth = 5, surface = 2, 
+#' mindepth = 25, surface = 5, 
 #' findall = FALSE)
 
 find_dives <- function(p, mindepth, sampling_rate = NULL, surface = 1, findall = 0) {
@@ -102,11 +102,11 @@ find_dives <- function(p, mindepth, sampling_rate = NULL, surface = 1, findall =
   t0 <- cbind(ton, toff)
   t1 <- t0 / sampling_rate
   t2 <- dmax
-  t <- cbind(t1, t2)
-  t <- matrix(t[stats::complete.cases(t)], byrow = FALSE, ncol = 4)
-  T <- data.frame(
-    start = t[, 1], end = t[, 2],
-    max = t[, 3], tmax = t[, 4]
+  dmat <- cbind(t1, t2)
+  dmat <- matrix(dmat[stats::complete.cases(dmat)], byrow = FALSE, ncol = 4)
+  dives <- data.frame(
+    start = dmat[, 1], end = dmat[, 2],
+    max = dmat[, 3], tmax = dmat[, 4]
   )
-  return(T)
+  return(dives)
 }

@@ -33,14 +33,14 @@ depth_rate <- function(p, fs, fc, depth) {
                 ignore.case = TRUE) | 
           grepl("depth", p$description, 
                 ignore.case = TRUE)) {
-        depth = TRUE
+        depth <- TRUE
     }}
     
     p <- p$data
   }
  
   if (missing(depth)) {
-    depth <-TRUE
+    depth <- TRUE
   }
   if (missing(fc)) {
     fc <- 0.2

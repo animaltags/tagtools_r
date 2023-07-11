@@ -4,9 +4,9 @@
 #'
 #' @param X A tag sensor data list, or a matrix or vector containing tag sensor data
 #' @param cal A calibration list for the data in X from, for example, spherical_cal.
-#' @param T a tag sensor data list or a vector of temperature measurements for use in temperature compensation.
-#' If T is not a sensor data list, it must be the same size and sampling rate as the data in \code{X}.
-#' T is only required if there is a tcomp item in the \code{cal} list.
+#' @param Tempr a tag sensor data list or a vector of temperature measurements for use in temperature compensation.
+#' If Tempr is not a sensor data list, it must be the same size and sampling rate as the data in \code{X}.
+#' Tempr is only required if there is a tcomp item in the \code{cal} list.
 #'
 #' @return A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed.
 #' @export
@@ -14,7 +14,7 @@
 #' t <- apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
 #' 
 
-apply_cal <- function(X, cal, T = NULL) {
+apply_cal <- function(X, cal, Tempr = NULL) {
   if (!is.list(cal)) {
     stop("Input argument cal must be a calibration list (for example, from spherical_cal)")
   }
@@ -31,10 +31,10 @@ apply_cal <- function(X, cal, T = NULL) {
     x <- X
   }
 
-  if (is.list(T)) {
-    T <- T$data
-    if (!is.matrix(T)) {
-      T <- matrix(T, ncol = 1)
+  if (is.list(Tempr)) {
+    Tempr <- Tempr$data
+    if (!is.matrix(Tempr)) {
+      Tempr <- matrix(Tempr, ncol = 1)
     }
   }
 
@@ -54,19 +54,19 @@ apply_cal <- function(X, cal, T = NULL) {
     }
   } # end of "if poly"
 
-  if (!is.null(T) & "tcomp" %in% names(cal)) {
-    if (nrow(T) == nrow(x)) {
-      # TODO interp T to match X
+  if (!is.null(Tempr) & "tcomp" %in% names(cal)) {
+    if (nrow(Tempr) == nrow(x)) {
+      # TODO interp Tempr to match X
       if (!("tref" %in% names(cal))) {
         tref <- 20
       } else {
         tref <- cal$tref
       }
       if (length(cal$tcomp) == ncol(x)) {
-        x <- x + (T - tref) * matrix(cal$tcomp, nrow = 1)
+        x <- x + (Tempr - tref) * matrix(cal$tcomp, nrow = 1)
       } else {
         if (ncol(x) == 1) {
-          M <- stats::poly(T, length(cal$tcomp), raw = TRUE)
+          M <- stats::poly(Tempr, length(cal$tcomp), raw = TRUE)
           M <- M[, c(ncol(M):1)]
           x <- x + M %*% matrix(cal$tcomp, ncol = 1)
         }
@@ -76,7 +76,7 @@ apply_cal <- function(X, cal, T = NULL) {
         X$cal_tref <- tref
       }
     }
-  } # end if T
+  } # end if Tempr
 
   if ("cross" %in% names(cal)) {
     x <- x %*% cal$cross
