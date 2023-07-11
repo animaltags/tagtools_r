@@ -27,8 +27,3 @@ called by \code{\link[tagtools]{read_cats}} which handles metadata and creates a
 \note{
 CATS csv files can be extremely large; perhaps too large to read the entire file into memory at once and work with it.
 }
-\examples{
-\dontrun{
-V <- read_cats_csv("cats_test_sample")
-}
-}

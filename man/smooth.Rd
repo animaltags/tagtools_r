@@ -18,10 +18,11 @@ The input signal has the first and fifth harmonic. Applying the low-pass filter 
 This function is used to low pass filter (smooth) a regularly-sampled time series.
 }
 \examples{
-\dontrun{
 y1 <- sin((2 * pi * 0.05) \%*\% t(c(1:100))) + cos((2 * pi * 0.25) \%*\% t(c(1:100)))
-plot(x = c(1:length(y1)), y = y1)
-y2 <- smooth(x, n = 4)
-plot(x = c(1:length(y2)), y = y2)
-}
+x1 = c(1:length(y1))
+plot(x = x1, y = y1)
+y2 <- smooth(x1, n = 4)
+x2 = c(1:length(y2))
+plot(x = x2, y = y2)
+
 }

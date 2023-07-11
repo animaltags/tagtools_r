@@ -9,7 +9,7 @@
 #' y1 <- sin((2 * pi * 0.05) %*% t(c(1:100))) + cos((2 * pi * 0.25) %*% t(c(1:100)))
 #' x1 = c(1:length(y1))
 #' plot(x = x1, y = y1)
-#' y2 <- smooth(x, n = 4)
+#' y2 <- smooth(x1, n = 4)
 #' x2 = c(1:length(y2))
 #' plot(x = x2, y = y2)
 #'

@@ -9,9 +9,16 @@
 #' 		 needed to describe the contents of the file. For non-archive and non-portable
 #' 		 storage of variables, consider using \code{\link{save}} or various functions to write data to text files.
 #' @param ... Additional sensor or metadata lists, if user has not bundled them all into a list already but is providing individual structures.
-#' @examples
-#' save_nc("beaked_whale", BW)
+#' @return no return; saves a dataset to an nc file
+#' @examples \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' BW <- beaked_whale
+#' save_nc("beaked_whale_test", BW)
 #' 
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 #' @export
 
 save_nc <- function(file, X, ...) {

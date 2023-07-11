@@ -34,9 +34,7 @@ The forward speed is assumed to be  with respect to the medium so the track deri
 There are numerous other sources of error so use at your own risk!
 }
 \examples{
-\dontrun{
 R <- zero_crossings(sin(2 * pi * 0.033 * c(1:100)), 0.3)
 s <- c(-1, 1, -1, 1, -1, 1)
-}
 
 }

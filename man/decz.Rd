@@ -32,7 +32,6 @@ The first time decz is called, use the following format: y = decz(x,df). The sub
 Decimation is performed in the same way as for \code{\link{decdc}}. The group delay of the filter is removed. For large decimation factors (e.g., df much greater than 50), it is better to perform several nested decimations with lower factors.
 }
 \examples{
-\dontrun{
 plott(list(Accel = beaked_whale$A)) # acceleration data before decimation
 a_rows <- nrow(beaked_whale$A$data)
 a_ind <- data.frame(start = c(1, floor(a_rows / 3), floor(2 * a_rows / 3)))
@@ -48,9 +47,6 @@ for (k in 1:nrow(a_ind)) {
   df <- NULL
   Z <- decz_out$Z
   y <- rbind(y, decz_out$y)
-}
-decz_out$y$sampling_rate <- 2.5
-plott(list(DecAccel = decz_out)) # does not plot
 }
 
 }

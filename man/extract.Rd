@@ -27,8 +27,6 @@ Output sampling rate is the same as the input sampling rate.
 If either tst or ted are beyond the length of x, non-existing samples will be replaced with NaN in X.
 }
 \examples{
-\dontrun{
 BW <- beaked_whale
 t <- extract(x = BW$A$data, sampling_rate = BW$A$sampling_rate, tst = 3, ted = 100)
-}
 }

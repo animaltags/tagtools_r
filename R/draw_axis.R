@@ -5,6 +5,7 @@
 #' @param x A date-time or date object, or other types of objects that can be converted appropriately.
 #' @param date_time Logical. Is the data being plotted date-time (POSIX) or time in seconds?
 #' @param last_panel Logical. Is this the last panel (in other words, should x axis tick labels be drawn)?
+#' @return a time axis on a graph
 #' @export
 
 draw_axis <- function(side = 1, x = NULL, date_time, last_panel) {

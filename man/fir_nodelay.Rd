@@ -33,7 +33,6 @@ The filter has a support of n samples, i.e., it uses n samples from x to compute
 The input samples used are those from n/2 samples before to n/2 samples after the sample number being computed. This means that samples at the start and end of the output vector y need input samples before the start of x and after the end of x. These are faked by reversing the first n/2 samples of x and concatenating them to the start of x. The same trick is used at the end of x. As a result, the first and last n/2 samples in y are untrustworthy. This initial condition problem is true for any filter but the FIR filter used here makes it easy to identify precisely which samples are unreliable.
 }
 \examples{
-\dontrun{
 x <- sin(t(2 * pi * 0.05 * (1:100)) +
   t(cos(2 * pi * 0.25 * (1:100))))
 Y <- fir_nodelay(x = x, n = 30, fc = 0.2, qual = "low")
@@ -42,6 +41,5 @@ plot(c(1:length(x)), x,
   xlab = "index", ylab = "input x and output y"
 )
 lines(c(1:length(Y)), Y, lwd = 2)
-}
 
 }

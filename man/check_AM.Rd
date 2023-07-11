@@ -44,11 +44,9 @@ This function automatically low-pass filters the data with a cut-off frequency
  [forward,right,up] local frame.
 }
 \examples{
-\dontrun{
 AMcheck <- check_AM(
   A = matrix(c(-0.3, 0.52, 0.8), nrow = 1),
   M = matrix(c(22, -22, 14), nrow = 1),
   fs = 1
 )
-}
 }

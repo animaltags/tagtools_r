@@ -15,7 +15,7 @@ track3D(
   q3p = 1.6e-05,
   tagonx,
   tagony,
-  enforce = T,
+  enforce = TRUE,
   x,
   y
 )
@@ -73,14 +73,15 @@ Frame: This function assumes a [north,east,up] navigation frame and a [forward,r
 This function output can be quite sensitive to the inputs used, namely those that define the relative weight given to the existing data, in particular regarding (x,y)=(lat,long); increasing q3p, the (x,y) state variance, will increase the weight given to independent observations of (x,y), say from GPS readings
 }
 \examples{
-\dontrun{
 p <- a2pr(A = beaked_whale$A$data)
 h <- m2h(M = beaked_whale$M$data, A = beaked_whale$A$data)
 track <- track3D(z = beaked_whale$P$data, phi = p$p, 
 psi = h$h, sf = beaked_whale$A$sampling_rate, 
 r = 0.001, q1p = 0.02, q2p = 0.08, q3p = 1.6e-05, 
-tagonx = 1000, tagony = 1000, enforce = T, x = NA, y = NA)
-par(mfrow = c(2, 1), mar = c(4, 4, 0.5, 0.5))
+tagonx = 1000, tagony = 1000, enforce = TRUE, x = NA, y = NA)
+oldpar <- graphics::par(no.readonly = TRUE)
+on.exit(graphics::par(oldpar))  
+graphics::par(mfrow = c(2, 1), mar = c(4, 4, 0.5, 0.5))
 plot(-beaked_whale$P$data, pch = ".", ylab = "Depth (m)", 
 xlab = "Time")
 plot(track$fit.rx, track$fit.ry, xlab = "X", 
@@ -89,7 +90,6 @@ points(track$fit.rx[c(1, length(track$fit.rx))],
 track$fit.ry[c(1, length(track$fit.rx))], pch = 21, bg = 5:6)
 legend("bottomright", cex = 0.7, legend = c("Start", "End"), 
 col = c(5, 6), pt.bg = c(5, 6), pch = c(21, 21))
-}
 
 }
 \seealso{

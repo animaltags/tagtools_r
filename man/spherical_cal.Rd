@@ -48,7 +48,6 @@ field data. This function is only usable for field sensors.
 It will not work for gyroscope data.
 }
 \examples{
-\dontrun{
 p <- spherical_cal(harbor_seal$A$data)
-}
+
 }

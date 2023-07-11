@@ -30,7 +30,7 @@ This is a utility function used by rotation_test, but advanced users may wish to
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/acceleration-filtering.html">Complementary filtering for acceleration: low- &amp; high-frequency</a>
     <a class="dropdown-item" href="../articles/data-quality-error-correction.html">Data quality &amp; error correction</a>
-    <a class="dropdown-item" href="../articles/detectors.html">Detectors</a>
+    <a class="dropdown-item" href="../articles/Detectors.html">Detectors</a>
     <a class="dropdown-item" href="../articles/dive-stats.html">Using dive_stats</a>
     <a class="dropdown-item" href="../articles/find-dives.html">Using find_dives</a>
     <a class="dropdown-item" href="../articles/fine-scale-tracking.html">Fine-scale tracking</a>
@@ -52,7 +52,13 @@ This is a utility function used by rotation_test, but advanced users may wish to
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/animaltags/tagtools_r/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -60,7 +66,7 @@ This is a utility function used by rotation_test, but advanced users may wish to
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Rotate data.</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/animaltags/tagtools_r/blob/HEAD/R/rotate_data.R" class="external-link"><code>R/rotate_data.R</code></a></small>
       <div class="d-none name"><code>rotate_data.Rd</code></div>
     </div>
 
@@ -105,12 +111,12 @@ computed for these "rotated" samples, provides a distribution to which the test 
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">my_events</span> <span class="op">&lt;-</span> <span class="fl">1500</span> <span class="op">*</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="co"># 10 events at "times" between 0 and 1500</span></span></span>
 <span class="r-in"><span><span class="va">my_events</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  700.3796  824.1559  351.9395 1296.1793 1180.5162  247.9480 1316.5622</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8]  517.7959  171.6060  778.6419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1140.20636  616.30473   94.97715 1228.71475  411.93613  185.53468</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  888.39152  747.87687  568.53402 1158.82983</span>
 <span class="r-in"><span><span class="va">rotated_events</span> <span class="op">&lt;-</span> <span class="fu">rotate_data</span><span class="op">(</span><span class="va">my_events</span>, full_period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rotated_events</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0.627441   76.969379  180.960917  346.817350  529.400970  607.663324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  653.177272 1009.537610 1125.200683 1145.583601</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   13.94354   32.56701  102.45193  468.71434  559.27186  785.67332</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  942.27121  990.04192 1121.61405 1262.12870</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -118,7 +124,7 @@ computed for these "rotated" samples, provides a distribution to which the test 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Stacy DeRuiter, Mark Johnson, David Sweeney, Ye Joo McNamara-Oh, Samuel Fynewever, (Oghenkevwe) Racheal Tejevbo, Tiago Marques, (Yuqian) Eason Wang, (Oghenesuvwe) Su Ogedegbe.</p>
+  <p></p><p>Developed by Stacy DeRuiter, Mark Johnson, David Sweeney, Ye Joo McNamara-Oh, Samuel Fynewever, (Oghenkevwe) Racheal Tejevbo, Tiago Marques, Yuqian Wang, (Oghenesuvwe) Su Ogedegbe.</p>
 </div>
 
 <div class="pkgdown-footer-right">

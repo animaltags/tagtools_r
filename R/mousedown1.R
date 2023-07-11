@@ -4,9 +4,10 @@
 #' @param buttons The keyboard button pressed
 #' @param x The x location of the mouse (in ndc coordinates)
 #' @param y The y location of the mouse (in ndc coordinates)
+#' @param quiet If quiet is false, print to screen
 #' @noRd
 #'
-mousedown1 <- function(buttons, x, y) {
+mousedown1 <- function(buttons, x, y, quiet=FALSE) {
   # what to do if the user clicks with the mouse:
   # record click location
   clicked_pt <- list(
@@ -14,9 +15,11 @@ mousedown1 <- function(buttons, x, y) {
     y = graphics::grconvertY(y, from = "nic", to = "user")
   )
   # and print to screen
+  if (!quiet){
   cat(paste(round(clicked_pt$x), ": ",
     round(clicked_pt$y, digits = 2), " degrees\n",
     sep = ""
   ))
+  }
   NULL
 }

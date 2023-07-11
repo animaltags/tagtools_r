@@ -15,6 +15,9 @@ draw_axis(side = 1, x = NULL, date_time, last_panel)
 
 \item{last_panel}{Logical. Is this the last panel (in other words, should x axis tick labels be drawn)?}
 }
+\value{
+a time axis on a graph
+}
 \description{
 This function is called by \code{\link{plott}} to add a time axis to a plot created by \code{\link{plott}}. Users are unlikely to need to call the function directly.
 }

@@ -4,10 +4,10 @@
 \alias{tortuosity}
 \title{Measure tortuosity index}
 \usage{
-tortuosity(T, sampling_rate, intvl)
+tortuosity(track, sampling_rate, intvl)
 }
 \arguments{
-\item{T}{Contains the animal positions in a local horizontal plane. T has a row for each position and two columns: northing and easting. The positions can be in any consistent spatial unit, e.g., metres, km, nautical miles, and are referenced to an arbitrary 0,0 location. T cannot be in degrees as the distance equivalent to a degree latitude is not the same as for a degree longitude.}
+\item{track}{Contains the animal positions in a local horizontal plane. The track parameter has a row for each position and two columns: northing and easting. The positions can be in any consistent spatial unit, e.g., metres, km, nautical miles, and are referenced to an arbitrary 0,0 location. T cannot be in degrees as the distance equivalent to a degree latitude is not the same as for a degree longitude.}
 
 \item{sampling_rate}{The sampling rate of the positions in Hertz (samples per second).}
 
@@ -20,16 +20,14 @@ The tortuosity index which is between 0 and 1 as described above. t contains a v
 This function is used to measure the tortuosity of a regularly sampled horizontal track. Tortuosity can be measured in a number of ways. This function compares the stretched-out track length (STL) over an interval of time with the distance made good (DMG, i.e., the distance actually covered in the interval). The index returned is (STL-DMG)/STL which is 0 for straightline movement and 1 for extreme circular movement.
 }
 \note{
-This tortuosity index is fairly insensitive to speed so if T is produced by dead-reckoning (e.g., using ptrack or htrack), the speed estimate is not important. Also the frame of T is not important as long as the two axes (nominally called northing and easting) used to describe the positions are perpendicular.
+This tortuosity index is fairly insensitive to speed so if track is produced by dead-reckoning (e.g., using ptrack or htrack), the speed estimate is not important. Also the frame of track is not important as long as the two axes (nominally called northing and easting) used to describe the positions are perpendicular.
 }
 \examples{
-\dontrun{
 BW <- beaked_whale
-T <- ptrack(
+track <- ptrack(
   A = BW$A$data, M = BW$M$data, s = 3,
   sampling_rate = BW$A$sampling_rate,
   fc = NULL, return_pe = TRUE
-)$T
-t <- tortuosity(T, sampling_rate = BW$A$sampling_rate, intvl = 25)
-}
+)$track
+tortuosity <- tortuosity(track, sampling_rate = BW$A$sampling_rate, intvl = 25)
 }

@@ -26,7 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/acceleration-filtering.html">Complementary filtering for acceleration: low- &amp; high-frequency</a>
     <a class="dropdown-item" href="../articles/data-quality-error-correction.html">Data quality &amp; error correction</a>
-    <a class="dropdown-item" href="../articles/detectors.html">Detectors</a>
+    <a class="dropdown-item" href="../articles/Detectors.html">Detectors</a>
     <a class="dropdown-item" href="../articles/dive-stats.html">Using dive_stats</a>
     <a class="dropdown-item" href="../articles/find-dives.html">Using find_dives</a>
     <a class="dropdown-item" href="../articles/fine-scale-tracking.html">Fine-scale tracking</a>
@@ -48,7 +48,13 @@
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/animaltags/tagtools_r/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -56,7 +62,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Save a tag dataset to a netCDF file.</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/animaltags/tagtools_r/blob/HEAD/R/save_nc.R" class="external-link"><code>R/save_nc.R</code></a></small>
       <div class="d-none name"><code>save_nc.Rd</code></div>
     </div>
 
@@ -87,16 +93,27 @@ storage of variables, consider using <code><a href="https://rdrr.io/r/base/save.
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>no return; saves a dataset to an nc file</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Warning: this will overwrite any previous NetCDF file with the same name. The file is assumed to be in the current working directory unless <code>file</code> includes file path information.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">save_nc</span><span class="op">(</span><span class="st">"dog17_124a"</span>, <span class="va">A</span>, <span class="va">M</span>, <span class="va">P</span>, <span class="va">info</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">save_nc</span><span class="op">(</span><span class="st">"dog17_124a"</span>, X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">M</span>, <span class="va">P</span>, <span class="va">info</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontshow{</span></span></span>
+<span class="r-in"><span><span class="va">.old_wd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="va">BW</span> <span class="op">&lt;-</span> <span class="va">beaked_whale</span></span></span>
+<span class="r-in"><span><span class="fu">save_nc</span><span class="op">(</span><span class="st">"beaked_whale_test"</span>, <span class="va">BW</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \dontshow{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">.old_wd</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -104,7 +121,7 @@ storage of variables, consider using <code><a href="https://rdrr.io/r/base/save.
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Stacy DeRuiter, Mark Johnson, David Sweeney, Ye Joo McNamara-Oh, Samuel Fynewever, (Oghenkevwe) Racheal Tejevbo, Tiago Marques, (Yuqian) Eason Wang, (Oghenesuvwe) Su Ogedegbe.</p>
+  <p></p><p>Developed by Stacy DeRuiter, Mark Johnson, David Sweeney, Ye Joo McNamara-Oh, Samuel Fynewever, (Oghenkevwe) Racheal Tejevbo, Tiago Marques, Yuqian Wang, (Oghenesuvwe) Su Ogedegbe.</p>
 </div>
 
 <div class="pkgdown-footer-right">

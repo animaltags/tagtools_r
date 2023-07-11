@@ -9,6 +9,9 @@
 #' @noRd
 #'
 plot_prh_fig1 <- function(P, sampling_rate, PRH, xl, prompt) {
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
+  
   #*****************************************
   # colors for PRH data
   #*****************************************

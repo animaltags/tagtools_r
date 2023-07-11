@@ -13,14 +13,23 @@ add_nc(file, D, vname)
 
 \item{vname}{The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).}
 }
+\value{
+no return; adds a structure to an \code{animaltag} object
+}
 \description{
 Add one tag sensor or metadata variable to a NetCDF archive file. If the archive file does not exist,
 it is created. The file is assumed to be in the current working directory
 unless a pathname is added to the beginning of fname.
 }
 \examples{
-\dontrun{
-add_nc('dog17_124a',A)
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+BW <- beaked_whale
+add_nc("beaked_whale", njerk(BW$A), "Jerk")
+
+\dontshow{
+setwd(.old_wd)
 }
 }
 \seealso{
