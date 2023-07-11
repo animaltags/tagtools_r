@@ -58,7 +58,8 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
   di <- which(stringr::str_detect(names(V), "Date "))
   ti <- which(stringr::str_detect(names(V), "Time "))
   
-  old_options <- options() 
+  old_options <- options()
+  on.exit(options(old_options))
   
   options(digits.secs = 6)
   V$Datetime <- as.POSIXct(paste(
@@ -67,5 +68,4 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
     format = "%d.%m.%Y %H:%M:%OS", tz = 'UTC'
     )
   return(V)
-  options(old_options)
 }
