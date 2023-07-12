@@ -333,11 +333,11 @@ nessie <- load_nc(nessie_file_path)
 th <- 0.6
 # find dives
 dt <- find_dives(nessie$P, mindepth = th)
-t <- as.POSIXct(nessie$info$dephist_device_datetime_start, tz = 'GMT') + c(1:nrow(nessie$P$data))/nessie$P$sampling_rate
+t_posix <- as.POSIXct(nessie$info$dephist_device_datetime_start, tz = 'GMT') + c(1:nrow(nessie$P$data))/nessie$P$sampling_rate
 # find data times between 11:30 and 12:30
 s <- as.POSIXct('2017-01-13 11:30:00', tz = 'GMT')
 e <- as.POSIXct('2017-01-13 12:30:00', tz = 'GMT')
-noon <- range(which(t < e & t > s)) 
+noon <- range(which(t_posix < e & t_posix > s)) 
 #convert to seconds
 noon <- noon/nessie$P$sampling_rate
 #do test

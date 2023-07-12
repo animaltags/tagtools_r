@@ -56,16 +56,16 @@ dsf <- function(A, sampling_rate = NULL, fc = NULL, Nfft = NULL) {
   }
   templist <- spectrum_level(Af, Nfft, sampling_rate, Nfft, Nfft / 2)
   S <- templist$SL
-  f <- templist$f
+  fr <- templist$f
   # sum spectral power in the three axes
   v <- rowSums(10^(S / 10))
   m <- max(v)
   n <- which.max(v)
-  if ((n > 1) & (n < length(f))) {
-    p <- pracma::polyfit(t(f[n + (-1:1)]), v[n + (-1:1)], 2)
+  if ((n > 1) & (n < length(fr))) {
+    p <- pracma::polyfit(t(fr[n + (-1:1)]), v[n + (-1:1)], 2)
     fpk <- -p[2] / (2 * p[1])
   } else {
-    fpk <- f[n]
+    fpk <- fr[n]
   }
   q <- m / mean(v)
   return(list(fpk = fpk, q = q))

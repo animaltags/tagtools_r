@@ -12,7 +12,7 @@
 #' @param baselineStart Start time (in seconds since start of the data set) of the baseline period (the mean data values for this period will be used as the 'control' to which all "comparison" data points (or windows) will be compared. if not specified, it will be assumed to be 0 (start of record).
 #' @param baselineEnd End time (in seconds since start of the data set) of the baseline period. If not specified, the entire data set will be used (baseline_end will be the last sampled time-point in the data set).
 #' @param BL_COV Logical.  If BL_COV=  TRUE, then a covariance matrix using all data in baseline period will be used for calculating the Mahalanobis distance. Default is BL_COV = FALSE.
-#' @return Data frame containing results: D$t is times in seconds since start of dataset, at which Mahalanobis distances are reported. If a smoothDur was applied, then the reported times will be the start times of each "comparison" window. D$dist is the Mahalanobis distances between the specified baseline period and the specified "comparison" periods.
+#' @return Data frame containing results: variable seconds is times in seconds since start of dataset, at which Mahalanobis distances are reported. If a smoothDur was applied, then the reported times will be the start times of each "comparison" window. Variable dist is the Mahalanobis distances between the specified baseline period and the specified "comparison" periods.
 #' @export
 #' @examples BW <- beaked_whale
 #' m_dist_result <- m_dist(BW$A$data, BW$A$sampling_rate)
@@ -60,7 +60,7 @@ m_dist <- function(data, sampling_rate, smoothDur, overlap, consec, cumSum, expS
   k <- matrix(c(1:N), ncol = 1)                               # index vector
   ss <- (k - 1) * (W - O) + 1                                 # start times of comparison windows, in samples
   ps <- ((k - 1) * (W - O) + 1) + smoothDur * sampling_rate * 60 / 2     # mid points of comparison windows, in samples (times at which distances will be reported)
-  t <- ps / sampling_rate                                                # mid-point times in seconds
+  mid_t <- ps / sampling_rate                                                # mid-point times in seconds
   ctr <- colMeans(data[bs:be,], na.rm = TRUE)                    # mean values during baseline period
   if (BL_COV) {
     bcov <- stats::cov(data[bs:be,], use = "complete.obs")           # covariance matrix using all data in baseline period
@@ -90,11 +90,11 @@ m_dist <- function(data, sampling_rate, smoothDur, overlap, consec, cumSum, expS
   }
   # functions return squared Mahalanobis dist so take sqrt
   dist <- sqrt(d2)
-  dist[t > (nrow(data) / sampling_rate - smoothDur * 60)] <- NA
+  dist[mid_t > (nrow(data) / sampling_rate - smoothDur * 60)] <- NA
   # Calculate cumsum of distances if requested
   if(cumSum == TRUE) {
     dist <- cumsum(dist)
   }
-  D <- data.frame(t,dist)
+  D <- data.frame(seconds = mid_t, dist)
   return(D)
 }

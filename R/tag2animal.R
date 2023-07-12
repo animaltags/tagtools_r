@@ -82,14 +82,14 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
     OTAB <- OTAB[order(OTAB[, 1]), ]
     PTAB <- o2p(OTAB)
     # time stamps
-    t <- matrix(c(0:(nrow(X) - 1)) / sampling_rate, ncol = 1)
-    if (PTAB[nrow(PTAB), 1] < utils::tail(t, 1)) {
-      PTAB <- rbind(PTAB, matrix(c(utils::tail(t, 1), PTAB[nrow(PTAB), 2:4]), nrow = 1))
+    timez <- matrix(c(0:(nrow(X) - 1)) / sampling_rate, ncol = 1)
+    if (PTAB[nrow(PTAB), 1] < utils::tail(timez, 1)) {
+      PTAB <- rbind(PTAB, matrix(c(utils::tail(timez, 1), PTAB[nrow(PTAB), 2:4]), nrow = 1))
     }
-    prh <- matrix(0, nrow = nrow(t), ncol = 3)
+    prh <- matrix(0, nrow = nrow(timez), ncol = 3)
     for (col in c(2:4)) {
-      # linear interpolation of PTAB entries to be same n rows as t
-      prh[, col] <- stats::approx(PTAB[, 1], PTAB[, col], t)
+      # linear interpolation of PTAB entries to be same n rows as timez
+      prh[, col] <- stats::approx(PTAB[, 1], PTAB[, col], timez)
     }
   } else { # if OTAB has only one row
     prh <- matrix(OTAB[, 3:5], nrow = 1)

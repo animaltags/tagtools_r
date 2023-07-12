@@ -17,9 +17,9 @@ undo_cal <- function(X, temperature) {
     stop("Input to undo_cal must be a list")
   }
   if ("info" %in% names(X)) {
-    f <- names(X)
-    for (k in 1:length(f)) {
-      if (identical(f[k], "info")) {
+    namez <- names(X)
+    for (k in 1:length(namez)) {
+      if (identical(namez[k], "info")) {
         next
       }
       X[[k]] <- undo_cal1(X[[k]], temperature)

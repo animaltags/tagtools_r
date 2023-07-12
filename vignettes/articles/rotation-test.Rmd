@@ -100,11 +100,11 @@ str(dt, max.level = 1)
 
 ```{r, echo = TRUE, eval = FALSE}
 # make time variables
-t <- as.POSIXct(nessie$info$dephist_device_datetime_start, tz = 'GMT') + c(1:nrow(nessie$P$data))/nessie$P$sampling_rate
+t_posix <- as.POSIXct(nessie$info$dephist_device_datetime_start, tz = 'GMT') + c(1:nrow(nessie$P$data))/nessie$P$sampling_rate
 # find data times between 11:30 and 12:30
 s <- as.POSIXct('2017-01-13 11:30:00', tz = 'GMT')
 e <- as.POSIXct('2017-01-13 12:30:00', tz = 'GMT')
-noon <- range(which(t < e & t > s)) 
+noon <- range(which(t_posix < e & t_posix > s)) 
 #convert to seconds
 noon <- noon/nessie$P$sampling_rate
 #do test
@@ -116,11 +116,11 @@ RTR <- rotation_test(event_times = dt$start, exp_period = noon, full_period = c(
 
 ```{r, echo = FALSE, eval = TRUE}
 # make time variables
-t <- as.POSIXct(nessie$info$dephist_device_datetime_start, tz = 'GMT') + c(1:nrow(nessie$P$data))/nessie$P$sampling_rate
+t_posix <- as.POSIXct(nessie$info$dephist_device_datetime_start, tz = 'GMT') + c(1:nrow(nessie$P$data))/nessie$P$sampling_rate
 # find data times between 11:30 and 12:30
 s <- as.POSIXct('2017-01-13 11:30:00', tz = 'GMT')
 e <- as.POSIXct('2017-01-13 12:30:00', tz = 'GMT')
-noon <- range(which(t < e & t > s)) 
+noon <- range(which(t_posix < e & t_posix > s)) 
 #convert to seconds
 noon <- noon/nessie$P$sampling_rate
 #do test

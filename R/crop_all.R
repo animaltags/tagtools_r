@@ -19,9 +19,9 @@ crop_all <- function(tcues, X) {
     stop("input to crop_all must be a sensor list")
   }
   if (utils::hasName(X, 'info')) {    #X is a set of sensor lists
-    f <- names(X)
-    for (k in 1:length(f)) {
-      if (f[k] == 'info') {
+    namez <- names(X)
+    for (k in 1:length(namez)) {
+      if (namez[k] == 'info') {
         next
       }  
       X[[k]] <- crop_to(X[[k]], tcues = tcues)

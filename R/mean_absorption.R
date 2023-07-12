@@ -34,10 +34,10 @@ mean_absorption <- function(freq, r, depth, Ttab = NULL) {
     return(a)
   }
   # handle a range of frequencies
-  f <- seq(min(freq), max(freq), len = 50)
-  aa <- matrix(0, length(depth), length(f))
+  fr <- seq(min(freq), max(freq), len = 50)
+  aa <- matrix(0, length(depth), length(fr))
   for (k in 1:length(depth)) {
-    aa[k, ] <- absorption(f, tempr[k], depth[k])
+    aa[k, ] <- absorption(fr, tempr[k], depth[k])
   }
   aaa <- matrix(0, 1, ncol(aa))
   for (i in 1:ncol(aa)) {

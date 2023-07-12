@@ -20,9 +20,9 @@ sound_speed <- function(temperature, D = NULL, S = NULL) {
     S <- 35
   }
   # v = 1449.2+4.6*temperature-0.055*temperature.^2+0.00029*temperature.^3+(1.34-0.01*temperature).*(S-35)+0.016*D ;
-  t <- temperature / 10
+  tempr <- temperature / 10
   D <- D / 1000
-  v0 <- 1449.05 + 45.7 * t - 5.21 * t^2 + 0.23 * t^3 + (1.333 - 0.126 * t + 0.009 * t^2) * (S - 35)
-  v <- v0 + (16.23 + 0.253 * t) * D + (0.213 - 0.1 * t) * D^2 + (0.016 + 0.0002 * (S - 35)) * (S - 35) * t * D
+  v0 <- 1449.05 + 45.7 * tempr - 5.21 * tempr^2 + 0.23 * tempr^3 + (1.333 - 0.126 * tempr + 0.009 * tempr^2) * (S - 35)
+  v <- v0 + (16.23 + 0.253 * tempr) * D + (0.213 - 0.1 * tempr) * D^2 + (0.016 + 0.0002 * (S - 35)) * (S - 35) * tempr * D
   return(v)
 }

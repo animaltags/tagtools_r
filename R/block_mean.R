@@ -7,7 +7,7 @@
 #' @return A list with 2 elements:
 #' \itemize{
 #'  \item{\strong{Y: }} A vector or matrix containing the mean value of each block. If X is a mxn matrix, Y is pxn where p is the number of complete n-length blocks with nov that can be made out of m samples, i.e., n+(p-1)*(n-nov) < m
-#'  \item{\strong{t: }} The time at which each output in Y is reported, in units of samples of X.  So if t[1] = 12, then the value Y[1] corresponds to the “time” 12 samples in X.
+#'  \item{\strong{samples: }} The time at which each output in Y is reported, in units of samples of X.  So if samples[1] = 12, then the value Y[1] corresponds to the “time” 12 samples in X.
 #' }
 #' @export
 #' @examples samplematrix <- matrix(c(1, 3, 5, 7, 9, 11, 13, 15, 17), byrow = TRUE, ncol = 3)
@@ -23,7 +23,7 @@ block_mean <- function(X, n, nov) {
     for (i in 1:ncol(ss)) {
       Y[i] <- t(mean(ss[, i]))
     }
-    t <- as.matrix(round(n / 2 + (0:(length(Y) - 1)) * (n - nov)))
+    samps <- as.matrix(round(n / 2 + (0:(length(Y) - 1)) * (n - nov)))
   }
   else {
     if (nrow(X) == 1) {
@@ -41,8 +41,8 @@ block_mean <- function(X, n, nov) {
         Y[j, k] <- t(mean(ss[, j]))
       }
     }
-    t <- as.matrix(round(n / 2 + (0:(nrow(Y) - 1)) * (n - nov)))
+    samps <- as.matrix(round(n / 2 + (0:(nrow(Y) - 1)) * (n - nov)))
   }
 
-  return(list(Y = Y, t = t))
+  return(list(Y = Y, samples = samps))
 }

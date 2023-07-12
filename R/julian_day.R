@@ -45,7 +45,7 @@ julian_day <- function(y = NULL, m = NULL, d = NULL) {
     d[length(d) + 1:k] <- d[length(d)]
   }
   dvec <- as.Date(ISOdate(y, m, d))
-  t <- as.POSIXlt(dvec)
-  n <- t$yday + 1
+  t_posix <- as.POSIXlt(dvec)
+  n <- t_posix$yday + 1
   return(n)
 }

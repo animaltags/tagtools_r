@@ -17,7 +17,7 @@ block_mean(X, n, nov)
 A list with 2 elements:
 \itemize{
  \item{\strong{Y: }} A vector or matrix containing the mean value of each block. If X is a mxn matrix, Y is pxn where p is the number of complete n-length blocks with nov that can be made out of m samples, i.e., n+(p-1)*(n-nov) < m
- \item{\strong{t: }} The time at which each output in Y is reported, in units of samples of X.  So if t[1] = 12, then the value Y[1] corresponds to the “time” 12 samples in X.
+ \item{\strong{samples: }} The time at which each output in Y is reported, in units of samples of X.  So if samples[1] = 12, then the value Y[1] corresponds to the “time” 12 samples in X.
 }
 }
 \description{

@@ -4,8 +4,8 @@
 #' @param x The signal vector to be buffered
 #' @return The "analytic signal," in other words the Hilbert transform of the input signal x
 #' @export
-#' @examples t <- seq(from = 0, by = 1/1024, to = 1)
-#' x <- sin(2*pi*60*t)
+#' @examples timez <- seq(from = 0, by = 1/1024, to = 1)
+#' x <- sin(2*pi*60*timez)
 #' y <- hilbert_transform(x)
 hilbert_transform <- function(x)
 {

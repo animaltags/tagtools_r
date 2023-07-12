@@ -65,16 +65,16 @@ crop <- function(X, sampling_rate = NULL, times = NULL, quiet=FALSE) {
   LIMS <- tcues
   pts <- graphics::locator(3) # This should probably be a shiny app at some point in order to make the interactiveness more user friendly
   if (length(pts$x) == 1) {
-    t <- pts$x
-    tcues[1] <- max(LIMS[1], min(t, tcues[2]))
+    tt <- pts$x
+    tcues[1] <- max(LIMS[1], min(tt, tcues[2]))
     graphics::abline(v = (c(1, 1) * tcues[1]), col = "green", lwd = 1.5)
     graphics::points(tcues[1], mean(c((graphics::par("usr")[3]), (graphics::par("usr")[4]))), col = "green", pch = 6)
     graphics::abline(v = (c(1, 1) * tcues[2]), col = "red", lwd = 1.5)
     graphics::points(tcues[2], mean(c((graphics::par("usr")[3]), (graphics::par("usr")[4]))), col = "red", pch = 6)
   } else {
     if (length(pts$x) == 2) {
-      t <- pts$x[2]
-      tcues[2] <- min(LIMS[2], max(t, tcues[1]))
+      tt <- pts$x[2]
+      tcues[2] <- min(LIMS[2], max(tt, tcues[1]))
       graphics::abline(v = (c(1, 1) * tcues[1]), col = "green", lwd = 1.5)
       graphics::points(tcues[1], mean(c((graphics::par("usr")[3]), (graphics::par("usr")[4]))), col = "green", pch = 6)
       graphics::abline(v = (c(1, 1) * tcues[2]), col = "red", lwd = 1.5)

@@ -4,9 +4,9 @@ n <- 3
 nov <- 1
 
 Y <- matrix(c(7,9,11),byrow = FALSE ,ncol = 3)
-t <- matrix(c(2))
+samples <- matrix(c(2))
 
-test_output <- list(Y = Y, t = t)
+test_output <- list(Y = Y, samples = samples)
 
 test_that("function works", {
   expect_equal(block_mean(test_matrix, n = n, nov = nov), test_output)
