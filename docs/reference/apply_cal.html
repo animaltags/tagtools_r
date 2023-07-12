@@ -72,7 +72,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">apply_cal</span><span class="op">(</span><span class="va">X</span>, <span class="va">cal</span>, T <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">apply_cal</span><span class="op">(</span><span class="va">X</span>, <span class="va">cal</span>, Tempr <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -85,10 +85,10 @@
 <dd><p>A calibration list for the data in X from, for example, spherical_cal.</p></dd>
 
 
-<dt>T</dt>
+<dt>Tempr</dt>
 <dd><p>a tag sensor data list or a vector of temperature measurements for use in temperature compensation.
-If T is not a sensor data list, it must be the same size and sampling rate as the data in <code>X</code>.
-T is only required if there is a tcomp item in the <code>cal</code> list.</p></dd>
+If Tempr is not a sensor data list, it must be the same size and sampling rate as the data in <code>X</code>.
+Tempr is only required if there is a tcomp item in the <code>cal</code> list.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -72,7 +72,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">crop_to</span><span class="op">(</span><span class="va">X</span>, sampling_rate <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">tcues</span>, T <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">crop_to</span><span class="op">(</span><span class="va">X</span>, sampling_rate <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">tcues</span>, times <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -89,7 +89,7 @@
 <dd><p>A two-element vector containing the start and end time cues in seconds of the data segment to keep (i.e., tcues &lt;- c(start_time, end_time)).</p></dd>
 
 
-<dt>T</dt>
+<dt>times</dt>
 <dd><p>A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled.</p></dd>
 
 </dl></div>
@@ -98,7 +98,7 @@
     
 
 <p>Cropped data in the same format as X, unless X is irregularly sampled and NOT a sensor list. In that case, the function returns a list with 2 elements:</p><ul><li><p><strong>X: </strong> A sensor list, vector or matrix containing the cropped data segment. If the input is a sensor list, the output will also be. The output has the same units, frame and sampling characteristics as the input.</p></li>
-<li><p><strong>T: </strong> A vector of sampling times for Y. This is only returned if X is irregularly sampled and X is not a sensor list. (If X is a sensor list, the sampling times are stored in the list.)</p></li>
+<li><p><strong>times: </strong> A vector of sampling times for Y. This is only returned if X is irregularly sampled and X is not a sensor list. (If X is a sensor list, the sampling times are stored in the list.)</p></li>
 </ul></div>
 
     <div class="section level2">

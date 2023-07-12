@@ -101,15 +101,15 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>T is a data frame with one row for each dive/flight found. The columns of T are: start (time in seconds of the start of each dive/flight), end (time in seconds of the start of each dive/flight), max (maximum depth/altitude reached in each dive/flight), tmax	(time in seconds at which the animal reaches the max depth/altitude).</p>
+<p>dives is a data frame with one row for each dive/flight found. The columns of dives are: start (time in seconds of the start of each dive/flight), end (time in seconds of the start of each dive/flight), max (maximum depth/altitude reached in each dive/flight), tmax	(time in seconds at which the animal reaches the max depth/altitude).</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">BW</span> <span class="op">&lt;-</span> <span class="va">beaked_whale</span></span></span>
-<span class="r-in"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu">find_dives</span><span class="op">(</span>p <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">data</span>, </span></span>
+<span class="r-in"><span><span class="va">dives</span> <span class="op">&lt;-</span> <span class="fu">find_dives</span><span class="op">(</span>p <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">data</span>, </span></span>
 <span class="r-in"><span>sampling_rate <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">sampling_rate</span>, </span></span>
-<span class="r-in"><span>mindepth <span class="op">=</span> <span class="fl">5</span>, surface <span class="op">=</span> <span class="fl">2</span>, </span></span>
+<span class="r-in"><span>mindepth <span class="op">=</span> <span class="fl">25</span>, surface <span class="op">=</span> <span class="fl">5</span>, </span></span>
 <span class="r-in"><span>findall <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

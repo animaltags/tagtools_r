@@ -78,7 +78,7 @@ that is not absolutely accurate.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_tracks</span><span class="op">(</span><span class="va">P</span>, T <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">D</span>, <span class="va">sampling_rate</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_tracks</span><span class="op">(</span><span class="va">P</span>, times <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">D</span>, <span class="va">sampling_rate</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,10 +87,10 @@ that is not absolutely accurate.</p>
 <dd><p>a two column matrix or data frame containing the anchor positions. The first column should be the "northing" and the second the "easting" coordinates. (If data frame is input, then columns with those two names, in any position, will be used if present).</p></dd>
 
 
-<dt>T</dt>
-<dd><p>a vector of times corresponding to the positions P. If P is a data frame with a column called "T" then that column will be used.
+<dt>times</dt>
+<dd><p>a vector of times corresponding to the positions P. If P is a data frame with a column called "times" then that column will be used.
 Times are in seconds since the start of the regularly sampled track.
-T must have the same number of rows as P. Times
+times must have the same number of rows as P. Times
 must be greater than or equal to 0 and less than the time length of the regularly sampled track.</p></dd>
 
 
