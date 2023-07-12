@@ -61,7 +61,7 @@ m_dist <- function(data, sampling_rate, smoothDur, overlap, consec, cumSum, expS
   ss <- (k - 1) * (W - O) + 1                                 # start times of comparison windows, in samples
   ps <- ((k - 1) * (W - O) + 1) + smoothDur * sampling_rate * 60 / 2     # mid points of comparison windows, in samples (times at which distances will be reported)
   t <- ps / sampling_rate                                                # mid-point times in seconds
-  ctr <- colMeans(data[bs:be,], na.rm = T)                    # mean values during baseline period
+  ctr <- colMeans(data[bs:be,], na.rm = TRUE)                    # mean values during baseline period
   if (BL_COV) {
     bcov <- stats::cov(data[bs:be,], use = "complete.obs")           # covariance matrix using all data in baseline period
   } else {
@@ -78,11 +78,11 @@ m_dist <- function(data, sampling_rate, smoothDur, overlap, consec, cumSum, expS
     
   if (consec == FALSE) {
     # doing the following with apply type commands means it could be executed in parallel if needed...
-    comps <- zoo::rollapply(data, width = W, mean, by = W - O, by.column = TRUE, align = "left", fill = NULL, partial = TRUE, na.rm = T) # rolling means, potentially with overlap
+    comps <- zoo::rollapply(data, width = W, mean, by = W - O, by.column = TRUE, align = "left", fill = NULL, partial = TRUE, na.rm = TRUE) # rolling means, potentially with overlap
     d2 <- apply(comps, MARGIN = 1, FUN = stats::mahalanobis, cov = bcov, center = ctr, inverted = FALSE)
   } else {
     i_bcov <- solve(bcov) # inverse of the baseline cov matrix
-    ctls <- zoo::rollapply(data, width = W, mean, by = W-O, by.column = TRUE, align = "left", fill = NULL, partial = TRUE, na.rm = T) # rolling means, potentially with overlap
+    ctls <- zoo::rollapply(data, width = W, mean, by = W-O, by.column = TRUE, align = "left", fill = NULL, partial = TRUE, na.rm = TRUE) # rolling means, potentially with overlap
     comps <- rbind( ctls[2:nrow(ctls),] , NA * vector(mode = "numeric",length = ncol(data)) ) # compare a given control window with the following comparison window.
     pair_difsampling_rate <- as.matrix(ctls - comps)
     d2 <- apply(pair_difsampling_rate, MARGIN = 1, FUN = Ma, Sx = i_bcov)

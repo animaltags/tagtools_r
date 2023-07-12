@@ -46,7 +46,7 @@ block_acf <- function(resids, blocks, max_lag,
   }
   if (make_plot) {
     # get an acf object in which the block_acf results will be inserted. Facilitates plotting.
-    A <- stats::acf(resids, lag.max = max_lag, plot = F)
+    A <- stats::acf(resids, lag.max = max_lag, plot = FALSE)
     # insert coefficients from block_acf into A
     A$acf[, 1, 1] <- block_acf
     # plot block_acf
