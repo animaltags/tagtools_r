@@ -263,7 +263,7 @@ plot(DR$easting, DR$northing, type = 'l',
      yl = c(-1000, 5000))
 lines(POSLLF$easting, POSLLF$northing, type = 'b', col = 'red', pch = 20)
 pitch_roll <- a2pr(d7$Aa)
-FT <- fit_tracks(P = POSLLF, T = d7$POS$data[,1],
+FT <- fit_tracks(P = POSLLF, times = d7$POS$data[,1],
                 D = DR[,c(1:2)],
                 sampling_rate = d7$Aa$sampling_rate)
 roll_deg <- pitch_roll$r/pi*180
@@ -285,7 +285,7 @@ This vignette starts with a quick review, where you'll find and correct for a fe
 #if you want to run this example, download the "mn12_186a_raw.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 MN_file_path <- "nc_files/mn12_186a_raw.nc"
 MN <- load_nc(MN_file_path)
-Pc = crop_to(X = MN$P, sampling_rate = 1, tcues = c(0, 25306), T = NULL)
+Pc = crop_to(X = MN$P, sampling_rate = 1, tcues = c(0, 25306), times = NULL)
 Pcm = median_filter(Pc,n=3)
 Tc <- crop_to(MN$T,tcues=Pc$crop)
 Pcmf <- fix_pressure(Pcm, Tc)
@@ -309,7 +309,7 @@ This vignette also has a nice review of some previous concepts---cropping data, 
 #if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 ZC_file_path <- "nc_files/zc11_267a.nc"
 ZC <- load_nc(ZC_file_path)
-ZPCr = crop_to(ZC$P, sampling_rate = ZC$P$sampling_rate, tcues = c(9424, 64027), T = NULL)
+ZPCr = crop_to(ZC$P, sampling_rate = ZC$P$sampling_rate, tcues = c(9424, 64027), times = NULL)
 mindepth <- 50 
 dt <- find_dives(ZPCr, mindepth=mindepth) 
 ds <- dive_stats(ZPCr, dive_cues=dt[,c('start', 'end'),]) 

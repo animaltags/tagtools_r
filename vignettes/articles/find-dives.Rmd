@@ -136,7 +136,7 @@ Pc = crop(MN$P)
 </div>
 
 ```{r, echo = FALSE, eval = TRUE}
-Pc = crop_to(X = MN$P, sampling_rate = 1, tcues = c(0, 25306), T = NULL)
+Pc = crop_to(X = MN$P, sampling_rate = 1, tcues = c(0, 25306), times = NULL)
 ```
 
 This displays an interactive depth plot. Follow the instructions to select the obvious diving section of the data and then click finish. The function returns a new data structure which contains just the selected part of the dive profile. The resulting sensor data list also contains fields that document what you just did. To see them:
