@@ -24,9 +24,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/Detectors.html">Detectors</a>
+    <a class="dropdown-item" href="../articles/TagTools.html">Tagtools vignettes: overview and introduction</a>
     <a class="dropdown-item" href="../articles/acceleration-filtering.html">Complementary filtering for acceleration: low- &amp; high-frequency</a>
     <a class="dropdown-item" href="../articles/data-quality-error-correction.html">Data quality &amp; error correction</a>
-    <a class="dropdown-item" href="../articles/Detectors.html">Detectors</a>
     <a class="dropdown-item" href="../articles/dive-stats.html">Using dive_stats</a>
     <a class="dropdown-item" href="../articles/find-dives.html">Using find_dives</a>
     <a class="dropdown-item" href="../articles/fine-scale-tracking.html">Fine-scale tracking</a>
@@ -38,7 +39,6 @@
     <a class="dropdown-item" href="../articles/plots-and-cropping.html">Plots and cropping</a>
     <a class="dropdown-item" href="../articles/rotation-test.html">Rotation test</a>
     <a class="dropdown-item" href="../articles/tag-to-whale-frame.html">Tag orientation: From tag frame to sperm whale frame</a>
-    <a class="dropdown-item" href="../articles/TagTools.html">Tagtools vignettes: overview and introduction</a>
     <a class="dropdown-item" href="../articles/vectors-vs-structures.html">Vectors and scalars versus structures</a>
   </div>
 </li>
@@ -94,7 +94,7 @@
     
 
 <p>A list with 2 elements:</p><ul><li><p><strong>Y: </strong> A vector or matrix containing the mean value of each block. If X is a mxn matrix, Y is pxn where p is the number of complete n-length blocks with nov that can be made out of m samples, i.e., n+(p-1)*(n-nov) &lt; m</p></li>
-<li><p><strong>t: </strong> The time at which each output in Y is reported, in units of samples of X.  So if t[1] = 12, then the value Y[1] corresponds to the “time” 12 samples in X.</p></li>
+<li><p><strong>samples: </strong> The time at which each output in Y is reported, in units of samples of X.  So if samples[1] = 12, then the value Y[1] corresponds to the “time” 12 samples in X.</p></li>
 </ul></div>
 
     <div class="section level2">
