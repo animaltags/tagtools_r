@@ -211,7 +211,7 @@ The next step is to correct the ‘0’ pressure offset of the depth sensor (so 
 Tc <- crop_to(MN$T,tcues=Pc$crop)
 ```
 
-This uses the crop information stored in Pc to do the same operation on T. Plot them together to confirm that the time intervals (horizontal ticks) are the same:
+This uses the crop information stored in Pc to do the same operation on MN$T. Plot them together to confirm that the time intervals (horizontal ticks) are the same:
 
 ```{r, echo = TRUE, eval = FALSE}
 plott(X=list(Pcm=Pcm, Tc=Tc), r=c(TRUE,FALSE))

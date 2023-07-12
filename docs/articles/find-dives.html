@@ -90,7 +90,7 @@
                         <h4 data-toc-skip class="author">tagtools
 project team</h4>
             
-            <h4 data-toc-skip class="date">2023-07-11</h4>
+            <h4 data-toc-skip class="date">2023-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/animaltags/tagtools_r/blob/HEAD/vignettes/articles/find-dives.Rmd" class="external-link"><code>vignettes/articles/find-dives.Rmd</code></a></small>
       <div class="d-none name"><code>find-dives.Rmd</code></div>
@@ -367,8 +367,8 @@ match the pressure data. You can do this using:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Tc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crop_to.html">crop_to</a></span><span class="op">(</span><span class="va">MN</span><span class="op">$</span><span class="cn">T</span>,tcues<span class="op">=</span><span class="va">Pc</span><span class="op">$</span><span class="va">crop</span><span class="op">)</span></span></code></pre></div>
 <p>This uses the crop information stored in Pc to do the same operation
-on T. Plot them together to confirm that the time intervals (horizontal
-ticks) are the same:</p>
+on MN$T. Plot them together to confirm that the time intervals
+(horizontal ticks) are the same:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plott.html">plott</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Pcm<span class="op">=</span><span class="va">Pcm</span>, Tc<span class="op">=</span><span class="va">Tc</span><span class="op">)</span>, r<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <button class="btn btn-primary" data-toggle="collapse" data-target="#Pc_Tc_plott">
