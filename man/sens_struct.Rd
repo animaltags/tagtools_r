@@ -7,7 +7,7 @@
 sens_struct(
   data,
   sampling_rate = NULL,
-  T = NULL,
+  times = NULL,
   depid,
   type,
   unit = NULL,
@@ -23,7 +23,7 @@ sens_struct(
 
 \item{sampling_rate}{(optional) sensor data sampling rate in Hz}
 
-\item{T}{(optional) is the time in seconds of each measurement in data for irregularly sampled data. The time reference (i.e., the 0 time) should be with respect to the start time of the deployment.}
+\item{times}{(optional) is the time in seconds of each measurement in data for irregularly sampled data. The time reference (i.e., the 0 time) should be with respect to the start time of the deployment.}
 
 \item{depid}{string that provides a unique identifier for this tag deployment}
 

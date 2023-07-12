@@ -4,7 +4,7 @@
 \alias{crop_to}
 \title{Reduce the time span of data}
 \usage{
-crop_to(X, sampling_rate = NULL, tcues, T = NULL)
+crop_to(X, sampling_rate = NULL, tcues, times = NULL)
 }
 \arguments{
 \item{X}{A sensor list, vector, or matrix. X can be regularly or irregularly samples data in any frame and unit.}
@@ -13,13 +13,13 @@ crop_to(X, sampling_rate = NULL, tcues, T = NULL)
 
 \item{tcues}{A two-element vector containing the start and end time cues in seconds of the data segment to keep (i.e., tcues <- c(start_time, end_time)).}
 
-\item{T}{A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled.}
+\item{times}{A vector of sampling times for X. This is only needed if X is not a sensor list and X is not regularly sampled.}
 }
 \value{
 Cropped data in the same format as X, unless X is irregularly sampled and NOT a sensor list. In that case, the function returns a list with 2 elements:
 \itemize{
  \item{\strong{X: }} A sensor list, vector or matrix containing the cropped data segment. If the input is a sensor list, the output will also be. The output has the same units, frame and sampling characteristics as the input.
- \item{\strong{T: }} A vector of sampling times for Y. This is only returned if X is irregularly sampled and X is not a sensor list. (If X is a sensor list, the sampling times are stored in the list.)
+ \item{\strong{times: }} A vector of sampling times for Y. This is only returned if X is irregularly sampled and X is not a sensor list. (If X is a sensor list, the sampling times are stored in the list.)
 }
 }
 \description{

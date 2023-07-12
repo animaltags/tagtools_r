@@ -4,16 +4,16 @@
 \alias{apply_cal}
 \title{Implement a calibration on tag sensor data}
 \usage{
-apply_cal(X, cal, T = NULL)
+apply_cal(X, cal, Tempr = NULL)
 }
 \arguments{
 \item{X}{A tag sensor data list, or a matrix or vector containing tag sensor data}
 
 \item{cal}{A calibration list for the data in X from, for example, spherical_cal.}
 
-\item{T}{a tag sensor data list or a vector of temperature measurements for use in temperature compensation.
-If T is not a sensor data list, it must be the same size and sampling rate as the data in \code{X}.
-T is only required if there is a tcomp item in the \code{cal} list.}
+\item{Tempr}{a tag sensor data list or a vector of temperature measurements for use in temperature compensation.
+If Tempr is not a sensor data list, it must be the same size and sampling rate as the data in \code{X}.
+Tempr is only required if there is a tcomp item in the \code{cal} list.}
 }
 \value{
 A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed.

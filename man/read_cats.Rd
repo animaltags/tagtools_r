@@ -21,7 +21,7 @@ generates a netCDF file in the current working directory containing
 		\itemize{
 		\item {A, Accelerometer data structure}
 		\item {M, Magnetometer data structure}
-		\item {T, Temperature sensor data structure}
+		\item {temp, Temperature sensor data structure}
 		\item {info	Information structure for the deployment}
 		}
 }

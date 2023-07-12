@@ -4,14 +4,14 @@
 \alias{fit_tracks}
 \title{Integrate track with reference positions}
 \usage{
-fit_tracks(P, T = NULL, D, sampling_rate)
+fit_tracks(P, times = NULL, D, sampling_rate)
 }
 \arguments{
 \item{P}{a two column matrix or data frame containing the anchor positions. The first column should be the "northing" and the second the "easting" coordinates. (If data frame is input, then columns with those two names, in any position, will be used if present).}
 
-\item{T}{a vector of times corresponding to the positions P. If P is a data frame with a column called "T" then that column will be used.
+\item{times}{a vector of times corresponding to the positions P. If P is a data frame with a column called "times" then that column will be used.
 Times are in seconds since the start of the regularly sampled track.
-T must have the same number of rows as P. Times
+times must have the same number of rows as P. Times
 must be greater than or equal to 0 and less than the time length of the regularly sampled track.}
 
 \item{D}{a two column matrix containing the regularly sampled track

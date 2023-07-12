@@ -3,7 +3,7 @@ BW <- beaked_whale
 sample<- BW$P$data %>% "["(.,1:9,)
 set <- list(
   SL = matrix(c(-24.56609273, -20.52578992), nrow = 2, ncol = 1),
-  f = c(0.00, 0.25)
+  freq = c(0.00, 0.25)
 )
 
 test_that("function works", {
