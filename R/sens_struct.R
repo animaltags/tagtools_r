@@ -6,7 +6,7 @@
 #'             e.g., acc for acceleration. These will be matched to the list of
 #'             sensor names in the sensor_names.csv file. If more than one sensor
 #'             matches type, a warning will be given. type can be in upper or lower case.
-#' @param T (optional) is the time in seconds of each measurement in data for irregularly sampled data. The time reference (i.e., the 0 time) should be with respect to the start time of the deployment.
+#' @param times (optional) is the time in seconds of each measurement in data for irregularly sampled data. The time reference (i.e., the 0 time) should be with respect to the start time of the deployment.
 #' @param sampling_rate (optional) sensor data sampling rate in Hz
 #' @param unit (optional) units in which data are sampled. Default determined by matching \code{type} with defaults in sensor_names.csv
 #' @param frame (optional) frame of reference for data axes, for example 'animal' or 'tag'. Default determined by matching \code{type} with defaults in sensor_names.csv.
@@ -20,7 +20,7 @@
 #' HB <- harbor_seal
 #' A <- sens_struct(data=HB$A$data,sampling_rate=3,depid='md13_134a', type='acc', quiet=TRUE)
 #'
-sens_struct <- function(data, sampling_rate = NULL, T = NULL,
+sens_struct <- function(data, sampling_rate = NULL, times = NULL,
                         depid, type,
                         unit = NULL, frame = NULL, name = NULL,
                         start_offset = 0, start_offset_units = "second", quiet=FALSE) {
@@ -43,11 +43,11 @@ sens_struct <- function(data, sampling_rate = NULL, T = NULL,
       sampling_rate = sampling_rate, sampling_rate_unit = "Hz"
     )
   } else { # irregular data
-    if (length(T) != min(nrow(data), length(data))) {
+    if (length(times) != min(nrow(data), length(data))) {
       stop("number of sampling times does not match number of samples.")
     }
-    X <- list(data = matrix(0, nrow = length(T), ncol = 1 + max(1, ncol(data))))
-    X$data[, 1] <- T
+    X <- list(data = matrix(0, nrow = length(times), ncol = 1 + max(1, ncol(data))))
+    X$data[, 1] <- times
     X$data[, 2:ncol(X$data)] <- data
     X$sampling <- "irregular"
     X$sampling_time <- "column 1"

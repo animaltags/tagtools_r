@@ -9,7 +9,7 @@
 #' @return A list with 2 elements:
 #' \itemize{
 #' \item{\strong{SL: }}The spectrum level at each frequency in dB RMS re root-Hz. The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
-#' \item{\strong{f: }} The vector of frequencies at which SL is calculated.
+#' \item{\strong{freq: }} The vector of frequencies at which SL is calculated.
 #' }
 #' @note The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
 #' @export
@@ -64,10 +64,10 @@ spectrum_level <- function(x, nfft, sampling_rate, w, nov) {
       return(newmat)
     }
     Freq <- abs(fftmatrix(X, nfft))^2
-    # F <- rollapply(data = x[, k], width = length(w), by = nov, FUN = abs(fft((detrend(X) * repmat(w, 1, ncol(X)))[1 : nfft]))^2, by.column = TRUE )
+    # f_matrix <- rollapply(data = x[, k], width = length(w), by = nov, FUN = abs(fft((detrend(X) * repmat(w, 1, ncol(X)))[1 : nfft]))^2, by.column = TRUE )
     # list(X = X, z = z) = buffer(x[, k], length(w), nov, 'nodelay')
     # X <- detrend(X) * repmat(w, 1, ncol(X))
-    # F <- abs(fft(X[1 : nfft]))^2
+    # f_matrix <- abs(fft(X[1 : nfft]))^2
     P[, k] <- rowSums(Freq[1:(nfft / 2), ])
   }
   ndt <- ncol(X)
@@ -80,6 +80,6 @@ spectrum_level <- function(x, nfft, sampling_rate, w, nov) {
   SL <- 10 * log10(P) - 10 * log10(ndt) - 20 * log10(nfft) + slc
   # 10*log10(ndt) corrects for the number of spectra summed in P (i.e., turns the sum into a mean)
   # 20*log10(nfft) corrects the nfft scaling in matlab's fft
-  f <- (c(0:((nfft / 2) - 1))) / nfft * sampling_rate
-  return(list(SL = SL, f = f))
+  freq <- (c(0:((nfft / 2) - 1))) / nfft * sampling_rate
+  return(list(SL = SL, freq = freq))
 }

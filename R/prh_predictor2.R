@@ -74,18 +74,18 @@ prh_predictor2 <- function(P, A, sampling_rate = NULL, MAXD = 10) {
   #**************************************************
   # find dive start/ends
   MAXD <- max(MAXD, 2)
-  T <- find_dives(p = P, sampling_rate = sampling_rate, mindepth = MAXD)
-  if (nrow(T) == 0) {
+  times <- find_dives(p = P, sampling_rate = sampling_rate, mindepth = MAXD)
+  if (nrow(times) == 0) {
     stop(sprintf(" No dives deeper than %4.0f found - change MAXD\n", MAXD))
   }
 
   # augment all dive-start and dive-end times by GAP seconds
-  T$start <- T$start - GAP
-  T$end <- T$end + GAP
+  times$start <- times$start - GAP
+  times$end <- times$end + GAP
 
   # check if there is a segment before first dive and after last dive
-  s1 <- c(max(T$start[1] - MAXSEG, 0), T$start[1])
-  se <- c(T$end[nrow(T)], min(T$end[nrow(T)] + MAXSEG, (nrow(P) - 1) / sampling_rate))
+  s1 <- c(max(times$start[1] - MAXSEG, 0), times$start[1])
+  se <- c(times$end[nrow(times)], min(times$end[nrow(times)] + MAXSEG, (nrow(P) - 1) / sampling_rate))
   k <- utils::tail(which(P[(round(sampling_rate * s1[1]) + 1):round(sampling_rate * s1[2])] > MAXD), 1)
   if (length(k) != 0) {
     s1[1] <- s1[1] + k / sampling_rate
@@ -94,7 +94,7 @@ prh_predictor2 <- function(P, A, sampling_rate = NULL, MAXD = 10) {
   if (length(k) != 0) {
     se[2] <- se[1] + (k - 1) / sampling_rate
   }
-  S <- rbind(s1, cbind(T$end[1:(nrow(T) - 1)], T$start[2:nrow(T)]), se)
+  S <- rbind(s1, cbind(times$end[1:(nrow(times) - 1)], times$start[2:nrow(times)]), se)
   S <- S[apply(S, MARGIN = 1, FUN = diff) > MINSEG, ]
 
   # break up long surfacing intervals

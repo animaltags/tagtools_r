@@ -73,17 +73,17 @@ prh_predictor1 <- function(P, A, sampling_rate = NULL, TH = 100, DIR = "descent"
   # dive detection
   #**************************************************
   # find dive start/ends
-  T <- tagtools::find_dives(p = P, sampling_rate = sampling_rate, mindepth = TH)
-  if (nrow(T) == 0) {
+  times <- tagtools::find_dives(p = P, sampling_rate = sampling_rate, mindepth = TH)
+  if (nrow(times) == 0) {
     stop(sprintf(" No dives deeper than %4.0f found\n", TH))
   }
   # augment all dive-end times by GAP seconds
-  T$end <- T$end + GAP
+  times$end <- times$end + GAP
 
   # make descent analysis segments
-  S <- matrix(T$start, nrow = nrow(T), ncol = 4) +
+  S <- matrix(times$start, nrow = nrow(times), ncol = 4) +
     matrix(c(-SURFLEN - GAP, -GAP, GAP, GAP + DIVELEN),
-      nrow = nrow(T),
+      nrow = nrow(times),
       ncol = 4,
       byrow = TRUE
     )
@@ -91,9 +91,9 @@ prh_predictor1 <- function(P, A, sampling_rate = NULL, TH = 100, DIR = "descent"
 
   # make ascent segments
   if (DIR == "both") {
-    SS <- matrix(T$end, nrow = nrow(T), ncol = 4) +
+    SS <- matrix(times$end, nrow = nrow(times), ncol = 4) +
       matrix(c(GAP, SURFLEN + GAP, -GAP - DIVELEN, -GAP),
-        nrow = nrow(T),
+        nrow = nrow(times),
         ncol = 4,
         byrow = TRUE
       )

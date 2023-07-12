@@ -43,26 +43,26 @@ make_info <- function(depid, tagtype, species, owner) {
   if (template_file == "blank_template.csv") {
     warning("Unknown tag type - fill out device-related metadata by hand.\n")
   }
-  T <- csv2struct(system.file("extdata", template_file, package = "tagtools"))
+  template_frame <- csv2struct(system.file("extdata", template_file, package = "tagtools"))
 
-  T$depid <- depid
-  T$dtype_datetime_made <- format(Sys.time(), tz = "UTC")
-  T$dtype_nfiles <- "UNKNOWN"
-  T$dtype_source <- "UNKNOWN"
-  T$device_serial <- "UNKNOWN"
-  T$dephist_deploy_datetime_start <- "UNKNOWN"
-  T$dephist_device_datetime_start <- "UNKNOWN"
+  template_frame$depid <- depid
+  template_frame$dtype_datetime_made <- format(Sys.time(), tz = "UTC")
+  template_frame$dtype_nfiles <- "UNKNOWN"
+  template_frame$dtype_source <- "UNKNOWN"
+  template_frame$device_serial <- "UNKNOWN"
+  template_frame$dephist_deploy_datetime_start <- "UNKNOWN"
+  template_frame$dephist_device_datetime_start <- "UNKNOWN"
 
   # need to add something like this when dtag I/O tools ready:
 
   if (!missing(species)) {
     S <- get_species(species)
     if (length(S) > 0) {
-      T$animal_species_common <- S$Common_name
-      T$animal_species_science <- S$Binomial
-      T$animal_dbase_url <- S$URL
+      template_frame$animal_species_common <- S$Common_name
+      template_frame$animal_species_science <- S$Binomial
+      template_frame$animal_dbase_url <- S$URL
       if ("ITIS" %in% names(S)) {
-        T$animal_dbase_itis <- S$ITIS
+        template_frame$animal_dbase_itis <- S$ITIS
       }
     }
   }
@@ -71,13 +71,13 @@ make_info <- function(depid, tagtype, species, owner) {
     rm(S)
     S <- get_researcher(owner)
     if (length(S) > 0) {
-      T$provider_name <- S$Name
-      T$provider_details <- S$Details
-      T$provider_email <- S$Email
-      T$provider_license <- S$License
-      T$provider_cite <- S$Cite
-      T$provider_doi <- S$DOI
+      template_frame$provider_name <- S$Name
+      template_frame$provider_details <- S$Details
+      template_frame$provider_email <- S$Email
+      template_frame$provider_license <- S$License
+      template_frame$provider_cite <- S$Cite
+      template_frame$provider_doi <- S$DOI
     }
   }
-  info <- T[order(names(T))]
+  info <- template_frame[order(names(template_frame))]
 } # end of make_info
