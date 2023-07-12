@@ -78,7 +78,7 @@ str(ZPCr, max.level = 1)
 </div>
 
 ```{r, echo = FALSE, eval = TRUE}
-ZPCr = crop_to(ZC$P, sampling_rate = ZC$P$sampling_rate, tcues = c(9424, 64027), T = NULL)
+ZPCr = crop_to(ZC$P, sampling_rate = ZC$P$sampling_rate, tcues = c(9424, 64027), times = NULL)
 ```
 
 3. What minimum depth threshold do you think you would use to detect dives this animal's dives? Consider how you would justify your choice.

@@ -249,7 +249,7 @@ The dead-reckoned track is always computed with respect to the water, not the gr
 There are a number of ways to combine the GPS positions and the dead-reckoned track into a single track which has both the absolute accuracy of GPS and the high temporal resolution of dead-reckoning. A simple method is to force the dead-reckoned track to meet the GPS positions at each surfacing by adding a constant 'current' to each track point in the preceding dive. This is done by `fit_tracks`:
 
 ```{r, eval = FALSE, echo = TRUE}
-FT <- fit_tracks(P = POSLLF, T = d7$POS$data[,1],
+FT <- fit_tracks(P = POSLLF, times = d7$POS$data[,1],
                 D = DR[,c(1:2)],
                 sampling_rate = d7$Aa$sampling_rate)
 # add to plot
@@ -266,7 +266,7 @@ lines(FT$easting, FT$northing, col = 'darkgreen')
 <div id="fit_tracks" class="collapse"> 
 
 ```{r, eval = TRUE, echo = FALSE}
-FT <- fit_tracks(P = POSLLF, T = d7$POS$data[,1],
+FT <- fit_tracks(P = POSLLF, times = d7$POS$data[,1],
                 D = DR[,c(1:2)],
                 sampling_rate = d7$Aa$sampling_rate)
 # add to plot
