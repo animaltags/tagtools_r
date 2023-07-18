@@ -4,7 +4,45 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tagtools)
+library(tinytex)
 library(plotly)
 library(stats)
 library(ggplot2)
+
+
+## ---- echo=TRUE---------------------------------------------------------------
+BW <- beaked_whale
+find_dives(p = BW$P$data, sampling_rate = BW$P$sampling_rate, mindepth = 5, surface = 2, findall = FALSE)
+
+
+## ---- echo=TRUE---------------------------------------------------------------
+find_dives(p = BW$P$data, sampling_rate = BW$P$sampling_rate, mindepth = 1, surface = 2, findall = FALSE)
+
+
+## ---- echo=TRUE---------------------------------------------------------------
+path <- "../vignettes/articles/nc_files/zc11_267a.nc"
+ZC <- load_nc(path)
+
+plott(X=list(Depth=ZC$P), r = TRUE)
+
+
+## ---- echo=TRUE---------------------------------------------------------------
+
+d <- find_dives(ZC$P,500) 
+
+
+## ---- echo = TRUE-------------------------------------------------------------
+
+P <- crop_to(ZC$P, tcues = c(d$start[1], d$end[2]))
+
+dive_stats(P, dive_cues=d[,c('start', 'end'),])
+
+
+## ---- echo=TRUE---------------------------------------------------------------
+msa(ZC$A)$data[1:18]
+
+
+## ---- echo=TRUE---------------------------------------------------------------
+odba(A = ZC$A$data, sampling_rate = ZC$A$sampling_rate, fh = 0.05)[1:18]
+
 
