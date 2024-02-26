@@ -86,9 +86,30 @@ code span.vs { color: #20794d; }
 code span.wa { color: #5e5e5e; font-style: italic; } 
 </style>
 
+<style>
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics</title>
+  <title>Tagtools: A tool for analyzing high resolution biologging data</title>
 
   <meta property="description" itemprop="description" content="An abstract of less than 150 words." />
 
@@ -100,18 +121,18 @@ code span.wa { color: #5e5e5e; font-style: italic; }
   <meta name="article:author" content="Oghenesuvwe Ogedegbe" />
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics" />
+  <meta property="og:title" content="Tagtools: A tool for analyzing high resolution biologging data" />
   <meta property="og:type" content="article" />
   <meta property="og:description" content="An abstract of less than 150 words." />
   <meta property="og:locale" content="en_US" />
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary" />
-  <meta property="twitter:title" content="ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics" />
+  <meta property="twitter:title" content="Tagtools: A tool for analyzing high resolution biologging data" />
   <meta property="twitter:description" content="An abstract of less than 150 words." />
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics" />
+  <meta name="citation_title" content="Tagtools: A tool for analyzing high resolution biologging data" />
   <meta name="citation_pdf_url" content="journal.pdf" />
   <meta name="citation_journal_title" content="The R Journal" />
   <meta name="citation_issn" content="2073-4859" />
@@ -125,10 +146,11 @@ code span.wa { color: #5e5e5e; font-style: italic; }
   <meta name="citation_author_institution" content="Calvin University" />
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=The golden age of bio-logging: How animal-borne sensors are advancing the frontiers of ecology;citation_volume=96;citation_doi=10.1890/14-1401.1;citation_issn=0012-9658;citation_author=Christopher C. Wilmers;citation_author=Barry Nickel;citation_author=Caleb M. Bryce;citation_author=Justine A. Smith;citation_author=Rachel E. Wheat;citation_author=Veronica Yovovich" />
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","date","description","draft","author","type","output","bibliography","journal","slug","pdf_url","creative_commons","packages","CTV","csl"]}},"value":[{"type":"character","attributes":{},"value":["ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics"]},{"type":"character","attributes":{},"value":["06-26-2023"]},{"type":"character","attributes":{},"value":["An abstract of less than 150 words.\n"]},{"type":"logical","attributes":{},"value":[true]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","address","url","orcid_id","email"]}},"value":[{"type":"character","attributes":{},"value":["Yuqian wang"]},{"type":"character","attributes":{},"value":["Calvin University"]},{"type":"character","attributes":{},"value":["Department of Letter Q","Somewhere, Australia"]},{"type":"character","attributes":{},"value":["https://www.britannica.com/animal/quokka"]},{"type":"character","attributes":{},"value":["0000-1721-1511-1101"]},{"type":"character","attributes":{},"value":["qquo@ulm.edu"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","address","url","email","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Oghenesuvwe Ogedegbe"]},{"type":"character","attributes":{},"value":["Calvin University"]},{"type":"character","attributes":{},"value":["Department of Letter Q, Somewhere, Australia","Department of Marsupials, Somewhere, Australia"]},{"type":"character","attributes":{},"value":["https://www.britannica.com/animal/bilby"]},{"type":"character","attributes":{},"value":["bbil@ulm.edu"]},{"type":"character","attributes":{},"value":["0000-0002-0912-0225"]}]}]},{"type":"character","attributes":{},"value":["package"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["RJreferences.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","issn","firstpage","lastpage"]}},"value":[{"type":"character","attributes":{},"value":["The R Journal"]},{"type":"character","attributes":{},"value":["2073-4859"]},{"type":"double","attributes":{},"value":[1]},{"type":"NULL"}]},{"type":"character","attributes":{},"value":["journal"]},{"type":"character","attributes":{},"value":["journal.pdf"]},{"type":"character","attributes":{},"value":["CC BY"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["cran","bioc"]}},"value":[{"type":"list","attributes":{},"value":[]},{"type":"list","attributes":{},"value":[]}]},{"type":"list","attributes":{},"value":[]},{"type":"character","attributes":{},"value":["C:/Users/wyq/AppData/Local/R/win-library/4.3/rjtools/rjournal.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","date","description","draft","author","type","output","bibliography","journal","slug","pdf_url","creative_commons","packages","CTV","csl"]}},"value":[{"type":"character","attributes":{},"value":["Tagtools: A tool for analyzing high resolution biologging data"]},{"type":"character","attributes":{},"value":["06-26-2023"]},{"type":"character","attributes":{},"value":["An abstract of less than 150 words.\n"]},{"type":"logical","attributes":{},"value":[true]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","address","url","orcid_id","email"]}},"value":[{"type":"character","attributes":{},"value":["Yuqian wang"]},{"type":"character","attributes":{},"value":["Calvin University"]},{"type":"character","attributes":{},"value":["Department of Letter Q","Somewhere, Australia"]},{"type":"character","attributes":{},"value":["https://www.britannica.com/animal/quokka"]},{"type":"character","attributes":{},"value":["0000-1721-1511-1101"]},{"type":"character","attributes":{},"value":["qquo@ulm.edu"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","address","url","email","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Oghenesuvwe Ogedegbe"]},{"type":"character","attributes":{},"value":["Calvin University"]},{"type":"character","attributes":{},"value":["Department of Letter Q, Somewhere, Australia","Department of Marsupials, Somewhere, Australia"]},{"type":"character","attributes":{},"value":["https://www.britannica.com/animal/bilby"]},{"type":"character","attributes":{},"value":["bbil@ulm.edu"]},{"type":"character","attributes":{},"value":["0000-0002-0912-0225"]}]}]},{"type":"character","attributes":{},"value":["package"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["references.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","issn","firstpage","lastpage"]}},"value":[{"type":"character","attributes":{},"value":["The R Journal"]},{"type":"character","attributes":{},"value":["2073-4859"]},{"type":"double","attributes":{},"value":[1]},{"type":"NULL"}]},{"type":"character","attributes":{},"value":["journal"]},{"type":"character","attributes":{},"value":["journal.pdf"]},{"type":"character","attributes":{},"value":["CC BY"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["cran","bioc"]}},"value":[{"type":"list","attributes":{},"value":[]},{"type":"list","attributes":{},"value":[]}]},{"type":"list","attributes":{},"value":[]},{"type":"character","attributes":{},"value":["C:/Users/Keren/AppData/Local/R/win-library/4.3/rjtools/rjournal.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2476,7 +2498,7 @@ margin-right: 0.5em;
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics","description":"An abstract of less than 150 words.","authors":[{"author":"Yuqian wang","authorURL":"https://www.britannica.com/animal/quokka","affiliation":"Calvin University","affiliationURL":"#","orcidID":"0000-1721-1511-1101"},{"author":"Oghenesuvwe Ogedegbe","authorURL":"https://www.britannica.com/animal/bilby","affiliation":"Calvin University","affiliationURL":"#","orcidID":"0000-0002-0912-0225"}],"publishedDate":"2023-06-26T00:00:00.000-04:00","citationText":"wang & Ogedegbe, 2023"}
+{"title":"Tagtools: A tool for analyzing high resolution biologging data","description":"An abstract of less than 150 words.","authors":[{"author":"Yuqian wang","authorURL":"https://www.britannica.com/animal/quokka","affiliation":"Calvin University","affiliationURL":"#","orcidID":"0000-1721-1511-1101"},{"author":"Oghenesuvwe Ogedegbe","authorURL":"https://www.britannica.com/animal/bilby","affiliation":"Calvin University","affiliationURL":"#","orcidID":"0000-0002-0912-0225"}],"publishedDate":"2023-06-26T00:00:00.000-04:00","citationText":"wang & Ogedegbe, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2486,7 +2508,7 @@ margin-right: 0.5em;
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics</h1>
+<h1>Tagtools: A tool for analyzing high resolution biologging data</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 <p><p>An abstract of less than 150 words.</p></p>
@@ -2504,31 +2526,169 @@ margin-right: 0.5em;
 <h1 data-number="1" id="introduction"><span class="header-section-number">1</span> Introduction</h1>
 <p>Bio-logging studies, where data are collected using animal-borne devices, continue to grow rapidly in numbers and in scope. Data from high-resolution tags are essential for assessing marine mammal behavior in relation to acoustic disturbance, as well as for acquiring baseline behavior for environmental risk models. A subset of these tags include sensors for speed, turning rate (gyroscopes), and sound, increasing the array of inferences that can be drawn about the context and energetic cost of responses to disturbance. While these tags offer exciting opportunities to observe animal behavior in unprecedented detail, there is a desperate need for freely-available, easy-to-use, flexible software tools along with appropriate training to facilitate analysis and interpretation of the resulting data.</p>
 <h1 data-number="2" id="background"><span class="header-section-number">2</span> Background</h1>
-<p>High-resolution multi-sensor tags typically include accelerometers that are used to measure body orientation, sudden movement, changes in speed, and to estimate energy expenditure. These tags also use magnetometers to measure direction of travel, and pressure sensors to measure dive depth in aquatic or marine animals. A subset of tags also include sensors for speed, turning rate (gyroscopes), and sound (hydrophones), increasing researchers’ ability to directly and indirectly assess impact from disturbances. These tags offer exciting opportunities to observe animal behavior in unprecedented detail and to quantify the consequences of human disturbance. However, analyses of the data are time-consuming and rely on a small cadre of highly-skilled scientists, creating a bottleneck in dissemination of these key findings.</p>
-<p>
-# Processing</p>
-<p>For calculations pertaining to data collected, we have a host of functions available to process the data for different purposes. Processing methods will include automated calibration of sensors; detection of dive start- and end-times; calculation of a common suite of dive parameters (depth, duration, kinematic parameters, etc.); parameterization of movement patterns (residence index, straightness of movement, tortuosity etc.) and acceleration (MSA, ODBA, norm-jerk); and calculation of acoustic characteristics (various standard measures of intensity, duration, bandwidth, and frequency characteristics for echolocation clicks or other sounds of interest). As a standout of these functions, we have find_dives. This function is used to find the time cues for the start and end of either dives in a depth record or flights in an altitude record. The simulated quantities used to do this are:</p>
-<p>p: A depth or altitude time series (a sensor data list or a vector) in meters.
-sampling_rate: The sampling rate of the sensor data in Hz (samples per second).
-mindepth: The threshold in meters at which to recognize a dive or flight. Dives shallow or flights lower than mindepth will be ignored.
-surface (optional): The threshold in meters at which the animal is presumed to have reached the surface. Default value is 1. A smaller value can be used if the dive/altitude data are very accurate and you need to detect shallow dives/flights.
-findall (optional) When TRUE, forces the algorithm to include incomplete dives at the start and end of the record. Default is FALSE which only recognizes complete dives.</p>
+<p>High-resolution multi-sensor tags typically include accelerometers that are used to measure body orientation, sudden movement, changes in speed, and to estimate energy expenditure. These tags also use magnetometers to measure direction of travel, and pressure sensors to measure dive depth in aquatic or marine animals. A subset of tags also include sensors for speed, turning rate (gyroscopes), and sound (hydrophones), increasing researchers’ ability to directly and indirectly assess impact from disturbances. These tags offer exciting opportunities to observe animal behavior in unprecedented detail and to quantify the consequences of human disturbance. However, analyses of the data are time-consuming and rely on a small cadre of highly-skilled scientists, creating a bottleneck in dissemination of these key findings.<span class="citation" data-cites="wilmers_golden_2015">(<a href="#ref-wilmers_golden_2015" role="doc-biblioref">Wilmers et al. 2015</a>)</span></p>
+<h1 data-number="3" id="processing"><span class="header-section-number">3</span> Processing</h1>
+<p>Through data processing we can extract meaningful inferences about animal behavior and patterns. We offer a range of functions to process the collected data for various purposes. These functions include automated sensor calibration, identification of dive start and end times, calculation of essential dive parameters (such as depth, duration, and kinematic parameters), analysis of movement patterns (such as residence index, straightness of movement, and tortuosity), evaluation of acceleration metrics (such as MSA, ODBA, and norm-jerk), and determination of acoustic characteristics (including standard measures of intensity, duration, bandwidth, and frequency for echolocation clicks or other relevant sounds). Notably, one prominent function is “find_dives,” which locates time references for the initiation and conclusion of dives in a depth record or flights in an altitude record.By automating the process of finding these time cues, the function simplifies the analysis of large datasets, allowing researchers to focus on interpretations of these events.The simulated quantities used to do this are:</p>
+<ul>
+<li>p: A depth or altitude time series (a sensor data list or a vector) in meters.</li>
+<li>sampling_rate: The sampling rate of the sensor data in Hz (samples per second).</li>
+<li>mindepth: The threshold in meters at which to recognize a dive or flight. Dives shallow or flights lower than mindepth will be ignored.</li>
+<li>surface (optional): The threshold in meters at which the animal is presumed to have reached the surface. Default value is 1. A smaller value can be used if the dive/altitude data are very accurate and you need to detect shallow dives/flights.</li>
+<li>findall (optional) When TRUE, forces the algorithm to include incomplete dives at the start and end of the record. Default is FALSE which only recognizes complete dives.</li>
+</ul>
 <p>Find_dives creates a data frame with one row for each dive or flight found. The columns of T are:
 start (time in seconds of the start of each dive/flight)
 end (time in seconds of the start of each dive/flight)
 max (maximum depth/altitude reached in each dive/flight)
 tmax(time in seconds at which the animal reaches the max depth/altitude).</p>
-<p>Using the dataset beaked_whale from the package as BW and
-T as find_dives(p = BW<span class="math inline">\(P\)</span>data, sampling_rate = BW<span class="math inline">\(P\)</span>sampling_rate, mindepth = 5, surface = 2, findall = FALSE), the result produced are:</p>
-<h1 data-number="3" id="calibration"><span class="header-section-number">3</span> Calibration</h1>
-<pre><code>Biologging tags, such as accelerometers, and gyroscopes, provide strong insight into the behavior of animals, but their measurements can be influenced by various external factors such as environmental conditions and sensor bias. As such, calibration is required to correct any errors or inconsistencies in the collected data. By comparing the measurements obtained from the biologging tags with known data, researchers can adjust the readings to improve accuracy of recorded data. This improves the process of analysis and interpretion of the data, which will result in more accurate conclusions to be drawn about the species being studied. </code></pre>
-<h1 data-number="4" id="plotting"><span class="header-section-number">4</span> Plotting</h1>
+<p>Using the dataset beaked_whale from the package as BW, the result produced are:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">BW</span> <span class="op">&lt;-</span> <span class="va">beaked_whale</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/find_dives.html">find_dives</a></span><span class="op">(</span>p <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">data</span>, sampling_rate <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">sampling_rate</span>, mindepth <span class="op">=</span> <span class="fl">5</span>, surface <span class="op">=</span> <span class="fl">2</span>, findall <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre>
+</div>
+<pre><code>  start  end        max tmax
+1   178 3920 1086.99275 1400
+2  3987 4039    6.21215 4012
+3  4243 5293  238.84884 4692</code></pre>
+</div>
+<p>Alternating the number for the minimum depth produces different results with the number of dives shown, increasing, or decreasing. This information is crucial for understanding the behavior of the studied species. Researchers can experiment with different depth thresholds to discover optimal values that accurately capture relevant dives while minimizing false detections. This allows researchers to fine-tune their analysis and ensure that the results align with the specific research objectives and the characteristics of the organisms being studied.</p>
+<p>For example, changing the value of mindepth to 1 would result in a dataframe of 19 rows:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/find_dives.html">find_dives</a></span><span class="op">(</span>p <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">data</span>, sampling_rate <span class="op">=</span> <span class="va">BW</span><span class="op">$</span><span class="va">P</span><span class="op">$</span><span class="va">sampling_rate</span>, mindepth <span class="op">=</span> <span class="fl">1</span>, surface <span class="op">=</span> <span class="fl">2</span>, findall <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre>
+</div>
+<pre><code>   start  end      max tmax
+1     52   54 1.105762   52
+2     61   63 1.128402   61
+3     82   84 1.106712   82
+4     99  101 1.122345  101
+5    109  111 1.116125  111
+6    122  124 1.127342  122
+7    138  140 1.142730  138
+8    149  151 1.097930  151
+9    176  178 1.197597  178
+10  3982 3984 1.090211 3984
+11  4148 4150 1.019758 4150
+12  4240 4242 1.055129 4242
+13  5308 5310 1.020068 5310
+14  5317 5319 1.098602 5319
+15  5327 5329 1.076354 5329
+16  5337 5339 1.075175 5339
+17  5346 5348 1.016802 5348
+18  5376 5378 1.093268 5378
+19  5381 5383 1.196322 5383</code></pre>
+</div>
+<p>Furthermore, to look at a more comprehensive view of the dive records available, we can look at the information presented using dive_stats. The function dive_stats() produces a profile of depth/altitude and a series of dive/flight start and end times. The simulated quantities for this are:</p>
+<ul>
+<li>P: Depth data in the form of a vector (or one-column matrix), or a tag sensor data list.</li>
+<li>X (optional): Another data stream, as a vector (or a one-column matrix) or a tag sensor data list, for which to compute mean and variability. If angular is TRUE, it is interpreted as angular data (e.g., pitch, roll, or heading) with means and variances computed accordingly. The unit of measure must be in radians (not degrees). Currently, X must be regularly sampled.</li>
+<li>dive_cues: A two-column data frame or matrix with dive/flight start times in the first column and dive/flight end times in the second. Units should be in seconds since the start of tag recording. It may be obtained from find_dives.</li>
+<li>sampling_rate (optional): The sampling rate of P (and X, if given). Ignored if P or X are tag sensor data lists. If omitted, the input data must be sensor data lists. If one value is given and both P and X are input, they are assumed to have the same sampling rate. If P and X have different sampling rates, this input can have two elements (first for P, second for X).</li>
+<li>prop: The proportion of the maximal excursion to use for defining the “destination” phase of a dive or flight. For example, if prop is 0.85 (the default), then the destination phase lasts from the first to the last time depth/altitude exceeds 0.85 times the within-dive maximum.</li>
+<li>angular: Is X angular data? Defaults to FALSE.</li>
+<li>X_name: A short name to use for the X variable in the output data frame. For example, if X is pitch data, use X_name=‘pitch’ to get output column names like mean_pitch, etc. Defaults to ‘angle’ for angular data and ‘aux’ for non-angular data.</li>
+<li>na.rm: Logical, default is TRUE. If TRUE, then returned mean values ignore missing values, computing an average over all non-missing observations.</li>
+</ul>
+<p>Dive_stats() returns a data frame that contains information about each dive or flight excursion. Each row in the data frame corresponds to one dive or flight, and the columns provide various details about the excursion. All time-related values are in seconds, and rates are expressed in units of x/sec, where x represents the units of the input <code>P</code> parameter.</p>
+<p>The columns included in the data frame are as follows:</p>
+<ul>
+<li>max: Represents the maximum depth or altitude reached during the excursion.</li>
+<li>st: Denotes the start time of the dive or flight in seconds, obtained from the input <code>dive_cues</code>.</li>
+<li>et: Indicates the end time of the dive or flight in seconds, also obtained from the input dive_cues.</li>
+<li>dur: Represents the total duration of the excursion in seconds.</li>
+<li>dest_st: Represents the start time of the destination phase in seconds since the start of tag recording. This time also marks the end time of the “to” phase within the dive or flight.</li>
+<li>dest_et: Represents the end time of the destination phase in seconds since the start of tag recording. This time also marks the start time of the “from” phase within the dive or flight.</li>
+<li>dest_dur: Denotes the duration of the destination phase in seconds.</li>
+<li>to_dur: Denotes the duration of the “to” phase within the dive or flight in seconds.</li>
+<li>from_dur: Denotes the duration of the “from” phase within the dive or flight in seconds.</li>
+</ul>
+<p>Depending on the parameters used, additional columns may be present in the data frame:</p>
+<ul>
+<li>mean_angle: If angular=TRUE and X is provided as input, this column represents the mean angle for the entire excursion. Separate columns (mean_to_angle, mean_dest_angle, and mean_from_angle) provide mean angles for each phase within the dive or flight.</li>
+<li>angle_var: If angular=TRUE and X is provided as input, this column represents the angular variance for the entire excursion. Separate columns (to_angle_var, dest_angle_var, and from_angle_var) provide angular variances for each phase within the dive or flight.</li>
+<li>mean_aux: If angular=FALSE and X is provided as input, this column represents the mean value of X for the entire excursion. Separate columns (mean_to_aux, mean_dest_aux, and mean_from_aux) provide mean values of X for each phase within the dive or flight.</li>
+<li>aux_sd: If angular=FALSE and X is provided as input, this column represents the standard deviation of X for the entire excursion. Separate columns (to_aux_sd, dest_aux_sd, and from_aux_sd) provide standard deviations of X for each phase within the dive or flight.</li>
+</ul>
+Dive_stats is to be used in conjunction with find_dives to provide more information on dives that have already been identified. Using the ZC dataset obtained from “zc11_267a.nc” nc file, we can plot a dive profile and choose a suitable chunk to analyze.
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">&quot;../vignettes/articles/nc_files/zc11_267a.nc&quot;</span></span>
+<span><span class="va">ZC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/load_nc.html">load_nc</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/plott.html">plott</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Depth<span class="op">=</span><span class="va">ZC</span><span class="op">$</span><span class="va">P</span><span class="op">)</span>, r <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+</div>
+<p><img src="data:image/png;base64,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" width="624" /></p>
+</div>
+<p>With the plot in view we can choose a suitable depth to find dives for.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/find_dives.html">find_dives</a></span><span class="op">(</span><span class="va">ZC</span><span class="op">$</span><span class="va">P</span>,<span class="fl">500</span><span class="op">)</span> </span></code></pre>
+</div>
+</div>
+We can further crop the plot to find information on particular waves. Here we can look at the first two waves and see what dive_stats produces as a result.
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">P</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/crop_to.html">crop_to</a></span><span class="op">(</span><span class="va">ZC</span><span class="op">$</span><span class="va">P</span>, tcues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">start</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">d</span><span class="op">$</span><span class="va">end</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/dive_stats.html">dive_stats</a></span><span class="op">(</span><span class="va">P</span>, dive_cues<span class="op">=</span><span class="va">d</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">&#39;start&#39;</span>, <span class="st">&#39;end&#39;</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span></span></code></pre>
+</div>
+<pre><code>  num      max      st      et    dur dest_st dest_et dest_dur to_dur
+1   1 1125.833 16151.8 20229.6 4077.8 19163.2 19639.4    476.2 3011.4
+2   2     -Inf 32580.0 36711.4 4131.4     Inf    -Inf     -Inf    Inf
+  from_dur   to_rate  from_rate
+1    590.4 0.2769636 -0.9771842
+2      Inf        NA         NA</code></pre>
+</div>
+<p>Two other functions that are of particular interest in terms of data processing are msa() and odba().</p>
+<p>The Msa() function is used to compute the Minimum Specific Acceleration (MSA). This is the absolute value of the norm of the acceleration minus 1 g, i.e., the amount that the acceleration differs from the gravity value. This is always equal to or less than the actual specific acceleration if A is correctly calibrated. Should MSA exceed the expected range, there is a clear potential for inaccurate measurements. The simulated quanties for this function are:</p>
+<ul>
+<li><p>A: An nx3 acceleration matrix with columns [ax ay az], or a tag sensor data list containing acceleration data. Acceleration can be in any consistent unit, e.g., g or m/s^2. A can be in any frame as the MSA is rotation independent.</p></li>
+<li><p>ref: The gravitational field strength in the same units as A. This parameter is not needed if A is a sensor structure. If A is a matrix, the default value is 9.81, assuming that A is in m/s^2. Use ref = 1 if the unit of A is g.</p></li>
+</ul>
+<p>The result of running it on a suitable dataset is a column vector of MSA with the same number of rows as A, or a tag sensor data list (output matches input). The MSA values (m) have the same units as A (e.g., g or m/s^2).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/msa.html">msa</a></span><span class="op">(</span><span class="va">ZC</span><span class="op">$</span><span class="va">A</span><span class="op">)</span><span class="op">$</span><span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">]</span></span></code></pre>
+</div>
+<pre><code> [1] 1.0386814 1.9996153 1.1563563 1.1778072 0.1246457 0.6830216
+ [7] 1.8871394 0.9207138 0.1500726 0.8410105 0.9207391 0.7463868
+[13] 1.7783814 1.1383616 1.6107005 0.1414111 1.3126264 0.9320780</code></pre>
+</div>
+<p>Similarly to msa(), odba is another function used to analyze acceleration data. ODBA stands for “Overall Dynamic Body Acceleration” as defined by Wilson et al. in 2006. This is derived from the norm of the high-pass-filtered acceleration taken from animal tags. arious methods for computing ODBA exist, differing in the choice of norm and filter used.</p>
+<p>In the Wilson paper, the 1-norm and a rectangular window (moving average) filter are employed. The high-pass filter is implemented by subtracting the moving average from the input accelerations.</p>
+<p>Alternatively, the 2-norm, also known as VeDBA, may be preferred if the tag orientation is unknown or subject to change. For VeDBA, a tapered symmetric FIR filter is used for more efficient high-pass filtering compared to the rectangular window method, effectively avoiding lobes in the response.</p>
+<p>The simulated quantities for calculating odba are:</p>
+<ul>
+<li>A: A tag sensor data list containing tri-axial acceleration data or an nx3 acceleration matrix with columns [ax ay az]. Acceleration can be in any consistent unit, e.g., g or m/s^2. A can be in any frame, but the result depends on the method used to compute ODBA.</li>
+<li>sampling_rate: The sampling rate in Hz of the acceleration signals. Required for the ‘fir’ method if A is not a tag sensor data list.</li>
+<li>fh: The high-pass filter cut-off frequency in Hz. This should be chosen to be about half of the stroking rate for the animal (e.g., using dsf.R). Required for the default ‘fir’ method.</li>
+<li>method: A character containing either ‘wilson’ or ‘vedba’ or ‘fir’. This determines the method by which the ODBA is calculated. The default method is ‘fir’.</li>
+<li>n: The rectangular window (moving average) length in samples. This is only needed if using the classic ODBA and VeDBA forms (methods ‘wilson’ and ‘vedba’).</li>
+</ul>
+<p>A column vector of ODBA is returned with the same number of rows as A. ODBA values have the same units as A</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="fu"><a href="https://rdrr.io/pkg/tagtools/man/odba.html">odba</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">ZC</span><span class="op">$</span><span class="va">A</span><span class="op">$</span><span class="va">data</span>, sampling_rate <span class="op">=</span> <span class="va">ZC</span><span class="op">$</span><span class="va">A</span><span class="op">$</span><span class="va">sampling_rate</span>, fh <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">]</span></span></code></pre>
+</div>
+<pre><code> [1] 2.644054 3.779015 3.079952 3.255186 2.285308 2.850576 4.192403
+ [8] 3.367263 2.288785 3.532974 4.054720 4.240424 5.623113 5.225649
+[15] 5.759661 4.893031 2.589384 5.070509</code></pre>
+</div>
+<h1 data-number="4" id="calibration"><span class="header-section-number">4</span> Calibration</h1>
+<pre><code>Biologging tags, such as accelerometers, and gyroscopes, provide strong insight into the behavior of animals, but their measurements can be influenced by various external factors such as environmental conditions and sensor bias. As such, calibration is required to correct any errors or inconsistencies in the collected data. By comparing the measurements obtained from the biologging tags with known data, researchers can adjust the readings to improve accuracy of recorded data. This improves the process of analysis and interpretion of the data, which will result in more accurate conclusions to be drawn about the species being studied. Calibration is a key part in enesuring data integrity.</code></pre>
+<h1 data-number="5" id="plotting"><span class="header-section-number">5</span> Plotting</h1>
 <pre><code>The main use of our package is to provide a comprehensive set of options for visualizing various behavioral metrics, such as activity levels, movement patterns, dive depths and duration. This streamlines the analysis process and helps researchers to better understand animal behavior. An important first step in tag data analysis is to plot the data.  Surprisingly, some of the most useful types of figures can be particularly hard to produce.  Examples include time-series plots that show several tag-sensor data streams in plot panels stacked atop one another, with all panels sharing a common time scale; or plots where sensor data from many exemplars of an event of interest are overlaid, in order to compare behavior between events. The resulting figures often prove crucially convincing to summarize results and complement statistical analysis in scientific publications. Unfortunately, since they are difficult to produce, creating them slows the pace of analysis (or they may even be neglected entirely).</code></pre>
-<h1 data-number="5" id="sound-processing"><span class="header-section-number">5</span> Sound processing</h1>
+<h1 data-number="6" id="sound-processing"><span class="header-section-number">6</span> Sound processing</h1>
 <pre><code>The package also undertakes some sound processing by way of measuring spectrum levels, plotting spectrograms and obtaining audio in the form of wav files. Sound speed is measured to ascertain the depth and position of the animal. </code></pre>
-<h1 data-number="6" id="summary"><span class="header-section-number">6</span> Summary</h1>
+<h1 data-number="7" id="summary"><span class="header-section-number">7</span> Summary</h1>
 <p>We have displayed various tooltips that are available in the package <a href="#">ToOoOlTiPs</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-wilmers_golden_2015" class="csl-entry" role="doc-biblioentry">
+C. C. Wilmers, B. Nickel, C. M. Bryce, J. A. Smith, R. E. Wheat and V. Yovovich. The golden age of bio-logging: How animal-borne sensors are advancing the frontiers of ecology. <em>Ecology</em>, 96(7): 1741–1753, 2015. URL <a href="http://doi.wiley.com/10.1890/14-1401.1">http://doi.wiley.com/10.1890/14-1401.1</a> [online; last accessed May 27, 2021].
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2536,15 +2696,6 @@ T as find_dives(p = BW<span class="math inline">\(P\)</span>data, sampling_rate 
 <div class="d-appendix">
 </div>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
@@ -2556,11 +2707,11 @@ T as find_dives(p = BW<span class="math inline">\(P\)</span>data, sampling_rate 
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don&#39;t fall under this license and can be recognized by a note in their caption: &quot;Figure from ...&quot;.</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">wang &amp; Ogedegbe, &quot;ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics&quot;, The R Journal, 2023</pre>
+<pre class="citation-appendix short">wang &amp; Ogedegbe, &quot;Tagtools: A tool for analyzing high resolution biologging data&quot;, The R Journal, 2023</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@article{journal,
   author = {wang, Yuqian and Ogedegbe, Oghenesuvwe},
-  title = {ToOoOlTiPs: An R Package for Customizable Tooltips in Interactive Graphics},
+  title = {Tagtools: A tool for analyzing high resolution biologging data},
   journal = {The R Journal},
   year = {2023},
   issn = {2073-4859},
