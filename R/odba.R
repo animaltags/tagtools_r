@@ -16,7 +16,7 @@
 #' BW <- beaked_whale
 #' e <- odba(A = BW$A$data, sampling_rate = BW$A$sampling_rate, fh = 0.05)
 #' ba <- list(e = e)
-#' plott(ba, BW$A$sampling_rate)
+#' plott_base(ba, BW$A$sampling_rate)
 #'
 odba <- function(A, sampling_rate = NULL, fh = NULL, method = "fir", n = NULL) {
   if (is.list(A)) {

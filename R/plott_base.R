@@ -1,6 +1,6 @@
 #' Plot tag data time series
 #'
-#' Plot time series in a single or multi-paneled figure, using ggplot2 graphics for static graphs and plotly for interactive ones. This is useful, for example, for comparing measurements across different sensors in an animaltag data object. The time axis is automatically displayed in seconds, minutes, hours, or days according to the span of the data.
+#' Plot time series in a single or multi-paneled figure, using base R graphics. This is useful, for example, for comparing measurements across different sensors in an animaltag data object. The time axis is automatically displayed in seconds, minutes, hours, or days according to the span of the data.
 #'
 #' If the input data X is an \code{animaltag} object, then all sensor variables in the object will be plotted. To plot only selected sensors from the \code{animaltag} object \code{my_tag}, for example, the input X=list(my_tag$A, my_tag$M) would plot just the accelerometer and magnetometer data. If possible, the plot will have
 #'
@@ -10,36 +10,26 @@
 #' @param offset (Optional) A vector of offsets, in seconds, between the start of each sensor data stream and the start of the first one. For example, if acceleration data collection started and then depth data collection commenced 436 seconds later, then the \code{offset} for the depth data would be 436.
 #' @param date_time_axis (Optional) Logical. Should the x-axis units be date-times rather than time-since-start-of-recording?  Ignored if \code{recording_start} is not provided and \code{X} does not contain metadata on recording start time. Default is FALSE.
 #' @param recording_start (Optional) The start time of the tag recording as a \code{\link{POSIXct}} object. If provided, the time axis will show calendar date/times; if not, it will show days/hours/minutes/seconds (as appropriate) since time 0 = the start of recording. If a character string is provided it will be coerced to POSIXct with \code{\link{as.POSIXct}}.
-#' @param panel_heights (Optional) A vector of relative or absolute heights for the different panels (one entry for each sensor data stream in \code{X}). Default is equal-height panels. If \code{panel_heights} is a numeric vector, it is interpreted as relative panel heights. 
+#' @param panel_heights (Optional) A vector of relative or absolute heights for the different panels (one entry for each sensor data stream in \code{X}). Default is equal-height panels. If \code{panel_heights} is a numeric vector, it is interpreted as relative panel heights. To specify absolute panel heights in centimeters using \code{lcm} (see help for \code{\link[graphics]{layout}}).
 #' @param panel_labels (Optional) A list of y-axis labels for the panels. Defaults to names(X).
+#' @param interactive (Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is FALSE. Interactive plotting requires the zoom package for its \code{\link[zoom]{zm}} function.
+#' @param par_opts (Optional) A list of options to be passed to \code{\link[graphics]{par}} before plotting. Default is mar=c(1,5,0,0), oma=c(2,0,2,1), las=1, lwd=1, cex=0.8.
 #' @param line_colors (Optional) A list of colors for lines for multivariate data streams (for example, if a panel plots tri-axial acceleration, it will have three lines -- their line colors will be the first three in this list). May be specified in any specification R understands for colors. Defaults to c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")
-#' @param interactive (Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is TRUE. Interactive plotting requires the package plotly.
-#' @param draw (Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a ggplot object (if interactive is FALSE) or plotly object (if interactive is TRUE) will be returned.
+#' @param ... Additional arguments to be passed to \code{\link{plot}}.
 #' @return A plot of time-series data
 #' @export
 #' @note This is a flexible plotting tool which can be used to display and explore sensor data with different sampling rates on a uniform time grid.
 #' @examples
 #' plott_base(list(depth = harbor_seal$P, Accel = harbor_seal$A))
 #' 
-plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
+plott_base <- function(X, fsx = NULL, r = FALSE, offset = 0,
                   date_time_axis = FALSE,
                   recording_start = NULL,
-                  panel_heights = rep.int(1, length(X)) / length(X),
+                  panel_heights = rep.int(1, length(X)),
                   panel_labels = names(X), line_colors,
-                  interactive = TRUE,
-                  draw = TRUE) {
-  
-  if ("animaltag" %in% class(X)) {
-    info <- X$info
-    X <- X[names(X) != "info"]
-    if (length(panel_labels) > length(X)){
-      panel_labels <- names(X)
-    }
-    if (length(panel_heights) > length(X)){
-      panel_heights = names(X)
-    }
-    # consider: should irregularly sampled data streams be plotted at all? Probably as points not lines?
-  }
+                  interactive = FALSE, par_opts, ...) {
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
   
   if (length(r) == 1) {
     if (r == FALSE) {
@@ -51,11 +41,21 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     }
   }
   
+  if (missing(par_opts)) {
+    par_opts <- list(mar = c(1, 5, 0, 0), oma = c(2, 0, 2, 1), las = 1, lwd = 1, cex = 0.8)
+  }
   if (missing(line_colors)) {
     line_colors <- c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")
   }
   if (length(offset) < length(X)) {
     offset <- rep(offset, length.out = length(X))
+  }
+  if ("animaltag" %in% class(X)) {
+    info <- X$info
+    X <- X[names(X) != "info"]
+    if (length(panel_labels) > length(X)){
+      panel_labels <- names(X)
+    }
   }
   
   times <- list()
@@ -144,63 +144,58 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     x_lab <- as.character(brk[t_ix, "units"])
   }
   
-  ### CHECK SIZE?
-  # don't want to crash r, give warning if data is really big
   # set up plot layout
   # ===============================================================
+  graphics::layout(matrix(c(1:length(X)), ncol = 1),
+                   widths = rep.int(1, length(X)),
+                   heights = panel_heights
+  )
+  graphics::par(par_opts)
   
-  # draw INTERACTIVE plot
+  # draw plot
   # ===============================================================
-  if (interactive){
-  facet_list <- vector(mode = 'list', length = length(X))
-  axis_names <- c('X', 'Y', 'Z')
-  
   for (i in 1:length(X)) {
-    facet_list[[i]] <- plotly::plot_ly() |>
-      plotly::layout(yaxis = list(title = panel_labels[i],
-                                  autorange= ifelse(r[i], "reversed", "TRUE")),
-                     xaxis = list(title = x_lab))
-    col <- 1
-    if ("data" %in% names(X[[i]])){
-      this_data <- X[[i]]$data
-    }else{
-      this_data <- X[[i]]
+    # get data for this sensor stream -- may be a vector or matrix
+    # =============================================================
+    data_i <- X[[i]]
+    if (is.list(data_i)) {
+      data_i <- data_i$data
     }
-    nc <- ncol(this_data)
-    if (is.na(nc)){
-      # if it's a univariate timeseries
-      facet_list[[i]] <- facet_list[[i]] |>
-        plotly::add_lines(name = panel_labels[i],
-                          x = times[[i]],
-                          y = this_data,
-                          line = list(color = line_colors[1]))
-    }else{
-      # if there are multiple axes
-      while (col <= nc){
-        facet_list[[i]] <- facet_list[[i]] |>
-          plotly::add_lines(name = paste0(panel_labels[i], axis_names[col], sep = ' '),
-                            x = times[[i]],
-                            y = this_data[,col],
-                            line = list(color = line_colors[col]))
-        col <- col + 1
-      } # end loop over xyz axes
-    } # end of 'else if there are several axes'
-  } # end loop over sensors
-  
-  # draw interactive plot
-  plot_out <- plotly::subplot(facet_list, 
-          nrows = length(X),
-          heights = panel_heights,
-          shareX = TRUE,
-          titleY = TRUE)
-  if (draw){
-    plot_out
-  }else{
-    return(plot_out)
+    # if data is univariate
+    if (!exists("ylim", mode = "numeric")) {
+      y_lim <- 1.1 * range(data_i, na.rm = TRUE)
+    }
+    if (r[i]) {
+      y_lim <- c(y_lim[2], y_lim[1])
+    }
+    if (!is.matrix(data_i)) {
+      y_data <- data_i
+    } else {
+      y_data <- data_i[, 1]
+    }
+    graphics::plot(
+      x = times[[i]], y = y_data, ylab = panel_labels[i],
+      xaxt = "n", # xlim=x_lim,
+      type = "l", ylim = y_lim,
+      col = line_colors[1], xlab = "", ...
+    )
+    draw_axis(
+      side = 1, x = times[[i]],
+      date_time = sum(grepl("POSIX", class(times[[i]]))),
+      last_panel = (i == length(X))
+    )
+    if (is.matrix(data_i)) {
+      if (dim(data_i)[2] > 1) {
+        for (c in 2:ncol(data_i)) {
+          graphics::lines(x = times[[i]], y = data_i[, c], col = line_colors[c])
+        }
+      }
+    }
   }
+  custom_cex <- max(graphics::par(no.readonly = TRUE)$cex, graphics::par(no.readonly = TRUE)$cex.lab)
+  graphics::mtext(x_lab, side = 1, line = 2, cex = custom_cex)
   
-  }else{ # end if interactive
-    # static (ggplot2) plot
-    stop('Static plot coming soon!')
-  } 
-} # end plott
+  if (interactive) {
+    zoom::zm()
+  }
+}

@@ -17,7 +17,7 @@
 #'   \item{\strong{Z: }} The state list (for internal tracking of filter internal values). Contains elements df (the decimation factor), nf (used to compute the filter length), frbw (the bandwidth of the filter relative to the new Nyquist frequency), h (the FIR filter coefficients), n (the filter length), z (padded signal used for filtering), and ov ("overflow" samples to be passed to future iterations).
 #' }
 #' @examples
-#' plott(list(Accel = beaked_whale$A)) # acceleration data before decimation
+#' plott_base(list(Accel = beaked_whale$A)) # acceleration data before decimation
 #' a_rows <- nrow(beaked_whale$A$data)
 #' a_ind <- data.frame(start = c(1, floor(a_rows / 3), floor(2 * a_rows / 3)))
 #' a_ind$end <- c(a_ind$start[2:3] - 1, a_rows)

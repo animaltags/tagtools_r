@@ -35,6 +35,6 @@ Frame: This function assumes a [north,east,up] navigation frame and a [forward,r
 HS <- harbor_seal
 s <- ocdr(p = HS$P$data, A = HS$A$data, sampling_rate = HS$P$sampling_rate, fc = NULL, plim = NULL)
 speed <- list(s = s)
-plott(speed, HS$P$sampling_rate)
+plott_base(speed, HS$P$sampling_rate)
 
 }

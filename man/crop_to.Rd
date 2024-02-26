@@ -28,5 +28,5 @@ This function is used to reduce the time span of data by cropping out any data t
 \examples{
          d <- find_dives(beaked_whale$P,300) 
          P2 <- crop_to(beaked_whale$P, tcues = c(d$start[1], d$end[1]))	#crop to 1st dive
-         plott(X = list(P2), r=c(1), panel_labels=c('Depth'))
+         plott_base(X = list(P2), r=c(1), panel_labels=c('Depth'))
 }

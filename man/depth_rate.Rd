@@ -26,7 +26,7 @@ The low-pass filter is a symmetric FIR with length 4fs/fc. The group delay of th
 }
 \examples{
 v <- depth_rate(p = beaked_whale$P)
-plott(list(beaked_whale$P$data, v),
+plott_base(list(beaked_whale$P$data, v),
   fs = beaked_whale$P$sampling_rate,
   r = c(1, 0), panel_labels = c("Depth\n(m)", "Vertical Velocity\n(m/s)")
 )

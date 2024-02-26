@@ -24,8 +24,8 @@ Y is a sensor structure, vector or matrix of interpolated data with the same num
 This function is used to reduce the time span of data by cropping out any data that falls before and after two time cues.
 }
 \examples{
-         plott(X = list(harbor_seal$P), fsx = 5)
+         plott_base(X = list(harbor_seal$P), fsx = 5)
          P_dec <- decdc(harbor_seal$P, 5)
          P_interp <- interp2length(X = P_dec, Z = harbor_seal$A)
-         plott(X = list(P_interp$data), fsx = 1)
+         plott_base(X = list(P_interp$data), fsx = 1)
 }
