@@ -31,7 +31,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
   
   if ("animaltag" %in% class(X)) {
     info <- X$info
-    X <- X[names(X) != "info"]
+    X <- X[!(names(X) %in% c("info", "_empty"))]
     if (length(panel_labels) > length(X)){
       panel_labels <- names(X)
     }
@@ -167,6 +167,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
       this_data <- X[[i]]
     }
     nc <- ncol(this_data)
+    nc <- ifelse(is.null(nc), NA, nc)
     if (is.na(nc)){
       # if it's a univariate timeseries
       facet_list[[i]] <- facet_list[[i]] |>
