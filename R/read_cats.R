@@ -18,7 +18,7 @@
 #' 		}
 #' @note CATS loggers can produce very large csv files which are slow to
 #' process. This function is (somewhat) optimised for speed and memory use so will
-#' tolerate large files. But processing could ppube slow.
+#' tolerate large files. But processing could be slow.
 #' @export
 #' @examples \dontrun{
 #' nc_filename <- read_cats("my_cats_file.csv", "my_cats_deplyment_name")
@@ -77,10 +77,10 @@ read_cats <- function(fname, depid) {
   nc_file <- paste(depid, "_raw.nc", sep = "")
 
 
-  #******************************
+  # ******************************
   # I THINK CATS ACCEL IS
   # NED axes and need to change to FRU for tag tools
-  #******************************
+  # ******************************
 
   #*********************************
   # HELPER FUNCTION

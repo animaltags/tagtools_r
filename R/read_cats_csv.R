@@ -42,7 +42,9 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
     col_types = readr::cols(
      `Time (UTC)` = readr::col_character(),
       `GPS (raw) 1 [raw]` = readr::col_character(),
-      `GPS (raw) 2 [raw]` = readr::col_character()
+      `GPS (raw) 2 [raw]` = readr::col_character(),
+     `GPS 1` = readr::col_character(),
+     `GPS 2` = readr::col_character()
     ),
     na = c(NA, "", " "),
     trim_ws = TRUE,
@@ -56,7 +58,16 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
 
   # add date-time in POSIX format
   di <- which(stringr::str_detect(names(V), "Date "))
+  if (length(di) > 1){
+    di <- which(stringr::str_detect(names(V), "Date ") & 
+                  stringr::str_detect(names(V), "UTC"))
+  }
+  
   ti <- which(stringr::str_detect(names(V), "Time "))
+  if (length(ti) > 1){
+    ti <- which(stringr::str_detect(names(V), "Time ") & 
+                  stringr::str_detect(names(V), "UTC"))
+  }
   
   old_options <- options()
   on.exit(options(old_options))
