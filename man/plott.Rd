@@ -14,7 +14,7 @@ plott(
   panel_heights = rep.int(1, length(X))/length(X),
   panel_labels = names(X),
   line_colors,
-  interactive = TRUE,
+  interactive = FALSE,
   draw = TRUE
 )
 }
@@ -39,7 +39,7 @@ plott(
 
 \item{interactive}{(Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is TRUE. Interactive plotting requires the package plotly.}
 
-\item{draw}{(Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a ggplot object (if interactive is FALSE) or plotly object (if interactive is TRUE) will be returned.}
+\item{draw}{(Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a list of ggplot objects (if interactive is FALSE; this list is suitable to plot with \code{cowplot::plot_grid()}) or plotly object (if interactive is TRUE) will be returned.}
 }
 \value{
 A plot of time-series data created with ggplot or plotly. If you prefer base R graphics, consider function \code{\link{plott_base}} instead.
@@ -54,6 +54,6 @@ If the input data X is an \code{animaltag} object, then all sensor variables in 
 This is a flexible plotting tool which can be used to display and explore sensor data with different sampling rates on a uniform time grid.
 }
 \examples{
-plott_base(list(depth = harbor_seal$P, Accel = harbor_seal$A))
+plott(list(depth = harbor_seal$P, Accel = harbor_seal$A))
 
 }

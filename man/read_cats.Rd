@@ -31,7 +31,7 @@ Read a .csv file with data from a CATS tag deployment, including associated meta
 \note{
 CATS loggers can produce very large csv files which are slow to
 process. This function is (somewhat) optimised for speed and memory use so will
-tolerate large files. But processing could ppube slow.
+tolerate large files. But processing could be slow.
 }
 \examples{
 \dontrun{
