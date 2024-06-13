@@ -18,15 +18,15 @@ check_AM(A, M = NULL, fs = NULL, find_incl = TRUE)
 \value{
 If find_incl is false, then the matrix fstr is returned. Otherwise, check_AM returns a list with elements:
 \itemize{
-   \item{\code{fstr, }} {The estimated field intensity of A and or M in the same units as A and M.
+   \item \code{fstr, } The estimated field intensity of A and or M in the same units as A and M.
          fstr is a vector or a two column matrix. If only one type of data is input,
          fstr will be a column vector. If both A and M are input, fstr will have two columns
          with the field strength of A in the 1st column and the field strength of M in the
-         2nd column.}
-   \item{\code{incl, }} {The estimated field inclination angle (i.e., the angle with respect to the
+         2nd column.
+   \item \code{incl, } The estimated field inclination angle (i.e., the angle with respect to the
    horizontal plane) in radians. incl is a column vector. By convention, a field
    vector pointing below the horizon has a positive inclination angle. This is only
-   returned if the function is called with both A and M data.}
+   returned if the function is called with both A and M data.
 }
 }
 \description{

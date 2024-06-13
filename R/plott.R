@@ -14,19 +14,19 @@
 #' @param panel_labels (Optional) A list of y-axis labels for the panels. Defaults to names(X).
 #' @param line_colors (Optional) A list of colors for lines for multivariate data streams (for example, if a panel plots tri-axial acceleration, it will have three lines -- their line colors will be the first three in this list). May be specified in any specification R understands for colors. Defaults to c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")
 #' @param interactive (Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is TRUE. Interactive plotting requires the package plotly.
-#' @param draw (Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a ggplot object (if interactive is FALSE) or plotly object (if interactive is TRUE) will be returned.
-#' @return A plot of time-series data
+#' @param draw (Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a list of ggplot objects (if interactive is FALSE; this list is suitable to plot with \code{cowplot::plot_grid()}) or plotly object (if interactive is TRUE) will be returned.
+#' @return A plot of time-series data created with ggplot or plotly. If you prefer base R graphics, consider function \code{\link{plott_base}} instead.
 #' @export
 #' @note This is a flexible plotting tool which can be used to display and explore sensor data with different sampling rates on a uniform time grid.
 #' @examples
-#' plott_base(list(depth = harbor_seal$P, Accel = harbor_seal$A))
+#' plott(list(depth = harbor_seal$P, Accel = harbor_seal$A))
 #' 
 plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
                   date_time_axis = FALSE,
                   recording_start = NULL,
                   panel_heights = rep.int(1, length(X)) / length(X),
                   panel_labels = names(X), line_colors,
-                  interactive = TRUE,
+                  interactive = FALSE,
                   draw = TRUE) {
   
   if ("animaltag" %in% class(X)) {
@@ -100,7 +100,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
         times[[s]] <- c(-1 + (1:n_obs)) / fs[s] + offset[s]
       }
     }
-    } # end loop over sensor streams to get times vectors
+  } # end loop over sensor streams to get times vectors
   x_lim <- range(sapply(times, range, na.rm = TRUE), na.rm = TRUE)
   
   # if recording_start is given or available,
@@ -110,7 +110,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     if (exists("info")) {
       recording_start <- info$dephist_device_datetime_start
     }
-
+    
     if (inherits(recording_start, "character")) {
       # try to coerce recording start time to POSIX if needed
       recording_start <- lubridate::ymd_hms(recording_start, tz = "GMT")
@@ -145,63 +145,79 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
   }
   
   ### CHECK SIZE?
-  # don't want to crash r, give warning if data is really big
-  # set up plot layout
+  # don't want to crash r, give warning if data is really big? TODO
+  # set up plot structure / info
   # ===============================================================
+  axis_names <- c('X', 'Y', 'Z')
   
   # draw INTERACTIVE plot
   # ===============================================================
   if (interactive){
-  facet_list <- vector(mode = 'list', length = length(X))
-  axis_names <- c('X', 'Y', 'Z')
-  
-  for (i in 1:length(X)) {
-    facet_list[[i]] <- plotly::plot_ly() |>
-      plotly::layout(yaxis = list(title = panel_labels[i],
-                                  autorange= ifelse(r[i], "reversed", "TRUE")),
-                     xaxis = list(title = x_lab))
-    col <- 1
-    if ("data" %in% names(X[[i]])){
-      this_data <- X[[i]]$data
-    }else{
-      this_data <- X[[i]]
-    }
-    nc <- ncol(this_data)
-    nc <- ifelse(is.null(nc), NA, nc)
-    if (is.na(nc)){
-      # if it's a univariate timeseries
-      facet_list[[i]] <- facet_list[[i]] |>
-        plotly::add_lines(name = panel_labels[i],
-                          x = times[[i]],
-                          y = this_data,
-                          line = list(color = line_colors[1]))
-    }else{
-      # if there are multiple axes
-      while (col <= nc){
+    facet_list <- vector(mode = "list", length = length(X))
+    for (i in 1:length(X)) {
+      facet_list[[i]] <- plotly::plot_ly() |>
+        plotly::layout(yaxis = list(title = panel_labels[i],
+                                    autorange= ifelse(r[i], "reversed", "TRUE")),
+                       xaxis = list(title = x_lab))
+      col <- 1
+      if ("data" %in% names(X[[i]])){
+        this_data <- X[[i]]$data
+      }else{
+        this_data <- X[[i]]
+      }
+      nc <- ncol(this_data)
+      nc <- ifelse(is.null(nc), NA, nc)
+      if (is.na(nc)){
+        # if it's a univariate timeseries
         facet_list[[i]] <- facet_list[[i]] |>
-          plotly::add_lines(name = paste0(panel_labels[i], axis_names[col], sep = ' '),
+          plotly::add_lines(name = panel_labels[i],
                             x = times[[i]],
-                            y = this_data[,col],
-                            line = list(color = line_colors[col]))
-        col <- col + 1
-      } # end loop over xyz axes
-    } # end of 'else if there are several axes'
-  } # end loop over sensors
-  
-  # draw interactive plot
-  plot_out <- plotly::subplot(facet_list, 
-          nrows = length(X),
-          heights = panel_heights,
-          shareX = TRUE,
-          titleY = TRUE)
-  if (draw){
-    plot_out
-  }else{
-    return(plot_out)
-  }
-  
+                            y = this_data,
+                            line = list(color = line_colors[1]))
+      }else{
+        # if there are multiple axes
+        while (col <= nc){
+          facet_list[[i]] <- facet_list[[i]] |>
+            plotly::add_lines(name = paste0(panel_labels[i], axis_names[col], sep = ' '),
+                              x = times[[i]],
+                              y = this_data[,col],
+                              line = list(color = line_colors[col]))
+          col <- col + 1
+        } # end loop over xyz axes
+      } # end of 'else if there are several axes'
+    } # end loop over sensors
+    
+    # draw interactive plot
+    plot_out <- plotly::subplot(facet_list, 
+                                nrows = length(X),
+                                heights = panel_heights,
+                                shareX = TRUE,
+                                titleY = TRUE)
+    if (draw){
+      plot_out
+    }else{
+      return(plot_out)
+    }
+    
   }else{ # end if interactive
-    # static (ggplot2) plot
-    stop('Static plot coming soon!')
-  } 
+    facet_list <- lapply(X = as.list(names(X)), 
+                         FUN = plott_static_panel, 
+                         sensor_data = X,
+                         line_colors = line_colors,
+                         panel_labels = panel_labels, 
+                         axis_names = axis_names, 
+                         times = times, 
+                         x_lab = x_lab,
+                         r = r)
+    
+    if (draw){
+      cowplot::plot_grid(plotlist = facet_list,
+                         align = 'v',
+                         ncol = 1,
+                         rel_heights = panel_heights)
+    }else{
+      return(facet_list)
+    }
+    
+  } # end of ggplot static plot 
 } # end plott

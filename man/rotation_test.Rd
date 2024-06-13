@@ -26,7 +26,7 @@ Note that all data that falls into any experimental period will be concatenated 
 
 \item{n_rot}{Number of rotations (randomizations) to carry out. Default is \code{n_rot=10000}.}
 
-\item{ts_fun}{A function to compute the test statistic. Input provided to this function will be the times of events that occur during the "experimental" period.  The default function is \code{length} - in other words, the default test statistis is the number of events that happen during the experimental period.}
+\item{ts_fun}{A function to compute the test statistic. Input provided to this function will be the times of events that occur during the "experimental" period.  The default function is \code{length} - in other words, the default test statistic is the number of events that happen during the experimental period.}
 
 \item{skip_sort}{Logical. Should times be sorted in ascending order? Default is \code{skip_sort=FALSE}.}
 
@@ -39,18 +39,17 @@ Note that all data that falls into any experimental period will be concatenated 
 \value{
 A list containing the following components:
 \itemize{
-  \item{\strong{result}}{, A one-row data frame with rows:
+  \item \strong{result}, A one-row data frame with rows:
   \itemize{
-     \item{\strong{statistic: }}{Test statistic (from original data)}
-     \item{\strong{p_value: }}{P-value of the test (2-sided)}
-     \item{\strong{n_rot: }}{Number of rotations}
-     \item{\strong{CI_low: }}{Lower bound on rotation-resampling percentile-based confidence interval}
-     \item{\strong{CI_up: }}{Upper bound on rotation-resampling percentile-based confidence interval}
-     \item{\strong{conf_level: }}{Confidence level, as a proportion}
-
-     }}
-  \item{\strong{rot_stats}}{ (If \code{return_rot_stats} is TRUE), a vector of \code{n_rot} statistics from the rotated datasets}
-  }
+     \item \strong{statistic: } Test statistic (from original data)
+     \item \strong{p_value: } P-value of the test (2-sided)
+     \item \strong{n_rot: } Number of rotations
+     \item \strong{CI_low: } Lower bound on rotation-resampling percentile-based confidence interval
+     \item \strong{CI_up: } Upper bound on rotation-resampling percentile-based confidence interval
+     \item \strong{conf_level: } Confidence level, as a proportion
+     }
+  \item \strong{rot_stats} (If \code{return_rot_stats} is TRUE), a vector of \code{n_rot} statistics from the rotated datasets
+}
 }
 \description{
 Carry out a rotation test (as applied in Miller et al. 2004 and detailed in DeRuiter and Solow 2008). This test is a

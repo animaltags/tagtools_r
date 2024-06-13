@@ -7,7 +7,7 @@
 draw_axis(side = 1, x = NULL, date_time, last_panel)
 }
 \arguments{
-\item{side}{See \code{\link[graphics]{axis}}.}
+\item{side}{see \code{\link[graphics]{axis}}.}
 
 \item{x}{A date-time or date object, or other types of objects that can be converted appropriately.}
 

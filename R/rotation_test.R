@@ -12,26 +12,24 @@
 #' @param exp_period A two-column vector, matrix, or data frame specifying the start and end times of the "experimental" period for the test. If a matrix or data frame is provided, one column should be start time(s) and the other end time(s). 
 #' Note that all data that falls into any experimental period will be concatenated and passed to \code{ts_fun}. If finer control is desired, consider writing your own test using the underlying function \code{rotate_data}.
 #' @param n_rot Number of rotations (randomizations) to carry out. Default is \code{n_rot=10000}.
-#' @param ts_fun A function to compute the test statistic. Input provided to this function will be the times of events that occur during the "experimental" period.  The default function is \code{length} - in other words, the default test statistis is the number of events that happen during the experimental period.
+#' @param ts_fun A function to compute the test statistic. Input provided to this function will be the times of events that occur during the "experimental" period.  The default function is \code{length} - in other words, the default test statistic is the number of events that happen during the experimental period.
 #' @param skip_sort Logical. Should times be sorted in ascending order? Default is \code{skip_sort=FALSE}.
 #' @param conf_level Confidence level to be used for the bootstrap CI calculation, specified as a proportion. (default is \code{conf_level=0.95}, or 95\% confidence.)
 #' @param return_rot_stats Logical. Should output include the test statistics computed for each rotation of the data? Default is \code{return_rot_stats=FALSE}.
 #' @param ... Additional inputs to be passed to \code{ts_fun}
 #' @return A list containing the following components:
 #' \itemize{
-#'   \item{\strong{result}}{, A one-row data frame with rows:
+#'   \item \strong{result}, A one-row data frame with rows:
 #'   \itemize{
-#'      \item{\strong{statistic: }}{Test statistic (from original data)}
-#'      \item{\strong{p_value: }}{P-value of the test (2-sided)}
-#'      \item{\strong{n_rot: }}{Number of rotations}
-#'      \item{\strong{CI_low: }}{Lower bound on rotation-resampling percentile-based confidence interval}
-#'      \item{\strong{CI_up: }}{Upper bound on rotation-resampling percentile-based confidence interval}
-#'      \item{\strong{conf_level: }}{Confidence level, as a proportion}
-#'
-#'      }}
-#'   \item{\strong{rot_stats}}{ (If \code{return_rot_stats} is TRUE), a vector of \code{n_rot} statistics from the rotated datasets}
-#'   }
-#'
+#'      \item \strong{statistic: } Test statistic (from original data)
+#'      \item \strong{p_value: } P-value of the test (2-sided)
+#'      \item \strong{n_rot: } Number of rotations
+#'      \item \strong{CI_low: } Lower bound on rotation-resampling percentile-based confidence interval
+#'      \item \strong{CI_up: } Upper bound on rotation-resampling percentile-based confidence interval
+#'      \item \strong{conf_level: } Confidence level, as a proportion
+#'      }
+#'   \item \strong{rot_stats} (If \code{return_rot_stats} is TRUE), a vector of \code{n_rot} statistics from the rotated datasets
+#' }
 #' @export
 #' @references
 #'    Miller, P. J. O., Shapiro, A. D., Tyack, P. L. and Solow, A. R. (2004). Call-type matching in vocal exchanges of free-ranging resident killer whales, Orcinus orca. Anim. Behav. 67, 1099–1107.

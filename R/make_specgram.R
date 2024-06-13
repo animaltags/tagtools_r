@@ -14,9 +14,9 @@
 #'
 #' @return if \code{draw_plot} is TRUE, a plot is produced. If it is FALSE, a list is returned, with as follows. Each element is a matrix and all three matrices are the same size.
 #' \itemize{
-#'   \item{\code{s, }} {A matrix of spectrogram values of signal x in dB. }
-#'   \item{\code{f, }} {Frequencies (Hz) corresponding to the rows of s}
-#'   \item{\code{t, }} {Time indices corresponding to the columns of s}
+#'   \item \code{s, } A matrix of spectrogram values of signal x in dB. 
+#'   \item \code{f, } Frequencies (Hz) corresponding to the rows of s
+#'   \item \code{t, } Time indices corresponding to the columns of s
 #' }
 #'
 #' @examples

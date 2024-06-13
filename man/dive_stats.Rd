@@ -36,20 +36,20 @@ The unit of measure must be radians (NOT degrees). Currently, \code{X} must be r
 \value{
 A data frame with one row for each dive/flight and columns as detailed below. All times are in seconds, and rates in units of x/sec where x is the units of \code{P}.
 \itemize{
-\code{max} { The maximum depth or altitude}
-\code{st} {start time of dive (seconds) - from input dive_cues}
-\code{et} {end time of dive (seconds) - from input dive_cues}
-\code{dur} { The duration of the excursion}
-\code{dest_st} { The start time of the destination phase in seconds since start of tag recording (which is also the end time of to phase)}
-\code{dest_et} { The end time of the destination phase in seconds since start of tag recording (which is also the start of the from phase).}
-\code{dest_dur} { The duration in seconds of destination phase}
-\code{to_dur} { The duration in seconds of to phase}
-\code{from_dur} { The duration in seconds of from phase}
-\code{mean_angle} { If angular=TRUE and X is input, the mean angle for the entire excursion. Values for each phase are also provided in columns \code{mean_to_angle}, \code{mean_dest_angle}, and \code{mean_from_angle}.}
-\code{angle_var} { If angular=TRUE and X is input, the angular variance for the entire excursion. Values for each phase are also provided individually in columns \code{to_angle_var}, \code{dest_angle_var}, and \code{from_angle_var}.}
-\code{mean_aux} { If angular=FALSE and X is input, the mean value of X for the entire excursion. Values for each phase are also provided in columns \code{mean_to_aux}, \code{mean_dest_aux}, and \code{mean_from_aux}.}
-\code{aux_sd} { If angular=FALSE and X is input, the standard deviation of X for the entire excursion. Values for each phase are also provided individually in columns \code{to_aux_sd}, \code{dest_aux_sd}, and \code{from_aux_sd}.}
-#' }
+\item \code{max}  The maximum depth or altitude
+\item \code{st} start time of dive (seconds) - from input dive_cues
+\item \code{et} end time of dive (seconds) - from input dive_cues
+\item \code{dur}  The duration of the excursion
+\item \code{dest_st}  The start time of the destination phase in seconds since start of tag recording (which is also the end time of to phase)
+\item \code{dest_et}  The end time of the destination phase in seconds since start of tag recording (which is also the start of the from phase).
+\item \code{dest_dur}  The duration in seconds of destination phase
+\item \code{to_dur}  The duration in seconds of to phase
+\item \code{from_dur}  The duration in seconds of from phase
+\item \code{mean_angle}  If angular=TRUE and X is input, the mean angle for the entire excursion. Values for each phase are also provided in columns \code{mean_to_angle}, \code{mean_dest_angle}, and \code{mean_from_angle}.
+\item \code{angle_var}  If angular=TRUE and X is input, the angular variance for the entire excursion. Values for each phase are also provided individually in columns \code{to_angle_var}, \code{dest_angle_var}, and \code{from_angle_var}.
+\item \code{mean_aux}  If angular=FALSE and X is input, the mean value of X for the entire excursion. Values for each phase are also provided in columns \code{mean_to_aux}, \code{mean_dest_aux}, and \code{mean_from_aux}.
+\item \code{aux_sd}  If angular=FALSE and X is input, the standard deviation of X for the entire excursion. Values for each phase are also provided individually in columns \code{to_aux_sd}, \code{dest_aux_sd}, and \code{from_aux_sd}.
+ }
 }
 \description{
 Given a depth/altitude profile and a series of dive/flight start and end times,

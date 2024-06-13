@@ -42,7 +42,7 @@ plott(
 \item{draw}{(Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a ggplot object (if interactive is FALSE) or plotly object (if interactive is TRUE) will be returned.}
 }
 \value{
-A plot of time-series data
+A plot of time-series data created with ggplot or plotly. If you prefer base R graphics, consider function \code{\link{plott_base}} instead.
 }
 \description{
 Plot time series in a single or multi-paneled figure, using ggplot2 graphics for static graphs and plotly for interactive ones. This is useful, for example, for comparing measurements across different sensors in an animaltag data object. The time axis is automatically displayed in seconds, minutes, hours, or days according to the span of the data.
