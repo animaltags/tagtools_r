@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+ggplot2::theme_set(ggplot2::theme_bw(base_size = 14))
 require(tagtools)
 ```
 
@@ -170,10 +171,18 @@ points(pks$peak_time/fs/3600, bw$P$data[round(pks$peak_time)], pch = 8)
 <div id="plot_peaks" class="collapse">
 
 ```{r, echo = FALSE, eval = TRUE}
-plott(X = list(Depth = bw$P))
+plot_panels <- plott(X = list(Depth = bw$P),
+                     draw = FALSE)
 # note: the code below assumes your plott x-axis is in hours.
 # if it were in minutes use /60 instead of /3600, etc.
-points(pks$peak_time/fs/3600, bw$P$data[round(pks$peak_time)], pch = 8)
+plot_panels[[1]] +
+  ggplot2::geom_point(
+    inherit.aes = FALSE,
+    ggplot2::aes(x = pks$peak_time/fs/3600,
+                 y = bw$P$data[round(pks$peak_time)]),
+                 color = 'darkred'
+  )
+
 ```
 
 </div>
@@ -207,4 +216,4 @@ vignette('magnetometer-filtering')
 
 ***
 
-Animaltags home pages: http://animaltags.org/ (old), https://animaltags.netlify.app/ (new), https://github.com/stacyderuiter/TagTools (for latest beta source code), https://stacyderuiter.github.io/TagTools/articles/TagTools (vignettes overview)
+Animaltags tag tools online: http://animaltags.org/, https://github.com/animaltags/tagtools_r (for latest beta source code), https://animaltags.github.io/tagtools_r/index.html (vignettes overview)

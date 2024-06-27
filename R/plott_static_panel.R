@@ -13,6 +13,14 @@
 #' @return A ggplot for "one panel," that is, with the data from one sensor
 
 plott_static_panel <- function(sensor, sensor_data, line_colors, panel_labels, axis_names = c("X", "Y", "Z"), times, x_lab, r) {
+  
+  if (missing(line_colors)) {
+    line_colors <- c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")
+  }
+  if (missing(panel_labels)) {
+    panel_labels <- ""
+  }
+  
   names(panel_labels) <- names(sensor_data)
   names(r) <- names(sensor_data)
   names(times) <- names(sensor_data)
@@ -36,7 +44,13 @@ plott_static_panel <- function(sensor, sensor_data, line_colors, panel_labels, a
     this_data <- sensor_data[[sensor]]
   }
   nc <- ncol(this_data)
-  nc <- ifelse(is.null(nc) | is.na(nc), 1, nc)
+  if(is.null(nc)){
+    nc <- 1
+  }
+  if(is.na(nc)){
+    nc <- 1
+  }
+  
   this_long_data <- as.numeric(matrix(this_data, ncol = 1, byrow = FALSE))
   this_plot <- this_plot +
     ggplot2::geom_path(mapping = ggplot2::aes(x = rep(times[[sensor]], times = nc),

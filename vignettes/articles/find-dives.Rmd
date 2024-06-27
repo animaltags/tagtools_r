@@ -305,23 +305,88 @@ mean_dive_depth
 When you have got the mean dive depth, try plotting the start and end of the dives on the depth plot:
 
 ```{r, echo = TRUE, eval = FALSE}
-plott(X=list(Pcmf=Pcmf$p), r=TRUE)
-points(d$start/(3600*24),rep(0,nrow(d)),col='green', pch=19)
-points(d$end/(3600*24),rep(0,nrow(d)),col='red', pch=17)
+plot_panels <- plott(X = list(Pcmf = Pcmf$p),
+                   r = TRUE,
+                   draw = FALSE) 
+# our "list" of plot panels from plott has only one element, the dive profile
+plot_panels[[1]] + 
+  ggplot2::geom_point(inherit.aes = FALSE,
+                      data = d,
+                      x = d$start/3600 / 24,
+                      y = 0 * d$start,
+                      color = 'darkgreen') +
+  ggplot2::geom_point(inherit.aes = FALSE,
+                      data = d,
+                      x = d$end / 3600 / 24,
+                      y = 0 * d$end,
+                      colour = "darkred") 
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#start_end_dives"> Show/Hide Results </button>  
 <div id="start_end_dives" class="collapse"> 
 ```{r, echo = FALSE, eval = TRUE}
-plott(X=list(Pcmf=Pcmf$p), r=TRUE)
-points(d$start/(3600*24),rep(0,nrow(d)),col='green', pch=19)
-points(d$end/(3600*24),rep(0,nrow(d)),col='red', pch=17)
+plot_panels <- plott(X = list(Pcmf = Pcmf$p),
+                   r = TRUE,
+                   draw = FALSE) 
+# our "list" of plot panels from plott has only one element, the dive profile
+plot_panels[[1]] + 
+  ggplot2::geom_point(inherit.aes = FALSE,
+                      data = d,
+                      x = d$start/3600 / 24,
+                      y = 0 * d$start,
+                      color = 'darkgreen') +
+  ggplot2::geom_point(inherit.aes = FALSE,
+                      data = d,
+                      x = d$end / 3600 / 24,
+                      y = 0 * d$end,
+                      colour = "darkred") 
 ```
 </div>
 
-Again, this plot might be rather small. As a result it might be tricky to make sense of the markers that designate the starts and ends of dives. You should be able to click Zoom to view the plot in a larger window. 
+Note: Depending on the duration of data you're plotting, `plott()` may choose days or hours as the time units, and you will have to adjust the multipliers in the `geom_point` code accordingly. The start and end times returned by `find_dives()` are in seconds.
 
-Note: if you cropped the time such that the units of the x-axis are not in days, you will have to adjust the multipliers in the `points` code accordingly. In the example above, the start and end times returned by find_dives are in seconds so we needed to divide them by 3600*24 to match the unit (days) automatically selected for time by `plott`.
+Again, this plot might be rather small. As a result it might be tricky to make sense of the markers that designate the starts and ends of dives. An interactive version might help, so you can zoom in and out...
+
+```{r, echo = TRUE, eval = FALSE}
+plot_panels <- plott(X = list(Pcmf = Pcmf$p),
+                   r = TRUE,
+                   interactive = TRUE,
+                   draw = FALSE) 
+# our "list" of plot panels from plott has only one element, the dive profile
+plot_panels[[1]] |>
+  plotly::add_trace(x = d$start/3600 / 24,
+                    y = 0 * d$start,
+                    marker = list(color = 'darkgreen'), 
+                    name = "Dive Starts",
+                    mode = "markers") |>
+  plotly::add_trace(x = d$end/3600 / 24,
+                    y = 0 * d$end,
+                    marker = list(color = 'darkred'),
+                    name = "Dive Ends",
+                    mode = "markers")
+```
+
+<button class="btn btn-primary" data-toggle="collapse" data-target="#start_end_dives"> Show/Hide Results </button>  
+<div id="start_end_dives" class="collapse"> 
+```{r, echo = FALSE, eval = TRUE}
+plot_panels <- plott(X = list(Pcmf = Pcmf$p),
+                   r = TRUE,
+                   interactive = TRUE,
+                   draw = FALSE) 
+# our "list" of plot panels from plott has only one element, the dive profile
+plot_panels[[1]] |>
+  plotly::add_trace(x = d$start/3600 / 24,
+                    y = 0 * d$start,
+                    marker = list(color = 'darkgreen'), 
+                    name = "Dive Starts",
+                    mode = "markers") |>
+  plotly::add_trace(x = d$end/3600 / 24,
+                    y = 0 * d$end,
+                    marker = list(color = 'darkred'),
+                    name = "Dive Ends",
+                    mode = "markers")
+```
+</div>
 
 # Review
 
@@ -337,4 +402,4 @@ vignette('mahalanobis-distance')
 
 ***
 
-Animaltags home pages: http://animaltags.org/ (old), https://animaltags.netlify.app/ (new), https://github.com/stacyderuiter/TagTools (for source code)
+Animaltags tag tools online: http://animaltags.org/, https://github.com/animaltags/tagtools_r (for latest beta source code), https://animaltags.github.io/tagtools_r/index.html (vignettes overview)

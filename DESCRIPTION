@@ -3,7 +3,8 @@ Title: Work with Data from High-Resolution Biologging Tags
 Version: 0.1.0
 Authors@R: c(person("Stacy", "DeRuiter", 
             email = "stacy.deruiter@calvin.edu", 
-            role = c("aut", "cre", "cph")),
+            role = c("aut", "cre", "cph"),
+            comment = c(ORCID = "0000-0002-0571-0306")),
             person("Mark", "Johnson",
             role = c("aut", "cph")),
             person("David", "Sweeney",

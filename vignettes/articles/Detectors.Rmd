@@ -302,7 +302,7 @@ Case Study
 
 ```{r, echo=TRUE, eval = FALSE}
 library(readr)
-bw11_210a_tagdata <- readr::read_csv('http://sldr.netlify.com/data/bw11_210a_tagdata.csv')
+bw11_210a_tagdata <- readr::read_csv('https://sldr.netlify.app/data/bw11_210a_tagdata.csv')
 Aw <- cbind(bw11_210a_tagdata$Awx, bw11_210a_tagdata$Awy, bw11_210a_tagdata$Awz)
 sampling_rate <- bw11_210a_tagdata$fs[1]  
 head(Aw, 5)
@@ -315,7 +315,7 @@ head(sampling_rate)
 ```{r, echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
 library(readr)
 library(tagtools)
-bw11_210a_tagdata <- readr::read_csv('http://sldr.netlify.com/data/bw11_210a_tagdata.csv')
+bw11_210a_tagdata <- readr::read_csv('https://sldr.netlify.app/data/bw11_210a_tagdata.csv')
 Aw <- cbind(bw11_210a_tagdata$Awx, bw11_210a_tagdata$Awy, bw11_210a_tagdata$Awz)
 sampling_rate <- bw11_210a_tagdata$fs[1]  
 head(Aw, 5)
@@ -329,7 +329,7 @@ head(sampling_rate)
 library(tagtools)
 jerk <- njerk(A = Aw, sampling_rate = sampling_rate)
 X <- list(jerk = jerk)
-plott(X, 5, line_colors = "blue") 
+plott(X, 5) 
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#plott_Aw"> Show/Hide Results </button>  
@@ -338,7 +338,7 @@ plott(X, 5, line_colors = "blue")
 ```{r, echo = FALSE, eval = TRUE, fig.width=7, fig.height=5, message=FALSE}
 jerk <- njerk(A = Aw, sampling_rate = sampling_rate)
 X <- list(jerk = jerk)
-plott(X, 5, line_colors = "blue") 
+plott(X, 5) 
 ```
 
 </div>
@@ -364,12 +364,12 @@ peaks <- detect_peaks(data = Aw[1:63000, ], sr = sr, FUN = njerk, thresh = NULL,
 ```
 ```{r, echo = FALSE, fig.width=7, fig.height=5}
 X <- list(jerk = jerk)
-plott(X, sampling_rate, line_colors = "blue")
+plott(X, sampling_rate)
 ```
 
 In the case where we did not need/want to see the jerk signal before running the detect_peaks function, we could have produced the same results using the following code:
 ```{r, message = FALSE, eval = FALSE}
-detect_peaks(data = Aw[1:63000, ], sr = sr, FUN = "njerk", 
+detect_peaks(data = Aw[1:63000, ], sr = sr, FUN = njerk, 
                 thresh = NULL, bktime = NULL, plot_peaks = TRUE, sampling_rate = sampling_rate)
 ```
 
@@ -377,17 +377,17 @@ detect_peaks(data = Aw[1:63000, ], sr = sr, FUN = "njerk",
 ```{r, echo = TRUE, eval = FALSE}
 peaks <- detect_peaks(data = jerk, sr = sr, FUN = NULL, 
                           thresh = 0.874, bktime = 50, plot_peaks = TRUE)
-plott(X, sampling_rate, line_colors = "blue")
+plott(X, sampling_rate)
 ```
 
 ```{r, eval = FALSE, echo = TRUE, fig.width=7, fig.height=5}
-plott(X, sampling_rate, line_colors = "blue")
+plott(X, sampling_rate)
 str(peaks)
 ```
 
 
 ```{r, eval = TRUE, echo = FALSE, fig.width=7, fig.height=5}
-plott(X, sampling_rate, line_colors = "blue")
+plott(X, sampling_rate)
 str(peaks)
 ```
 
@@ -399,7 +399,7 @@ tpevents <- (63000 / sampling_rate) / 30
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The number of known events is also hard to determine as it requires a trained scientist to manually scroll through a signal, looking for distinct characteristics in the plot that are known to be related to the desired behavioral event. Lucky for us, this hard work has already been completed by members of the SOCAL BRS project. We will name the vector containing the known times of lunges in our data set as "events". Now, because the event times determined by the members of SOCAL BRS are in units of seconds, we must first multiply our vector by the sampling rate in order to have the units be in samples.
 ```{r, message=FALSE, echo=FALSE, results='hide'}
-events <- readr::read_csv('http://sldr.netlify.com/data/bw11_210aLungeTimes.csv')
+events <- readr::read_csv('https://sldr.netlify.app/data/bw11_210aLungeTimes.csv')
 events <- events$Ltimes * sampling_rate
 ```
 ```{r}
@@ -427,14 +427,24 @@ str(peaks)
 ```{r, fig.width=7, fig.height=5}
 depth <- bw11_210a_tagdata$depth
 cropped_depth <- depth[1:63000]
-klunge <- (((events / 5) / 60) / 60)
-dettimes <- (((peaks$peak_time / 5) / 60) / 60)
-depthevents <- cropped_depth[events]
-depthdetections <- cropped_depth[peaks$peak_time]
-Dive_Profile <- list(Dive_Profile = cropped_depth)
-plott(Dive_Profile, 5, r = TRUE, par_opts = list(mar=c(1,5,0,0), oma=c(2,0,2,1), las=1, lwd=1, cex = 1))
-graphics::points(x = klunge, y = depthevents, col = "red", cex = 1.4, pch = 16)
-graphics::points(x = dettimes, y = depthdetections, col = "gold", cex = 1.4, pch = "+:")
+lunges <- data.frame(klunge = (((events / 5) / 60) / 60),
+                     depthevents = cropped_depth[events])
+event_detections <- data.frame(dettimes = (((peaks$peak_time / 5) / 60) / 60),
+                               depthdetections = cropped_depth[peaks$peak_time])
+Dive_Profile <- data.frame(Dive_Profile = cropped_depth)
+ggplot2::ggplot(Dive_Profile) +
+  ggplot2::geom_line(ggplot2::aes(y = Dive_Profile,
+                                  # time in hours
+                                  x = c(0:(-1+length(cropped_depth))) / 5 / 60 / 60)) +
+  ggplot2::scale_y_reverse() +
+  xlab('Hours') +
+  ggplot2::geom_point(data = lunges,
+                      ggplot2::aes(x = klunge, y = depthevents, colour = "Lunges"),
+                      inherit.aes = FALSE) +
+  ggplot2::geom_point(data = event_detections,
+                      ggplot2::aes(x = dettimes, y = depthdetections, col = "Events"),
+                      inherit.aes = FALSE) +
+  scale_color_discrete("")
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The resulting data shows the lunge feeding events detected by the detect_peaks function while using an "optimal" threshold and blanking time. I have included a plot of the dive profile of the blue whale with the lunges detected by the detect_peaks function marked in gold and the known lunge times marked in red. One brief note about the dive profile plot shown above is that gold and red markings which overlap slightly but which are not directly overlayed still represent a correctly detected lunge feeding event. This is because the exact time at which the lunge was determined to have occured is slightly different between the detect_peaks function and the manual detections performed by the SOCAL BRS researchers.

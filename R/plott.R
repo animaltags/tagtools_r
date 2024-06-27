@@ -13,8 +13,8 @@
 #' @param panel_heights (Optional) A vector of relative or absolute heights for the different panels (one entry for each sensor data stream in \code{X}). Default is equal-height panels. If \code{panel_heights} is a numeric vector, it is interpreted as relative panel heights. 
 #' @param panel_labels (Optional) A list of y-axis labels for the panels. Defaults to names(X).
 #' @param line_colors (Optional) A list of colors for lines for multivariate data streams (for example, if a panel plots tri-axial acceleration, it will have three lines -- their line colors will be the first three in this list). May be specified in any specification R understands for colors. Defaults to c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")
-#' @param interactive (Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is TRUE. Interactive plotting requires the package plotly.
-#' @param draw (Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a list of ggplot objects (if interactive is FALSE; this list is suitable to plot with \code{cowplot::plot_grid()}) or plotly object (if interactive is TRUE) will be returned.
+#' @param interactive (Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is FALSE. Interactive plotting requires the package plotly.
+#' @param draw (Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a list of ggplot objects (if interactive is FALSE; this list is suitable to plot with \code{cowplot::plot_grid()}) or a list of plotly objects (if interactive is TRUE) will be returned. This may be useful if you wish to further customize the plot panels, for example adding detected events atop the dive profile.
 #' @return A plot of time-series data created with ggplot or plotly. If you prefer base R graphics, consider function \code{\link{plott_base}} instead.
 #' @export
 #' @note This is a flexible plotting tool which can be used to display and explore sensor data with different sampling rates on a uniform time grid.
@@ -196,7 +196,7 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
     if (draw){
       plot_out
     }else{
-      return(plot_out)
+      return(facet_list)
     }
     
   }else{ # end if interactive

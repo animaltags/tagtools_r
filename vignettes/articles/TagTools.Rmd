@@ -286,13 +286,30 @@ This vignette starts with a quick review, where you'll find and correct for a fe
 MN_file_path <- "nc_files/mn12_186a_raw.nc"
 MN <- load_nc(MN_file_path)
 Pc = crop_to(X = MN$P, sampling_rate = 1, tcues = c(0, 25306), times = NULL)
-Pcm = median_filter(Pc,n=3)
-Tc <- crop_to(MN$T,tcues=Pc$crop)
+Pcm = median_filter(Pc,n = 3)
+Tc <- crop_to(MN$T,tcues = Pc$crop)
 Pcmf <- fix_pressure(Pcm, Tc)
-d <- find_dives(Pcmf$p,mindepth=5)
-plott(X=list(Pcmf=Pcmf$p), r=TRUE)
-points(d$start/(3600*24),rep(0,nrow(d)),col='green', pch=19)
-points(d$end/(3600*24),rep(0,nrow(d)),col='red', pch=17)
+d <- find_dives(Pcmf$p,mindepth = 5)
+
+plot_panels <- plott(X = list(Pcmf = Pcmf$p), 
+                     r = TRUE,
+                     draw = FALSE)
+# we only have 1 plot panel, the depth data
+plot_panels[[1]] +
+  ggplot2::geom_point(inherit.aes = FALSE,
+                      data = d,
+                      mapping = ggplot2::aes(
+                        x = start / 3600 / 24,
+                        y = 0 * start
+                      ),
+                      colour = 'darkgreen') +
+  ggplot2::geom_point(inherit.aes = FALSE,
+                      data = d,
+                      mapping = ggplot2::aes(
+                        x = end / 3600 / 24,
+                        y = 0 * end
+                      ),
+                      colour = 'darkred')
 ```
 
 
@@ -341,7 +358,11 @@ noon <- range(which(t_posix < e & t_posix > s))
 #convert to seconds
 noon <- noon/nessie$P$sampling_rate
 #do test
-RTR <- rotation_test(event_times = dt$start, exp_period = noon, full_period = c(0,length(nessie$P$data)/nessie$P$sampling_rate), n_rot = 10000, ts_fun = length)
+RTR <- rotation_test(event_times = dt$start, 
+                     exp_period = noon, 
+                     full_period = c(0,length(nessie$P$data)/nessie$P$sampling_rate), 
+                     n_rot = 10000, 
+                     ts_fun = length)
 print(RTR)
 ```
 
@@ -359,7 +380,9 @@ You'll compare data to other data to see how out of the ordinary it is, using a 
 #if you want to run this example, download the "zc11_267a.nc" file from https://github.com/animaltags/tagtools_data and change the file path to match where you've saved the files
 ZC_file_path <- "nc_files/zc11_267a.nc"
 zc <- load_nc(ZC_file_path)
-plott(X = list(Depth = zc$P$data, Accel = zc$A$data), fsx = zc$P$sampling_rate, interactive = FALSE)
+plott(X = list(Depth = zc$P$data, Accel = zc$A$data), 
+      fsx = zc$P$sampling_rate, 
+      interactive = FALSE)
 ```
 
 
@@ -374,4 +397,4 @@ Thanks for reading---best of luck!
 
 ***
 
-Animaltags home pages: http://animaltags.org/ (old), https://animaltags.netlify.app/ (new), https://github.com/stacyderuiter/TagTools (for latest beta source code), https://stacyderuiter.github.io/TagTools/articles/TagTools (vignettes overview)
+Animaltags tag tools online: http://animaltags.org/, https://github.com/animaltags/tagtools_r (for latest beta source code), https://animaltags.github.io/tagtools_r/index.html (vignettes overview)

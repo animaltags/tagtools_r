@@ -172,7 +172,8 @@ If you like, zoom in to the section of steady stroking that you used for `dsf`--
 plott(X = list(`Depth` = bw$P$data,
                `LF Accel` = Alow, 
                `HF Accel` = Ahigh),
-      fsx = sampling_rate, xlim = c(35*60, 42*60)/3600)
+      fsx = sampling_rate,
+      interactive = TRUE)
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#plott_lowNhigh_zoomd"> Show/Hide Results </button>  
@@ -182,7 +183,8 @@ plott(X = list(`Depth` = bw$P$data,
 plott(X = list(`Depth` = bw$P$data,
                `LF Accel` = Alow, 
                `HF Accel` = Ahigh),
-      fsx = sampling_rate, xlim = c(35*60, 42*60)/3600)
+      fsx = sampling_rate,
+      interactive = TRUE)
 ```
 
 </div>
@@ -200,17 +202,17 @@ Ah1 <- crop_to(Ahigh, sampling_rate = sampling_rate, tcues = intvl1)
 Ah2 <- crop_to(Ahigh, sampling_rate = sampling_rate, tcues = intvl2)
 ```
 
-Now plott these together. Be careful when comparing, since plott puts them on different y-scales automatically to fit the data to the window! 
+Now plott these together. Be careful when comparing, since `plott()` puts them on different y-scales automatically to fit the data to the window! 
 
 ```{r, echo = TRUE, eval = FALSE}
-plott(X = list(Ah1 = Ah1, Ah2 = Ah2), fsx = sampling_rate, xl = c(0, 1))
+plott(X = list(Ah1 = Ah1, Ah2 = Ah2), fsx = sampling_rate)
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#plott_Ah1Ah2"> Show/Hide Results </button>  
 <div id="plott_Ah1Ah2" class="collapse"> 
 
 ```{r, echo = FALSE, eval = TRUE}
-plott(X = list(Ah1 = Ah1, Ah2 = Ah2), fsx = sampling_rate, xl = c(0, 1))
+plott(X = list(Ah1 = Ah1, Ah2 = Ah2), fsx = sampling_rate)
 ```
 
 </div>
@@ -307,4 +309,4 @@ Aaaaand... congrats! You've aced this vignette.
 
 ***
 
-Animaltags home pages: http://animaltags.org/ (old), https://animaltags.netlify.app/ (new), https://github.com/stacyderuiter/TagTools (for latest beta source code), https://stacyderuiter.github.io/TagTools/articles/TagTools (vignettes overview)
+Animaltags tag tools online: http://animaltags.org/, https://github.com/animaltags/tagtools_r (for latest beta source code), https://animaltags.github.io/tagtools_r/index.html (vignettes overview)

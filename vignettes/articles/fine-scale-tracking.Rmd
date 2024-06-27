@@ -156,11 +156,10 @@ plott(X = list(Depth = d7$P$data, `Vertical Speed` = v),
 
 Set `interactive = TRUE` and zoom in to individual dives on this plot to get a rough idea of the descent and ascent speed of the whale. 
 
-Or, if the interactive figure drives you a bit crazy, just set the axis limits:
-
 ```{r, echo = TRUE, eval = FALSE}
 plott(X = list(Depth = d7$P$data, `Vertical Speed` = v), 
-       fsx = sampling_rate, xl = c(0,0.1))
+       fsx = sampling_rate, 
+      interactive = TRUE)
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#plott_v2"> Show/Hide Results </button>  
@@ -168,7 +167,8 @@ plott(X = list(Depth = d7$P$data, `Vertical Speed` = v),
 
 ```{r, echo = FALSE, eval = TRUE}
 plott(X = list(Depth = d7$P$data, `Vertical Speed` = v), 
-       fsx = sampling_rate, xl = c(0,0.1))
+       fsx = sampling_rate, 
+      interactive = TRUE)
 ```
 
 </div>
@@ -295,9 +295,9 @@ library(plotly)
 theme_set(theme_bw(base_size = 12))
 
 track_fig <- gf_path(northing ~ easting, data = DR,
-         xlab = 'Easting, m', ylab = 'Northing, m') %>%
-  gf_path(northing ~ easting, data = POSLLF, color = 'darkred') %>%
-  gf_point(northing ~ easting, data = POSLLF, color = 'darkred') %>%
+         xlab = 'Easting, m', ylab = 'Northing, m') |>
+  gf_path(northing ~ easting, data = POSLLF, color = 'darkred') |>
+  gf_point(northing ~ easting, data = POSLLF, color = 'darkred') |>
   gf_path(northing ~ easting, data = FT, color = 'darkgreen')
 
 track_fig
@@ -312,9 +312,9 @@ library(plotly)
 theme_set(theme_bw(base_size = 12))
 
 track_fig <- gf_path(northing ~ easting, data = DR,
-         xlab = 'Easting, m', ylab = 'Northing, m') %>%
-  gf_path(northing ~ easting, data = POSLLF, color = 'darkred') %>%
-  gf_point(northing ~ easting, data = POSLLF, color = 'darkred') %>%
+         xlab = 'Easting, m', ylab = 'Northing, m') |>
+  gf_path(northing ~ easting, data = POSLLF, color = 'darkred') |>
+  gf_point(northing ~ easting, data = POSLLF, color = 'darkred') |>
   gf_path(northing ~ easting, data = FT, color = 'darkgreen')
 
 track_fig
@@ -325,14 +325,14 @@ track_fig
 OK, that's the track figure. What about zooming and interaction?
 
 ```{r, echo = TRUE, eval = FALSE}
-track_fig %>% ggplotly()
+track_fig |> ggplotly()
 ```
 
 <button class="btn btn-primary" data-toggle="collapse" data-target="#track_fig_ggplotly"> Show/Hide Results </button>  
 <div id="track_fig_ggplotly" class="collapse"> 
 
 ```{r, echo = FALSE, eval = TRUE}
-track_fig %>% ggplotly()
+track_fig |> ggplotly()
 ```
 
 </div>
@@ -342,7 +342,7 @@ Ahhh, so much nicer! But do note that `plotly()` figures render only in interact
 This figure is also nicer in that we can update it by chaining. For example, to change the axis limits:
 
 ```{r, echo = TRUE, eval = FALSE}
-track_fig_zoom <- track_fig %>%
+track_fig_zoom <- track_fig |>
   gf_lims(x = c(-500, 1500), y = c(-1100, 100))
 track_fig_zoom
 ```
@@ -351,7 +351,7 @@ track_fig_zoom
 <div id="track_fig_zoom" class="collapse"> 
 
 ```{r, echo = FALSE, eval = TRUE}
-track_fig_zoom <- track_fig %>%
+track_fig_zoom <- track_fig |>
   gf_lims(x = c(-500, 1500), y = c(-1100, 100))
 track_fig_zoom
 ```
@@ -371,10 +371,13 @@ Examine the plot to see how the green fitted track interpolates the red GPS posi
 
 # Tracks Colored by a Variable
 
-We often want to plot a track colored proportional to another variable of interest. For example, it can be useful to see where the animal is diving along the track. To colour the track by depth, use `col_line()` with `P` as the color information:
+We often want to plot a track colored proportional to another variable of interest. For example, it can be useful to see where the animal is diving along the track. Here is one way to color the track by dive depth:
 
 ```{r, echo = TRUE, eval = FALSE}
-CF <- col_line(y = northing, x = easting, data = FT, color = d7$P$data)
+CF <- ggplot2::ggplot(FT) +
+  ggplot2::geom_path(ggplot2::aes(y = northing, 
+                                  x = easting,
+                                  color = d7$P$data))
 CF
 ```
 
@@ -383,7 +386,10 @@ CF
 <div id="col_line_static" class="collapse"> 
 
 ```{r, echo = TRUE, eval = FALSE}
-CF <- col_line(y = northing, x = easting, data = FT, color = d7$P$data)
+CF <- ggplot2::ggplot(FT) +
+  ggplot2::geom_path(ggplot2::aes(y = northing, 
+                                  x = easting,
+                                  color = d7$P$data))
 CF
 ```
 
@@ -392,7 +398,7 @@ CF
 What about an interactive version?
 
 ```{r, echo = TRUE, eval = FALSE}
-col_line(x = FT$easting, y = FT$northing, color = d7$P$data)
+plotly::ggplotly(CF)
 ```
 
 Zoom in to see what the scale is of the track [tortuosity](https://en.wikipedia.org/wiki/Tortuosity): Is there tortuosity within individual dives, or is the tortuosity occurring across dives?
@@ -441,4 +447,4 @@ vignette('dive-stats')
 
 ***
 
-Animaltags home pages: http://animaltags.org/ (old), https://animaltags.netlify.app/ (new), https://github.com/stacyderuiter/TagTools (for latest beta source code), https://stacyderuiter.github.io/TagTools/articles/TagTools (vignettes overview)
+Animaltags tag tools online: http://animaltags.org/, https://github.com/animaltags/tagtools_r (for latest beta source code), https://animaltags.github.io/tagtools_r/index.html (vignettes overview)

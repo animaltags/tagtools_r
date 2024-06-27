@@ -37,9 +37,9 @@ plott(
 
 \item{line_colors}{(Optional) A list of colors for lines for multivariate data streams (for example, if a panel plots tri-axial acceleration, it will have three lines -- their line colors will be the first three in this list). May be specified in any specification R understands for colors. Defaults to c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")}
 
-\item{interactive}{(Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is TRUE. Interactive plotting requires the package plotly.}
+\item{interactive}{(Optional) Should an interactive figure (allowing zoom/pan/etc.) be produced? Default is FALSE. Interactive plotting requires the package plotly.}
 
-\item{draw}{(Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a list of ggplot objects (if interactive is FALSE; this list is suitable to plot with \code{cowplot::plot_grid()}) or plotly object (if interactive is TRUE) will be returned.}
+\item{draw}{(Optional) Whether or not to draw the plot. Defaults to TRUE. If FALSE, a list of ggplot objects (if interactive is FALSE; this list is suitable to plot with \code{cowplot::plot_grid()}) or a list of plotly objects (if interactive is TRUE) will be returned. This may be useful if you wish to further customize the plot panels, for example adding detected events atop the dive profile.}
 }
 \value{
 A plot of time-series data created with ggplot or plotly. If you prefer base R graphics, consider function \code{\link{plott_base}} instead.
