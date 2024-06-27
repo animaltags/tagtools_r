@@ -11,9 +11,7 @@
 #' @param x_lab Title for x axis (string)
 #' @param r whether or not to reverse the y axis scale for each sensor
 #' @return A ggplot for "one panel," that is, with the data from one sensor
-#' @examples
-#' plott_static_panel(list(depth = harbor_seal$P, Accel = harbor_seal$A), sensor = "Accel", line_colors = line_colors <- c("#000000", "#009E73", "#9ad0f3"), panel_labels =  )
-#' 
+
 plott_static_panel <- function(sensor, sensor_data, line_colors, panel_labels, axis_names = c("X", "Y", "Z"), times, x_lab, r) {
   names(panel_labels) <- names(sensor_data)
   names(r) <- names(sensor_data)

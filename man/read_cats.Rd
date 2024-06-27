@@ -31,7 +31,14 @@ Read a .csv file with data from a CATS tag deployment, including associated meta
 \note{
 CATS loggers can produce very large csv files which are slow to
 process. This function is (somewhat) optimised for speed and memory use so will
-tolerate large files. But processing could be slow.
+tolerate large files. But processing could be slow. Note also that although CATs tags use a NED axis orientation for 3D sensors, 
+this function converts to the NEU orientation expected by the animaltag tool kit. 
+To revert (if continuing analysis with CATs-specific tools outside animaltags), 
+simply multiply all z-axis values by -1. 
+Also note that Cade et al. 2021 note that not all CATs tags have the same internal orientation of the triaxial sensors -- 
+such that the first column in the data may or may not be the "x axis." 
+Here, we assume that the three columns of data for any triaxial sensor are correctly labeled with X,Y,Z included in the column name in the CATs csv file. 
+If not, further data-based bench calibration of the device may be needed to determine correct axis orientation.
 }
 \examples{
 \dontrun{

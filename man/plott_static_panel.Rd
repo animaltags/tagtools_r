@@ -38,7 +38,3 @@ A ggplot for "one panel," that is, with the data from one sensor
 \description{
 This internal function helps\code{plott} produce the individual panels that make up the static ggplot output. It will not usually be needed by users.
 }
-\examples{
-plott_static_panel(list(depth = harbor_seal$P, Accel = harbor_seal$A), sensor = "Accel", line_colors = line_colors <- c("#000000", "#009E73", "#9ad0f3"), panel_labels =  )
-
-}

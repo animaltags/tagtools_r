@@ -18,7 +18,14 @@
 #' 		}
 #' @note CATS loggers can produce very large csv files which are slow to
 #' process. This function is (somewhat) optimised for speed and memory use so will
-#' tolerate large files. But processing could be slow.
+#' tolerate large files. But processing could be slow. Note also that although CATs tags use a NED axis orientation for 3D sensors, 
+#' this function converts to the NEU orientation expected by the animaltag tool kit. 
+#' To revert (if continuing analysis with CATs-specific tools outside animaltags), 
+#' simply multiply all z-axis values by -1. 
+#' Also note that Cade et al. 2021 note that not all CATs tags have the same internal orientation of the triaxial sensors -- 
+#' such that the first column in the data may or may not be the "x axis." 
+#' Here, we assume that the three columns of data for any triaxial sensor are correctly labeled with X,Y,Z included in the column name in the CATs csv file. 
+#' If not, further data-based bench calibration of the device may be needed to determine correct axis orientation.
 #' @export
 #' @examples \dontrun{
 #' nc_filename <- read_cats("my_cats_file.csv", "my_cats_deplyment_name")
@@ -78,8 +85,8 @@ read_cats <- function(fname, depid) {
 
 
   # ******************************
-  # I THINK CATS ACCEL IS
-  # NED axes and need to change to FRU for tag tools
+  # CATs triaxial sensors are in NED orientation
+  # need to flip to -z for animaltags tools
   # ******************************
 
   #*********************************
@@ -106,6 +113,11 @@ read_cats <- function(fname, depid) {
       }
       # pull names off data and make it a matrix
       X <- as.matrix(X[, cols])
+      if (naxes == 3){
+        # for triaxial sensors need to change from NED to NEU orientation
+        # (DELETE THIS PART or make it an input option dependent on tag type if ever moving this fn outside of read_cats!!)
+        X <- X %*% matrix(c(1,0,0, 0,1,0, 0,0,-1), ncol = 3, byrow = TRUE)
+      }
       dimnames(X) <- NULL
       S <- sens_struct(
         data = X,
