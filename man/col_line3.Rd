@@ -30,5 +30,5 @@ x, y, z and c must all be the same size vectors. The color axis will by default 
 col_line3(1:20, 1:20, 1:20, 1:20)
 }
 \seealso{
-\code{\link{col_line}}, \code{\link{cline}}
+\code{\link{cline}}
 }
