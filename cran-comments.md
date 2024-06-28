@@ -4,6 +4,8 @@
 
 ## New changes
 
+* documentation for fir_nodelay() has been updated to include a package anchor (to the signal package) for the link to fir1().
+
 * the plott() function has been updated to produce graphs using the plotly package (for interactive graphs) and ggplot2 (for static ones) rather than base R. The new function plott_base() retains the original functionality of the old plott() function (with base R graphics).
 
 * the read_cats() function has been updated to fix a bug: triaxial sensor data is now converted from the CATs standard right-handed NED orientation to the left-handed NEU one expected by other animaltags tools. The function also now deals better with the range of column names present in older and news CATs csv data files.
