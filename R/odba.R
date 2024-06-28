@@ -7,7 +7,7 @@
 #' The default method and VeDBA method are rotation independent and so give the same result irrespective of the frame of A. The 1-norm method has a more complex dependency on frame.
 #' @param sampling_rate The sampling rate in Hz of the acceleration signals. Required for 'fir' method if A is not a tag sensor data list.
 #' @param fh The high-pass filter cut-off frequency in Hz. This should be chosen to be about half of the stroking rate for the animal (e.g., using dsf.R). Required for the default 'fir' method.
-#' @param method A character containing either 'wilson' or 'vedba' or 'fir'. This determines the ethod by which the ODBA is calculated. The default method is 'fir'.
+#' @param method A character containing either 'wilson' or 'vedba' or 'fir'. This determines the method by which the ODBA is calculated. The default method is 'fir'.
 #' @param n The rectangular window (moving average) length in samples. This is only needed if using the classic ODBA and VeDBA forms (methods 'wilson' and 'vedba').
 #' @return A column vector of ODBA with the same number of rows as A. e has the same units as A.
 #' @note If applying the default (FIR filtering) method to calculate odba, use the inputs A, sampling_rate, and fh. When applying the 'vedba' or 'wilson' method, use the inputs A, n, and method.

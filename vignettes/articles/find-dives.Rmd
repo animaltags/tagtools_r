@@ -160,7 +160,7 @@ str(Pc, max.level = 1)
 
 </div>
 
-The `$history` field keeps track of the operations that you perform on a data structure. This helps with traceability if you make the processed data available in an archive. The `$crop` and `$start_time` fields show how the original data was changed: the start_time is with respect to the field ‘dephist_device_datetime_start’ in the `$info` structure which says when the tag recording started. Use `plott` to plot Pc to make sure you cropped it correctly.
+The `$history` field keeps track of the operations that you perform on a data structure. This helps with trace-ability if you make the processed data available in an archive. The `$crop` and `$start_time` fields show how the original data was changed: the `start_time` is with respect to the field `dephist_device_datetime_start` in the `$info` structure which says when the tag recording started. Use `plott` to plot Pc to make sure you cropped it correctly.
 
 ```{r, echo = TRUE, eval = FALSE}
 plott(X = list(DepthCropped=Pc), r = TRUE)
@@ -205,7 +205,7 @@ plott(X=list(Pc=Pc, Pcm=Pcm), r=c(TRUE,TRUE))
 This plots `Pc` in the upper panel and `Pcm` in the lower one, and reverses the y-axis labeling on both plots (by setting `r` to TRUE both times).
 
 ## Correcting pressure offsets & temperature effects
-The next step is to correct the ‘0’ pressure offset of the depth sensor (so that the animal is not 10 m out of the water when it is really at the surface). We can also compensate for temperature at the same time. To do this we have to first crop the temperature data to match the pressure data. You can do this using:
+The next step is to correct the pressure offset of the depth sensor (so that the animal is not 10 m out of the water when it is really at the surface). We can also compensate for temperature at the same time. To do this we have to first crop the temperature data to match the pressure data. You can do this using:
 
 ```{r, echo = TRUE, eval = TRUE}
 Tc <- crop_to(MN$T,tcues=Pc$crop)
@@ -224,7 +224,7 @@ plott(X=list(Pcm=Pcm, Tc=Tc), r=c(TRUE,FALSE))
 ```
 </div>
 
-The tag toolbox has a function to correct pressure data called ‘fix_pressure’. Type
+The tag toolbox has a function to correct pressure data called `fix_pressure()`. Type
 
 ```{r, echo = TRUE, eval = FALSE}
 ? fix_pressure

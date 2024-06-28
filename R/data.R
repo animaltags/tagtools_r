@@ -4,7 +4,7 @@
 #'
 #' @format A set of sensor lists:
 #' \describe{
-#'   \item{A}{sensor list contining a triaxial acceleration matrix sampled at 25 Hz}
+#'   \item{A}{sensor list containing a triaxial acceleration matrix sampled at 25 Hz}
 #'   \item{M}{sensor list containing a triaxial magnetometer matrix sampled at 25 Hz}
 #'   \item{P}{sensor list containing a pressure (depth) vector sampled at 25 Hz}
 #' }
@@ -16,7 +16,7 @@
 #'
 #' @format A set of sensor lists:
 #' \describe{
-#'   \item{A}{sensor list contining a triaxial acceleration matrix sampled at 5 Hz}
+#'   \item{A}{sensor list containing a triaxial acceleration matrix sampled at 5 Hz}
 #'   \item{M}{sensor list containing a triaxial magnetometer matrix sampled at 5 Hz}
 #'   \item{P}{sensor list containing a pressure (depth) vector sampled at 5 Hz}
 #'   \item{POS}{sensor list containing a position matrix with columns [sampling time, latitude, longitude]}

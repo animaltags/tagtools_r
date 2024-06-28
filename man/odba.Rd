@@ -14,7 +14,7 @@ The default method and VeDBA method are rotation independent and so give the sam
 
 \item{fh}{The high-pass filter cut-off frequency in Hz. This should be chosen to be about half of the stroking rate for the animal (e.g., using dsf.R). Required for the default 'fir' method.}
 
-\item{method}{A character containing either 'wilson' or 'vedba' or 'fir'. This determines the ethod by which the ODBA is calculated. The default method is 'fir'.}
+\item{method}{A character containing either 'wilson' or 'vedba' or 'fir'. This determines the method by which the ODBA is calculated. The default method is 'fir'.}
 
 \item{n}{The rectangular window (moving average) length in samples. This is only needed if using the classic ODBA and VeDBA forms (methods 'wilson' and 'vedba').}
 }

@@ -67,9 +67,31 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="tagtools-010">tagtools 0.1.0<a class="anchor" aria-label="anchor" href="#tagtools-010"></a></h2><p class="text-muted">CRAN release: 2023-07-18</p>
-<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<p>This release adds several new features and fixes several bugs.</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-0"></a></h3>
+<ul><li><p><code><a href="../reference/plott.html">plott()</a></code> now generates interactive plots via the plotly package, and static ones via ggplot2. If you prefer base R graphics, the old implementation is still present at <code><a href="../reference/plott_base.html">plott_base()</a></code>.</p></li>
+<li><p>Changes to <code><a href="../reference/read_cats.html">read_cats()</a></code> mean it now changes all triaxial sensor data from the CATs standard right-handed NED axis orientation to the left-handed NEU one employed by the animaltags tagtools. If you employed custom code to make this change after reading in CATs data, the custom code will no longer be needed.</p></li>
+<li><p>The <code>col_line()</code> function has been removed because its purpose is easily accomplished with ggplot2 (or other) graphics.</p></li>
 </ul></div>
-  </main></div>
+<div class="section level3">
+<h3 id="new-features-0-1-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-1-0"></a></h3>
+<ul><li>
+<code><a href="../reference/plott.html">plott()</a></code> now generates interactive plots via the plotly package, and static ones via ggplot2. If you prefer base R graphics, the old implementation is still present at <code><a href="../reference/plott_base.html">plott_base()</a></code>. <code><a href="../reference/plott.html">plott()</a></code> also now has an option to draw the plot, or instead return a list of graphics objects (one for each panel). This is helpful for users who would like to amend individual panels (for example, overlaying event times on a dive or flight profile).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0"></a></h3>
+<ul><li>
+<code><a href="../reference/read_cats.html">read_cats()</a></code> has been updated to deal better with the column names present in more recent CATs csv data files. It has also been amended to change all triaxial sensor data from the CATs standard right-handed NED axis orientation to the left-handed NEU one employed by the animaltags tagtools.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="tagtools-010-1">tagtools 0.1.0<a class="anchor" aria-label="anchor" href="#tagtools-010-1"></a></h2><p class="text-muted">CRAN release: 2023-07-18</p>
+<ul><li><p>First CRAN release</p></li>
+<li><p>Added a <code>NEWS.md</code> file to track changes to the package.</p></li>
+</ul></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
