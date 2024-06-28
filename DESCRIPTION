@@ -1,6 +1,6 @@
 Package: tagtools
 Title: Work with Data from High-Resolution Biologging Tags
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(person("Stacy", "DeRuiter", 
             email = "stacy.deruiter@calvin.edu", 
             role = c("aut", "cre", "cph"),

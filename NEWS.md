@@ -1,4 +1,4 @@
-# tagtools 0.1.0
+# tagtools 0.2.0
 
 This release adds several new features and fixes several bugs.
 
