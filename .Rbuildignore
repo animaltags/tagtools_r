@@ -11,3 +11,5 @@
 ^vignettes/articles/nc_files$
 ^development$
 ^CRAN-SUBMISSION$
+^README\.Rmd$
+^\.github$
