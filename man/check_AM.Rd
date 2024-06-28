@@ -27,7 +27,7 @@ If find_incl is false, then the matrix fstr is returned. Otherwise, check_AM ret
    horizontal plane) in radians. incl is a column vector. By convention, a field
    vector pointing below the horizon has a positive inclination angle. This is only
    returned if the function is called with both A and M data.
-}
+   }
 }
 \description{
 Compute field intensity of acceleration and magnetometer data,

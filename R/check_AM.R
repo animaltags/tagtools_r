@@ -22,7 +22,7 @@
 #'    horizontal plane) in radians. incl is a column vector. By convention, a field
 #'    vector pointing below the horizon has a positive inclination angle. This is only
 #'    returned if the function is called with both A and M data.
-#' }
+#'    }
 #' @details The sampling rate of fstr and incl is the same as the input sampling rate.
 #' This function automatically low-pass filters the data with a cut-off frequency
 #'  of 5 Hz if the sampling rate is greater than 10 Hz.
