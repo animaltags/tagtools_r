@@ -5,10 +5,11 @@
 
 <!-- badges: start -->
 
-``` r
-use_cran_badge()
-use_lifecycle_badge("stable")
-```
+    #> ✔ Setting active project to "/Users/sld33/Dropbox/animaltags/tagtools_r".
+    #> ✔ Adding "CRAN status badge" to 'README.Rmd'.
+    #> ☐ Re-knit 'README.Rmd' with `devtools::build_readme()`.
+    #> ✔ Adding "Lifecycle: stable badge" to 'README.Rmd'.
+    #> ☐ Re-knit 'README.Rmd' with `devtools::build_readme()`.
 
 [![R-CMD-check](https://github.com/animaltags/tagtools_r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/animaltags/tagtools_r/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->

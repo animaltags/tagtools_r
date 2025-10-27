@@ -19,6 +19,8 @@
 
 # RStudio files
 .Rproj.user/
+.Rproj.user.*/
+.Rproj.user*/
 *.Rproj
 .DS_Store
 inst/.DS_Store
@@ -43,3 +45,7 @@ vignettes/*.pdf
 /doc/
 /Meta/
 # docs
+
+# experimental
+tagtoolscpp/
+inst/shiny/
