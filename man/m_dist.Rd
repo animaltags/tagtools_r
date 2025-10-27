@@ -6,16 +6,14 @@
 \usage{
 m_dist(
   data,
-  sampling_rate,
-  smoothDur,
-  overlap,
-  consec,
-  cumSum,
-  expStart,
-  expEnd,
-  baselineStart,
-  baselineEnd,
-  BL_COV
+  sampling_rate = 1,
+  smooth_dur = 0,
+  overlap = 0,
+  consec = FALSE,
+  cum_sum = FALSE,
+  bl_start = 0,
+  bl_end = floor(nrow(data)/sampling_rate),
+  bl_cov = FALSE
 )
 }
 \arguments{
@@ -23,26 +21,22 @@ m_dist(
 
 \item{sampling_rate}{The sampling rate in Hz (data should be regularly sampled). If not specified it will be assumed to be 1 Hz.}
 
-\item{smoothDur}{The length, in minutes, of the window to use for calculation of "comparison" values. If not specified or zero, there will be no smoothing (a distance will be calculated for each data observation).}
+\item{smooth_dur}{The length, in minutes, of the window to use for calculation of "comparison" values. If not specified or zero (the default), there will be no smoothing (a distance will be calculated for each data observation).}
 
-\item{overlap}{The amount of overlap, in minutes, between consecutive "comparison" windows. smooth_dur - overlap will give the time resolution of the  resulting distance time series. If not specified or zero, there will be no overlap.  Overlap will also be set to zero if smoothDur is unspecified or zero.}
+\item{overlap}{The amount of overlap, in minutes, between consecutive "comparison" windows. \code{smooth_dur} - \code{overlap} will give the time resolution of the output distance time series. Default is 0, which means no overlap.  Overlap will also be set to zero if \code{smooth_dur} is unspecified or zero.}
 
-\item{consec}{Logical. If consec = TRUE, then the calculated distances are between consecutive windows of duration smoothDur, sliding forward over the data set by a time step of (smoothDur-overlap) minutes. If TRUE, baselineStart and baselineEnd inputs will be used to define the period used to calculate the data covariance matrix. Default is consec = FALSE.}
+\item{consec}{Logical (default FALSE). If \code{consec} is TRUE, then the calculated distances are between *consecutive windows* of duration \code{smooth_dur}, sliding forward over the data set by a time step of (\code{smooth_dur} - \code{overlap}) minutes. Default is \code{consec} = FALSE, which means each output distance will be the distance between the current "comparison" window and the baseline window. If \code{consec} is TRUE, \code{bl_start} and \code{bl_end} inputs will be used *only* to define the period used to calculate the data covariance matrix.}
 
-\item{cumSum}{Logical.  If cum_sum = TRUE, then output will be the cumulative sum of the calculated distances, rather than the distances themselves. Default is cum_sum = FALSE.}
+\item{cum_sum}{Logical (default FALSE). If \code{cum_sum} is TRUE, then output will be the cumulative sum of the calculated distances, rather than the distances themselves. Default is cum_sum = FALSE.}
 
-\item{expStart}{Start times (in seconds since start of the data set) of the experimental exposure period(s).}
+\item{bl_start}{Start time (in seconds since start of the data set) of the baseline period. The mean data values for this period will be used as the 'control' to which all "comparison" data points (or windows) will be compared. If not specified, it will be assumed to be 0 (start of record). If \code{consec} is TRUE, then adjacent windows will be compared, and this input will have no effect except to define the data used to compute the covariance matrix, if \code{bl_cov} is TRUE.}
 
-\item{expEnd}{End times (in seconds since start of the data set) of the experimental exposure period(s). If either or both of exp_start and exp_end are missing, the distance will be calculated over whole dataset and full dataset will be assumed to be baseline.}
+\item{bl_end}{End time (in seconds since start of the data set) of the baseline period. If not specified, the entire data set will be used (baseline_end will be the last sampled time-point in the data set). If consec = TRUE, then adjacent windows will be compared, and this input will have no effect except to define the data used to compute the covariance matrix, if \code{bl_cov} is TRUE.}
 
-\item{baselineStart}{Start time (in seconds since start of the data set) of the baseline period (the mean data values for this period will be used as the 'control' to which all "comparison" data points (or windows) will be compared. if not specified, it will be assumed to be 0 (start of record).}
-
-\item{baselineEnd}{End time (in seconds since start of the data set) of the baseline period. If not specified, the entire data set will be used (baseline_end will be the last sampled time-point in the data set).}
-
-\item{BL_COV}{Logical.  If BL_COV=  TRUE, then a covariance matrix using all data in baseline period will be used for calculating the Mahalanobis distance. Default is BL_COV = FALSE.}
+\item{bl_cov}{Logical.  If bl_cov is TRUE, then a covariance matrix using all data *in the baseline period* will be used for calculating the Mahalanobis distance. Default is bl_cov = FALSE, which uses *all* data (in the entire dataset) to compute the covariance matrix.}
 }
 \value{
-Data frame containing results: variable seconds is times in seconds since start of dataset, at which Mahalanobis distances are reported. If a smoothDur was applied, then the reported times will be the start times of each "comparison" window. Variable dist is the Mahalanobis distances between the specified baseline period and the specified "comparison" periods.
+Data frame containing results: variable \code{seconds} is times (in seconds since start of dataset) at which Mahalanobis distances are reported. If a \code{smooth_dur} window was applied, then the reported times will be the midpoint of each "comparison" window. Variable \code{dist} contains the computed Mahalanobis distances.
 }
 \description{
 This function is used to calculate the Mahalanobis distance for a multivariate time series.
