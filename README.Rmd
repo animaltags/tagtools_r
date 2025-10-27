@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # tagtools
 
 <!-- badges: start -->
-``` {r, echo = FALSE}
+``` {r, include = FALSE}
 usethis::use_cran_badge()
 usethis::use_lifecycle_badge("stable")
 ```

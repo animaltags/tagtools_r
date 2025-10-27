@@ -5,13 +5,11 @@
 
 <!-- badges: start -->
 
-    #> ✔ Setting active project to "/Users/sld33/Dropbox/animaltags/tagtools_r".
-    #> ✔ Adding "CRAN status badge" to 'README.Rmd'.
-    #> ☐ Re-knit 'README.Rmd' with `devtools::build_readme()`.
-    #> ✔ Adding "Lifecycle: stable badge" to 'README.Rmd'.
-    #> ☐ Re-knit 'README.Rmd' with `devtools::build_readme()`.
-
 [![R-CMD-check](https://github.com/animaltags/tagtools_r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/animaltags/tagtools_r/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/tagtools)](https://CRAN.R-project.org/package=tagtools)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 This repository contains an R package with the R version of the
