@@ -28,24 +28,24 @@ save_nc <- function(file, X, ...) {
   }
 
   # if one or more loose inputs are given, collect into a list
-  if (length(X$depid) > 0) {
-    xname <- X$name
+  if (length(list(...))){
     X <- list(X, ...)
-    names(X)[1] <- xname
   }
 
   # if there are multiple inputs, make sure that info
   # (global attributes) is not the first one.
   # this is because we can't create an empty nc file with
   # no variable and only global attributes.
-  if (!is.null(names(X))) {
-    if (names(X)[1] == "info") {
-      X <- c(X[2:length(X)], X[1])
-    }
+
+  if (!("data" %in% names(X[1]))){
+    X <- c(X[2:length(X)], X[1])
   }
 
   # write sensors and metadata to file
   for (k in 1:length(X)) {
+    if (is.null(names(X))){
+      names(X) <- rep.int("", length(X))
+    }
     if (names(X)[k] != ''){
       var_name <- names(X)[k]
     }else{
