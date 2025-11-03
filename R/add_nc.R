@@ -6,7 +6,7 @@
 #'
 #' @param file The name of the netCDF file to which to save. If the name does not include a .nc suffix, this will be added automatically.
 #' @param D The sensor data or metadata list to be saved. 
-#' @param vname The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).
+#' @param vname The name of the sensor data stream to be saved. Defaults to the entry "name" (or "full_name" if there is no "name") from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).
 #' @return no object is returned; this function adds an animaltag sensor data structure to a animaltag-style netCDF file containing tag data.
 #' @seealso \code{\link{save_nc}}, \code{\link{load_nc}}
 #' @export
