@@ -14,7 +14,7 @@ add_nc(file, D, vname)
 \item{vname}{The name of the sensor data stream to be saved. Defaults to the entry "name" from the sensor or metadata list provided by the user (but an option to specify a name is provided to facilitate calling this function from \code{save_nc}).}
 }
 \value{
-no return; adds a structure to an \code{animaltag} object
+no object is returned; this function adds an animaltag sensor data structure to a animaltag-style netCDF file containing tag data.
 }
 \description{
 Add one tag sensor or metadata variable to a NetCDF archive file. If the archive file does not exist,
