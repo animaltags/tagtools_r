@@ -2,17 +2,20 @@
 % Please edit documentation in R/read_cats.R
 \name{read_cats}
 \alias{read_cats}
-\title{Read a CATS data file and convert to .nc}
+\title{Read CATS csv data file(s) and convert to .nc}
 \usage{
-read_cats(fname, depid)
+read_cats(file_dir = NULL, fname = NULL, depid, nc_dir = getwd())
 }
 \arguments{
-\item{fname}{is the file name of the CATS CSV file including the complete
-path name if the file is not in the current working directory or in a
-directory on the path. The .csv suffix is optional.}
+\item{file_dir}{String containing the name (including full or relative path) of the directory where the CATS csv file(s) are stored. If omitted, \code{fname} must include full or relative path information for the csv file(s).}
 
-\item{depid}{is a string containing the deployment identification code assigned
-to this deployment, for example, 'mn12_186a'.}
+\item{fname}{Name(s) of the CATS csv file(s) to read. If \code{fname} is not provided, then the function will try to read all csv files in \code{file_dir}. If \code{file_dir} is provided, the path(s) to the file(s) will be constructed by appending the file name(s) to the \code{file_dir}. 
+If \code{file_dir} is omitted, then \code{fname} is assumed to include the path to the file(s). The .csv file extension is optional.}
+
+\item{depid}{String containing the deployment identification code assigned
+to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv files are assumed to have names of the form "\code{depid}_001.csv" (002, 003 etc if multiple files) or "\code{depid}.csv" (if data is in a single file).}
+
+\item{nc_dir}{String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to the current working directory.}
 }
 \value{
 A string (constructed by: '\code{depid}_raw.nc'; for example, 'mn12_186a_raw.nc') containing the file name of the netCDF (.nc) file in which the output has been saved. This function
@@ -26,23 +29,23 @@ generates a netCDF file in the current working directory containing
 		}
 }
 \description{
-Read a .csv file with data from a CATS tag deployment, including associated metadata, and store the resulting data in a .nc file.
+Read .csv file(s) with data from a CATS tag deployment, including associated metadata, and store the resulting data in a .nc file.
 }
 \note{
 CATS loggers can produce very large csv files which are slow to
 process. This function is (somewhat) optimised for speed and memory use so will
 tolerate large files. But processing could be slow. Note also that although CATs tags use a NED axis orientation for 3D sensors, 
-this function converts to the NEU orientation expected by the animaltag tool kit. 
+**this function converts to the NEU orientation** expected by the animaltag tool kit. 
 To revert (if continuing analysis with CATs-specific tools outside animaltags), 
-simply multiply all z-axis values by -1. 
-Also note that Cade et al. 2021 note that not all CATs tags have the same internal orientation of the triaxial sensors -- 
+simply multiply all z-axis values by -1, and consider editing the metadata. 
+Also note that according to Cade et al. 2021, not all CATs tags have the same internal orientation of the triaxial sensors -- 
 such that the first column in the data may or may not be the "x axis." 
 Here, we assume that the three columns of data for any triaxial sensor are correctly labeled with X,Y,Z included in the column name in the CATs csv file. 
 If not, further data-based bench calibration of the device may be needed to determine correct axis orientation.
 }
 \examples{
 \dontrun{
-nc_filename <- read_cats("my_cats_file.csv", "my_cats_deplyment_name")
+nc_filename <- read_cats("my_cats_file.csv", "my_cats_deployment_name")
 load_nc("my_cats_deployment_name_raw.nc")
 }
 }
