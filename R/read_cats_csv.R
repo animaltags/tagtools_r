@@ -47,54 +47,54 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
                              skip_samps = skip_samps, 
                              max_samps = max_samps))
            #   )
-  
-  # helper function to read a single CATS csv file
-  read1_cats_csv <- function(file, skip_samps, max_samps){
-    V <- suppressMessages(
-      readr::read_csv(
-        file = file, 
-        col_names = TRUE,
-        col_types = readr::cols(
-          `Time (UTC)` = readr::col_character(),
-          # `GPS (raw) 1 [raw]` = readr::col_character(),
-          # `GPS (raw) 2 [raw]` = readr::col_character(),
-          # `GPS 1` = readr::col_character(),
-          # `GPS 2` = readr::col_character()
-        ),
-        na = c(NA, "", " "),
-        trim_ws = TRUE,
-        skip = skip_samps,
-        n_max = max_samps
-      )) |>
-      as.data.frame()
-    # make mus and degree symbols and superscripts not show up as black diamonds with question marks inside
-    # that make R throw errors...
-    names(V) <- iconv(names(V), from = "UTF-8", to = "ASCII", sub = "")
-    
-    # add date-time in POSIX format
-    di <- which(stringr::str_detect(names(V), "Date "))
-    if (length(di) > 1){
-      di <- which(stringr::str_detect(names(V), "Date ") & 
-                    stringr::str_detect(names(V), "UTC"))
-    }
-    
-    ti <- which(stringr::str_detect(names(V), "Time "))
-    if (length(ti) > 1){
-      ti <- which(stringr::str_detect(names(V), "Time ") & 
-                    stringr::str_detect(names(V), "UTC"))
-    }
-    
-    old_options <- options()
-    on.exit(options(old_options))
-    
-    options(digits.secs = 6)
-    V$Datetime <- as.POSIXct(paste(
-      V[, di],
-      V[, ti]),
-      format = "%d.%m.%Y %H:%M:%OS", tz = 'UTC'
-    )
-    return(V)
-  } # end of read1_cats_csv()
   return(V)
 } # end of read_cats_csv()
+
+# helper function to read a single CATS csv file
+read1_cats_csv <- function(file, skip_samps, max_samps){
+  V <- suppressMessages(
+    readr::read_csv(
+      file = file, 
+      col_names = TRUE,
+      col_types = readr::cols(
+        `Time (UTC)` = readr::col_character(),
+        # `GPS (raw) 1 [raw]` = readr::col_character(),
+        # `GPS (raw) 2 [raw]` = readr::col_character(),
+        # `GPS 1` = readr::col_character(),
+        # `GPS 2` = readr::col_character()
+      ),
+      na = c(NA, "", " "),
+      trim_ws = TRUE,
+      skip = skip_samps,
+      n_max = max_samps
+    )) |>
+    as.data.frame()
+  # make mus and degree symbols and superscripts not show up as black diamonds with question marks inside
+  # that make R throw errors...
+  names(V) <- iconv(names(V), from = "UTF-8", to = "ASCII", sub = "")
+  
+  # add date-time in POSIX format
+  di <- which(stringr::str_detect(names(V), "Date "))
+  if (length(di) > 1){
+    di <- which(stringr::str_detect(names(V), "Date ") & 
+                  stringr::str_detect(names(V), "UTC"))
+  }
+  
+  ti <- which(stringr::str_detect(names(V), "Time "))
+  if (length(ti) > 1){
+    ti <- which(stringr::str_detect(names(V), "Time ") & 
+                  stringr::str_detect(names(V), "UTC"))
+  }
+  
+  old_options <- options()
+  on.exit(options(old_options))
+  
+  options(digits.secs = 6)
+  V$Datetime <- as.POSIXct(paste(
+    V[, di],
+    V[, ti]),
+    format = "%d.%m.%Y %H:%M:%OS", tz = 'UTC'
+  )
+  return(V)
+} # end of read1_cats_csv()
 

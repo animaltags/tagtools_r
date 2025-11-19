@@ -34,6 +34,10 @@
 #' load_nc("my_cats_deployment_name_raw.nc")
 #' }
 read_cats <- function(file_dir = NULL, fname = NULL, depid, nc_dir = getwd()) {
+  if (missing(depid)){
+    stop("required input argument 'depid' is missing.")
+  }
+  
   if (is.null(fname) & !is.null(file_dir)){
     # get file name(s) (with path included) 
     # that are in file_dir
@@ -121,50 +125,50 @@ read_cats <- function(file_dir = NULL, fname = NULL, depid, nc_dir = getwd()) {
   }
   add_nc(nc_file, info, "info")
   return(nc_file)
-
-  # HELPER FUNCTION to save CATS sensor structure to nc file
-  save_sens_struct <- function(X, depid, sampling_rate, fname, name, naxes) {
-    nc_file <- paste(depid, "_raw.nc", sep = "")
-    cols <- grep(name, names(X))
-    if (length(cols) > 0) {
-      if (length(cols) < naxes) {
-        warning(sprintf(" Warning: %d axes of %s missing in data\n", naxes - length(k), name))
-      }
-      if (naxes > 1) {
-        # make sure column indices are ordered x, then y, then z
-        # this assumes x, y, z cols of same sensor are named such that
-        # alphabetical sorting --> x, y, z order
-        cols <- cols[order(names(X)[cols])]
-      } else {
-        cols <- cols[1]
-      }
-      if (grepl("gyr", name)) {
-        scf <- 0.001 # gyroscope unit is mrad/s. Multiply by 0.001 to get rad/s
-      } else {
-        scf <- 1 # all other units are standard
-      }
-      # pull names off data and make it a matrix
-      X <- as.matrix(X[, cols])
-      if (naxes == 3){
-        # for triaxial sensors need to change from NED to NEU orientation
-        # (DELETE THIS PART or make it an input option dependent on tag type if ever moving this fn outside of read_cats!!)
-        X <- X %*% matrix(c(1,0,0, 0,1,0, 0,0,-1), ncol = 3, byrow = TRUE)
-      }
-      dimnames(X) <- NULL
-      S <- sens_struct(
-        data = X,
-        sampling_rate, depid = depid, type = name
-      )
-      S$history <- "read_cats"
-      S$files <- fname
-      if (grepl("light", name)) {
-        S$unit <- "1"
-        S$unit_name <- "counts"
-        S$unit_label <- "counts"
-      }
-      
-      add_nc(nc_file, S, name)
-    }
-  } # end of save_sens_struct
 } # end of read_cats
+
+# HELPER FUNCTION to save CATS sensor structure to nc file
+save_sens_struct <- function(X, depid, sampling_rate, fname, name, naxes) {
+  nc_file <- paste(depid, "_raw.nc", sep = "")
+  cols <- grep(name, names(X))
+  if (length(cols) > 0) {
+    if (length(cols) < naxes) {
+      warning(sprintf(" Warning: %d axes of %s missing in data\n", naxes - length(k), name))
+    }
+    if (naxes > 1) {
+      # make sure column indices are ordered x, then y, then z
+      # this assumes x, y, z cols of same sensor are named such that
+      # alphabetical sorting --> x, y, z order
+      cols <- cols[order(names(X)[cols])]
+    } else {
+      cols <- cols[1]
+    }
+    if (grepl("gyr", name)) {
+      scf <- 0.001 # gyroscope unit is mrad/s. Multiply by 0.001 to get rad/s
+    } else {
+      scf <- 1 # all other units are standard
+    }
+    # pull names off data and make it a matrix
+    X <- as.matrix(X[, cols])
+    if (naxes == 3){
+      # for triaxial sensors need to change from NED to NEU orientation
+      # (DELETE THIS PART or make it an input option dependent on tag type if ever moving this fn outside of read_cats!!)
+      X <- X %*% matrix(c(1,0,0, 0,1,0, 0,0,-1), ncol = 3, byrow = TRUE)
+    }
+    dimnames(X) <- NULL
+    S <- sens_struct(
+      data = X,
+      sampling_rate, depid = depid, type = name
+    )
+    S$history <- "read_cats"
+    S$files <- fname
+    if (grepl("light", name)) {
+      S$unit <- "1"
+      S$unit_name <- "counts"
+      S$unit_label <- "counts"
+    }
+    
+    add_nc(nc_file, S, name)
+  }
+} # end of save_sens_struct
 
