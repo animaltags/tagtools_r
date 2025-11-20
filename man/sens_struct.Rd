@@ -12,7 +12,8 @@ sens_struct(
   type,
   unit = NULL,
   frame = NULL,
-  name = NULL,
+  name = type,
+  description = NULL,
   start_offset = 0,
   start_offset_units = "second",
   quiet = FALSE
@@ -29,7 +30,7 @@ sens_struct(
 
 \item{type}{is a string containing the first few letters of the sensor type,
 e.g., acc for acceleration. These will be matched to the list of
-sensor names in the sensor_names.csv file. If more than one sensor
+sensor types in the sensor_names.csv file. If more than one sensor
 matches type, a warning will be given. type can be in upper or lower case.}
 
 \item{unit}{(optional) units in which data are sampled. Default determined by matching \code{type} with defaults in sensor_names.csv}
@@ -37,6 +38,8 @@ matches type, a warning will be given. type can be in upper or lower case.}
 \item{frame}{(optional) frame of reference for data axes, for example 'animal' or 'tag'. Default determined by matching \code{type} with defaults in sensor_names.csv.}
 
 \item{name}{(optional) "full name" to assign to the variable. Default determined by matching \code{type} to defaults in sensor_names.csv/}
+
+\item{description}{(optional) more detail about this sensor (if provided will override a default explanation)}
 
 \item{start_offset}{(optional) offset in start time for this sensor relative to start of tag recording. Defaults to 0.}
 

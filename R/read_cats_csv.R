@@ -9,7 +9,8 @@
 #' @return A tibble data frame containing the data read from the file. The column names are
 #' taken from the first line of the CSV file and include units and axis. Some columns may be empty (if for example, a tag did not record data from a certain sensor type).
 #' @note CATS csv files can be extremely large; perhaps too large to read the entire file into memory at once and work with it.
-
+#' @export
+  
 read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
   if (length(fname) > 1){
     # make sure file names are given in order
@@ -39,14 +40,11 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
   }
 
   # read data file(s) and concatenate if multiple files
-  V <- #ifelse(length(fname == 1),
-      #        read1_cats_csv(fname, skip_samps, max_samps),
-              do.call(what = rbind, 
-                      lapply(X = fname, 
-                             FUN = read1_cats_csv, 
-                             skip_samps = skip_samps, 
-                             max_samps = max_samps))
-           #   )
+  V <- do.call(what = rbind, 
+               lapply(X = fname, 
+                      FUN = read1_cats_csv, 
+                      skip_samps = skip_samps, 
+                      max_samps = max_samps))
   return(V)
 } # end of read_cats_csv()
 

@@ -4,8 +4,9 @@
 #' @param depid string that provides a unique identifier for this tag deployment
 #' @param type is a string containing the first few letters of the sensor type,
 #'             e.g., acc for acceleration. These will be matched to the list of
-#'             sensor names in the sensor_names.csv file. If more than one sensor
+#'             sensor types in the sensor_names.csv file. If more than one sensor
 #'             matches type, a warning will be given. type can be in upper or lower case.
+#' @param description (optional) more detail about this sensor (if provided will override a default explanation)
 #' @param times (optional) is the time in seconds of each measurement in data for irregularly sampled data. The time reference (i.e., the 0 time) should be with respect to the start time of the deployment.
 #' @param sampling_rate (optional) sensor data sampling rate in Hz
 #' @param unit (optional) units in which data are sampled. Default determined by matching \code{type} with defaults in sensor_names.csv
@@ -22,7 +23,8 @@
 #'
 sens_struct <- function(data, sampling_rate = NULL, times = NULL,
                         depid, type,
-                        unit = NULL, frame = NULL, name = NULL,
+                        unit = NULL, frame = NULL, name = type,
+                        description = NULL,
                         start_offset = 0, start_offset_units = "second", quiet=FALSE) {
   sens_names <- utils::read.csv(system.file("extdata", "sensor_names.csv", package = "tagtools"),
     stringsAsFactors = FALSE
@@ -61,26 +63,11 @@ sens_struct <- function(data, sampling_rate = NULL, times = NULL,
 
   # compare sensor names database against type
   k <- grepl(type, sens_names$name, ignore.case = TRUE)
-  if (sum(k) == 0) {
+  if (!any(k)) {
     w_msg <- paste("unknown sensor type ", type, ". Set metadata manually or define more inputs to sens_struct().", sep = "")
     warning(w_msg)
-    X$name <- type
+    X$name <- name
     X$type <- type
-    if (!missing(unit)) {
-      X$unit <- unit
-    }
-    if (!missing(frame)) {
-      X$frame <- frame
-    }
-    if (!missing(name)) {
-      X$name <- name
-    }
-    if (!missing(start_offset)) {
-      X$start_offset <- start_offset
-    }
-    if (!missing(start_offset_units)) {
-      X$start_offset_units <- start_offset_units
-    }
     return(X)
   }
 
@@ -115,6 +102,16 @@ sens_struct <- function(data, sampling_rate = NULL, times = NULL,
   X$unit_label <- sens_names[k, "def_label"]
   X$start_offset <- start_offset
   X$start_offset_units <- start_offset_units
+  
+  if (!is.null(unit)) {
+    X$unit <- unit
+  }
+  if (!is.null(description)) {
+    X$description <- description
+  }
+  if (!is.null(frame)) {
+    X$frame <- frame
+  }
 
   if (!is.na(sens_names[k, "def_cols"])) {
     if (is.null(sampling_rate)) {

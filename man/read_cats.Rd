@@ -4,7 +4,20 @@
 \alias{read_cats}
 \title{Read CATS csv data file(s) and convert to .nc}
 \usage{
-read_cats(file_dir = NULL, fname = NULL, depid, nc_dir = getwd())
+read_cats(
+  file_dir = NULL,
+  fname = NULL,
+  depid,
+  txt_fname = NULL,
+  nc_dir = getwd(),
+  device_serial = NULL,
+  device_model_name = NULL,
+  device_model_version = NULL,
+  device_url = "https://cats.is/",
+  dephist_device_tzone = NULL,
+  animal_species_common = "unknown",
+  animal_species_science = "unknown"
+)
 }
 \arguments{
 \item{file_dir}{String containing the name (including full or relative path) of the directory where the CATS csv file(s) are stored. If omitted, \code{fname} must include full or relative path information for the csv file(s).}
@@ -15,7 +28,24 @@ If \code{file_dir} is omitted, then \code{fname} is assumed to include the path 
 \item{depid}{String containing the deployment identification code assigned
 to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv files are assumed to have names of the form "\code{depid}_001.csv" (002, 003 etc if multiple files) or "\code{depid}.csv" (if data is in a single file).}
 
+\item{txt_fname}{Name of the .txt file with metadata about the CATS deployment. If not input, the function will try to construct it from file_dir and depid (like \code{file.path(file_dir, paste0(depid, ".txt"))}). 
+If present, this file will be used to determine sensor sampling rates; if not, sampling rates will be guessed based on timestamps in the csv file.}
+
 \item{nc_dir}{String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to the current working directory.}
+
+\item{device_serial}{String containing the serial number of the CATS tag. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.}
+
+\item{device_model_name}{String containing the model of the CATS tag used for data collection, for example "CATS Cam." Obtained from \code{txt_fname} or else defaults to NULL. This information is stored in the info structure of the output NetCDF file.}
+
+\item{device_model_version}{String; CATS tag version. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.}
+
+\item{device_url}{String containing URL of tag manufacturer; defaults to "https://cats.is/" and is stored in the info structure of the output NetCDF file.}
+
+\item{dephist_device_tzone}{String indicating the time zone in which the tag was deployed. Obtained from \code{txt_fname} or else defaults to NULL. Stored in the info structure of the output NetCDF file. For CATS tags this is the local offset from UTC time in hours.}
+
+\item{animal_species_common}{Common name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.}
+
+\item{animal_species_science}{Scientific name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.}
 }
 \value{
 A string (constructed by: '\code{depid}_raw.nc'; for example, 'mn12_186a_raw.nc') containing the file name of the netCDF (.nc) file in which the output has been saved. This function
