@@ -30,6 +30,7 @@ Description: High-resolution movement-sensor tags typically include acceleromete
     data processing (such as event detection, calculation of derived metrics like jerk and 
     dynamic acceleration, dive detection, and dive parameter calculation); and statistical analysis (for example, track reconstruction, a rotation test, and Mahalanobis distance analysis).
 Depends: R (>= 3.4)
+LinkingTo: Rcpp, RcppArmadillo
 Imports:
     CircStats,
     cowplot,
@@ -42,6 +43,8 @@ Imports:
     ncdf4,
     plotly,
     pracma,
+    Rcpp (>= 1.1.0),
+    RcppArmadillo,
     readr,
     signal,
     stats,
