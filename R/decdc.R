@@ -3,6 +3,7 @@
 #' This function is used to reduce the sampling rate of a time series by an integer factor.
 #' @param x A data structure, vector or matrix containing the signal(s) to be decimated. If x is a matrix, each column is decimated separately.
 #' @param df The decimation factor. The output sampling rate is the input sampling rate divided by df. df must be an integer greater than 1.
+#' @param go_slow if TRUE the function will NOT use Rcpp to speed up convolution. Default is FALSE. This input is for testing and benchmarking.
 #' @return y The decimated signal vector or matrix. It has the same number of columns as x but has 1/df of the rows.
 #' @note Decimation is performed by first low-pass filtering x and then keeping 1 sample out of every df. A symmetric FIR filter with length 12*df and cutoff frequency 0.4*fs/df is used. The group delay of the filter is removed. For large decimation factors (e.g., df>>50), it is better to perform several decimations with lower factors. For example to decimate by 120, use: decdc(decdc(x,10),12).
 #' @export
@@ -13,7 +14,7 @@
 #' plot(c(1:length(y)), y) 
 #' 
 
-decdc <- function(x,df) {
+decdc <- function(x,df, go_slow = FALSE) {
   if (missing(df)) {
     stop("df is a required input")
   }
@@ -37,7 +38,7 @@ decdc <- function(x,df) {
     warning("decdc needs integer decimation factor")
   }
   flen <- 12 * df
-  h <- as.vector(signal::fir1(flen, 0.8 / df))
+  h <- as.vector(gsignal::fir1(flen, 0.8 / df))
   xlen <- nrow(x)
   # ensures that the output samples coincide with every df of the input samples
   dc <- flen + floor(flen / 2) - round(df / 2) + seq(df, xlen, df)
@@ -47,8 +48,11 @@ decdc <- function(x,df) {
     bcd <- x[, k]
     cde <- (2 * x[xlen, k]) - (x[xlen - c(1:(flen + 1), k)])
     xx <- c(abc, bcd, cde)
-    v <- signal::conv(h,xx)
- #   v <- pracma::conv(h,xx) # results identical and signal is a bit faster? SDR
+    if (!go_slow){
+      v <- conv_cpp(h, xx)        
+    }else{
+      v <- gsignal::conv(h,xx) # STILL TOO SLOW!
+    }
     y[,k] <- v[dc]
   }
 

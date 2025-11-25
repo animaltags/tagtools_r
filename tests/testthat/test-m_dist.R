@@ -11,6 +11,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(m_dist(sample, 16), "'x' must be an array of at least two dimensions")
 })

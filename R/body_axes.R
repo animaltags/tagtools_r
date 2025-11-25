@@ -62,9 +62,7 @@ body_axes <- function(A, M, sampling_rate = NULL, fc = NULL) {
     M <- M[c(1:n), ]
   }
 
-  #********************************************
   # end of input checking
-  #********************************************
 
   # apply filter if required
   if (!is.null(fc)) {
@@ -85,7 +83,8 @@ body_axes <- function(A, M, sampling_rate = NULL, fc = NULL) {
   A <- A * matrix(g^(-1), nrow = nrow(A), ncol = 3)
   # estimate inclination angle from the data
   I <- acos(rowSums(A * M)) - (pi / 2)
-  Mh <- (M + matrix(sin(I), nrow = nrow(M), ncol = 3) * A) * matrix(cos(I)^(-1), nrow = nrow(M), ncol = 3)
+  Mh <- (M + matrix(sin(I), nrow = nrow(M), ncol = 3) * A) * 
+    matrix(cos(I)^(-1), nrow = nrow(M), ncol = 3)
   v <- sqrt(rowSums(Mh^2))
   # normalize Mh
   Mh <- Mh * matrix(v^(-1), nrow = nrow(M), ncol = 3)

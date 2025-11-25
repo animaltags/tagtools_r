@@ -10,6 +10,6 @@ test_that("function works", {
   expect_equal(spectrum_level(x = sample, nfft = 4, sampling_rate = BW$P$sampling_rate),set)
 })
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(spectrum_level(x = sample, nfft = "4", sampling_rate = BW$P$sampling_rate), "non-numeric argument to binary operator")
 })

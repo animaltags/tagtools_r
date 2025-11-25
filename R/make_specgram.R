@@ -20,24 +20,21 @@
 #' }
 #'
 #' @examples
-#' x <- signal::chirp(seq(from = 0, by = 0.001, to = 2),
+#' x <- gsignal::chirp(seq(from = 0, by = 0.001, to = 2),
 #'   f0 = 0,
 #'   t1 = 2,
 #'   f1 = 500
 #' )
-#' fs <- 2
-#' nfft <- 256
-#' numoverlap <- 128
-#' window <- signal::hanning(nfft)
-#' S <- make_specgram(x, nfft, fs, window, numoverlap, draw_plot = FALSE)
+#' S <- make_specgram(x, nfft = 256, fs = 2, 
+#' noverlap = 128, draw_plot = FALSE)
 #' @export
 #' 
 make_specgram <- function(x, nfft = 256, fs = 2,
-                          window = signal::hanning(nfft),
+                          window = gsignal::hanning(nfft),
                           noverlap = length(window) / 2,
                           draw_plot = TRUE) {
-  S <- signal::specgram(
-    x = x, n = nfft, Fs = fs, window = window,
+  S <- gsignal::specgram(
+    x = x, n = nfft, fs = fs, window = window,
     overlap = noverlap
   )
   if (draw_plot) {

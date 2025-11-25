@@ -35,7 +35,7 @@ spectrum_level <- function(x, nfft, sampling_rate, w, nov) {
     }
   }
   if (length(w) == 1) {
-    w <- signal::hanning((w + 2))
+    w <- gsignal::hanning((w + 2))
     w <- w[2:(length(w) - 1)]
   }
   ismatrix <- FALSE

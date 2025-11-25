@@ -1,22 +1,25 @@
 BW <- beaked_whale
 sample <- data.frame(
-  northing = c(-2.120204789, -4.237066670, -6.248253759, -8.481072583, -10.988549602,
-               -13.427957913, -16.052810633, -18.794814608, -21.568980996, -24.373243168),
-  easting = c(2.10506209, 4.15910906, 5.90078747, 7.54824624, 9.17719370,
-              10.65608016, 11.91137029, 13.04227137, 14.09101129, 15.11195755),
-  dunno = c(-0.271007831, 0.276520077, 1.662767829, 2.803118513, 2.560035827,
-            1.631498305, 0.900475130, 0.450500748, -0.001323815, -0.307562929)
+  northing = c(-2.0953960268,  -4.2082928031,  -6.3496047671,  -8.6432735759,
+               -11.1641458942, -13.7114748259, -16.2961650853,
+               -18.9931458704, -21.7684502686, -24.5604780297),
+  easting = c(2.1177740584,  4.1596035981,  6.0162834723,  7.7445818565,  
+              9.3680949337, 10.8186918424, 12.0955444166,
+              13.2142832650, 14.2482692714, 15.3227149168),
+  dunno = c(0.352630867004, 0.958105345105, 1.941732773214, 2.808951367677,
+            2.905946436717, 2.268071901974, 1.437997346985,
+            0.748999499727, 0.270921643646, 0.046985187928)
 )
 
 test_that("function works", {
   expect_equal(ptrack(A = BW$A$data, M = BW$M$data, s = 3, 
-                      sampling_rate = BW$A$sampling_rate, fc = NULL, 
+                      sampling_rate = BW$A$sampling_rate, fc = 0.2, 
                       return_pe = TRUE)$track %>% "["(.,1:10,), sample)
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(ptrack(A = BW$A$data, M = BW$M$data, s = 12, 
                       sampling_rate = BW$A$sampling_rate, fc = 2, 
-                      return_pe = TRUE), "frequency must be nondecreasing starting from 0 and ending at 1")
+                      return_pe = TRUE), "frequency vector f must be nondecreasing between 0 and 1")
 })
