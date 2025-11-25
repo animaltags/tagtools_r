@@ -30,7 +30,7 @@ if (is.matrix(X)) {
   X <- matrix(X, ncol = 1)
 }
 
-taper <- signal::triang(N)%*%matrix(1, nrow = 1, ncol = ncol(X))
+taper <- gsignal::triang(N) %*% matrix(1, nrow = 1, ncol = ncol(X))
 nbuffs <- floor(nrow(X) / (N / 2) - 1)
 iind <- c(1:N)
 oind <- c(1:(N / 2))

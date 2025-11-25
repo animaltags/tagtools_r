@@ -13,6 +13,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(hilbert_transform("2"), "non-numeric argument")
 })

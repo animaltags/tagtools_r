@@ -10,6 +10,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(inv_axis(matrix(sin( 2 * pi * 0.1 * c(1:50)), ncol=1)), "subscript out of bounds")
 })

@@ -6,6 +6,6 @@ test_that("function works", {
 })
 
 sample2 <- matrix(c(list(7,8), 9, -1), ncol =1)
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(median_filter(sample2, n = 2), "'data' must be of a vector type")
 })

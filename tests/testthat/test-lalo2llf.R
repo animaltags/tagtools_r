@@ -13,10 +13,10 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(lalo2llf(matrix(c(4, 3, 8, "dance"), ncol=2)), "non-numeric argument to binary operator")
 })  
   
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(lalo2llf(c(102.15,78.5), c(85.75, 125.8)), "non-numeric matrix extent")
 })  

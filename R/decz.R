@@ -66,7 +66,7 @@ decz <- function(x, df = NULL, Z = NULL, nf = 12, frbw = 0.8) {
   # ================================================
   if (is.null(Z)) {
     Z <- list(df = df, frbw = frbw, nf = nf)
-    Z$h <- signal::fir1((Z$df * Z$nf), (Z$frbw / Z$df))
+    Z$h <- gsignal::fir1((Z$df * Z$nf), (Z$frbw / Z$df))
     Z$n <- length(Z$h)
     # below number carefully (must be)
     # chosen to precisely match to decdc.

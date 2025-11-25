@@ -29,7 +29,7 @@ Description: High-resolution movement-sensor tags typically include acceleromete
     visualization (for example, multi-panel time-series plots); 
     data processing (such as event detection, calculation of derived metrics like jerk and 
     dynamic acceleration, dive detection, and dive parameter calculation); and statistical analysis (for example, track reconstruction, a rotation test, and Mahalanobis distance analysis).
-Depends: R (>= 3.4)
+Depends: R (>= 4.1)
 LinkingTo: Rcpp, RcppArmadillo
 Imports:
     CircStats,
@@ -37,6 +37,7 @@ Imports:
     dplyr,
     ggplot2,
     graphics,
+    gsignal,
     latex2exp,
     lubridate,
     matlab,
@@ -44,9 +45,7 @@ Imports:
     plotly,
     pracma,
     Rcpp (>= 1.1.0),
-    RcppArmadillo,
     readr,
-    signal,
     stats,
     stringr,
     utils,
@@ -60,7 +59,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
-URL: <https://animaltags.org>, <https://animaltags.github.io/tagtools_r/index.html>
+URL: https://animaltags.org, https://animaltags.github.io/tagtools_r/index.html
 BugReports: https://github.com/animaltags/tagtools_r/issues
 Config/Needs/website: rmarkdown
 Config/testthat/edition: 3

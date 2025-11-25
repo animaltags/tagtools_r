@@ -7,6 +7,6 @@ test_that("function works", {
   expect_equal(rotate_vecs(c(0.7, -0.63, -0.12), Q), sample)
 })
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(rotate_vecs(c(0.7, -0.63, -0.12)), "inputs for all arguments are required")
 })  

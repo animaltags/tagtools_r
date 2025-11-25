@@ -14,6 +14,6 @@ test_that("function works", {
   exp_period = c(10, 298),return_rot_stats = TRUE, ts_fun = mean)$result, sample)
 })
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(rotation_test(event_times = 110 * runif(590),return_rot_stats = TRUE, ts_fun = mean), "event_times and exp_period are required inputs.")
 })

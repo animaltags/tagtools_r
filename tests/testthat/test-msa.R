@@ -8,6 +8,6 @@ test_that("function works", {
 })
 
 sample2 <- matrix(c("hea", 0.94, -1.34))
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(msa(A = sample2, ref=1), "A must be an acceleration matrix")
 })

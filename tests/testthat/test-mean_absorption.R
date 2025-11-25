@@ -3,6 +3,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(mean_absorption(c(48e5,28e9), "head", c(4, 94)), "non-numeric argument to binary operator")
 })

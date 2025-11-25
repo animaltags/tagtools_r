@@ -9,6 +9,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(htrack(A = beaked_whale$A, M = beaked_whale$M), "inputs for A, M, and s are all required.")
 })

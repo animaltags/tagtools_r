@@ -11,6 +11,6 @@ test_that("function works", {
 })
 
 set <- matrix(c(20,30,15))
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(inclination(set,M), "A must be an acceleration matrix")
 })

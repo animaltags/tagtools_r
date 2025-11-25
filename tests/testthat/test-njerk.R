@@ -8,6 +8,6 @@ test_that("function works", {
 })
 
 sample2 <- matrix(c("hea", 9, -1))
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(njerk(A = sample2, sampling_rate=4), "non-numeric argument to binary operator")
 })

@@ -11,8 +11,8 @@ Work with Data from High-Resolution Biologging Tags
 \seealso{
 Useful links:
 \itemize{
-  \item \url{<https://animaltags.org>}
-  \item \url{<https://animaltags.github.io/tagtools_r/index.html>}
+  \item \url{https://animaltags.org}
+  \item \url{https://animaltags.github.io/tagtools_r/index.html}
   \item Report bugs at \url{https://github.com/animaltags/tagtools_r/issues}
 }
 

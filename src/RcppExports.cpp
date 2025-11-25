@@ -12,13 +12,13 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // conv_cpp
-arma::vec conv_cpp(arma::vec a, arma::vec b, std::string shape);
+arma::vec conv_cpp(const arma::vec& a, const arma::vec& b, std::string shape);
 RcppExport SEXP _tagtools_conv_cpp(SEXP aSEXP, SEXP bSEXP, SEXP shapeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type a(aSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type a(aSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type b(bSEXP);
     Rcpp::traits::input_parameter< std::string >::type shape(shapeSEXP);
     rcpp_result_gen = Rcpp::wrap(conv_cpp(a, b, shape));
     return rcpp_result_gen;

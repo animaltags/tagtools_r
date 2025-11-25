@@ -12,6 +12,6 @@ test_that("function works", {
   expect_equal(tortuosity(track, sampling_rate = BW$A$sampling_rate, intvl = 12)[1:6,], sample)
 })
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(tortuosity(track, sampling_rate = BW$A$sampling_rate, intvl = "12"), "non-numeric argument to binary operator")
 })

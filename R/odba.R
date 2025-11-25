@@ -45,7 +45,7 @@ odba <- function(A, sampling_rate = NULL, fh = NULL, method = "fir", n = NULL) {
       ) -
         matrix(1, nrow = n, ncol = 1) / n
       # filter A with h
-      Ah <- signal::filter(h, 1, x = rbind(
+      Ah <- gsignal::filter(h, 1, x = rbind(
         matrix(0, nrow = nz, ncol = ncol(A)),
         A,
         matrix(0, nrow = nz, ncol = ncol(A))

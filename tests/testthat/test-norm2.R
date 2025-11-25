@@ -8,6 +8,6 @@ test_that("function works", {
 })
 
 sample2 <- matrix(c("hea", 1.9, -0.31))
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(norm2(sample2), "non-numeric argument to binary operator")
 })

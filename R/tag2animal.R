@@ -155,7 +155,7 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
       }
     }
     # check for angles wrapping at +/- 180 degrees
-    PTAB[, 2:4] <- apply(X = PTAB[, c(2:4)], MARGIN = 2, FUN = signal::unwrap)
+    PTAB[, 2:4] <- apply(X = PTAB[, c(2:4)], MARGIN = 2, FUN = gsignal::unwrap)
     return(PTAB)
   } # end of o2p function
 } # end of tag2animal function

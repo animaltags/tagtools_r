@@ -18,6 +18,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(zero_crossings(vec, "stay"), "invalid argument to unary operator")
 })

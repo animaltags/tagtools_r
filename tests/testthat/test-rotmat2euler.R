@@ -16,6 +16,6 @@ sample2 <- matrix(c(1, 2, 3,
                    7, 8, 9),
                  nrow = 3, ncol = 3)
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(rotmat2euler(sample2), "non-numeric argument to mathematical function")
 })  

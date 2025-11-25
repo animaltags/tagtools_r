@@ -7,7 +7,7 @@ test_that("function works", {
   expect_equal(julian_day(y=2015, 332), as.Date("2015-11-28"))
 })
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(julian_day(y=2013, m="12th"), "non-numeric argument to binary operator")
 })  
 

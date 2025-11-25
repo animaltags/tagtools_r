@@ -13,10 +13,10 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(spherical_cal(matrix(c(17,12,19))), "non-conformable arrays")
 })
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(spherical_cal(c(17,12,19)), "'x' must be an array of at least two dimensions")
 })

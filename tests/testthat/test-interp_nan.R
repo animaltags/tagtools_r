@@ -6,7 +6,7 @@ test_that("function works", {
 })
 
 P <- matrix(c(40,"h",20))
-test_that("function does not works", {
+test_that("function does not work", {
   expect_warning(interp_nan(P), "NAs introduced by coercion")
 })
 

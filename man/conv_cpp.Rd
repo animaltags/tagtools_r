@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{conv_cpp}
 \alias{conv_cpp}
-\title{C++ convolution}
+\title{Convolution (in C++)}
 \usage{
 conv_cpp(a, b, shape = "full")
 }
@@ -17,5 +17,5 @@ conv_cpp(a, b, shape = "full")
 A numeric vector containing the convolution result.
 }
 \description{
-Performs 1D convolution of two vectors.
+Performs 1D convolution of two vectors in C++ via FFT.
 }

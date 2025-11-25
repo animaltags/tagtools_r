@@ -16,6 +16,6 @@ test_that("function works", {
 })
 
 
-test_that("function does not works", {
+test_that("function does not work", {
   expect_error(rotate_data(15*stats::runif(25)), "event_times and full_period are required inputs.")
 })

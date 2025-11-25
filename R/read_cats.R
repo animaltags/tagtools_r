@@ -110,7 +110,7 @@ read_cats <- function(file_dir = NULL,
   # Read metadata from txt file, if present
   # Note: the code for sensor_meta works, but data from it doesn't seem to match data file so ???
   if (file.exists(txt_fname)){
-    cats_meta <- read.delim(txt_fname, header = FALSE)[,1]
+    cats_meta <- utils::read.delim(txt_fname, header = FALSE)[,1]
     start_sensors <- grep(cats_meta, pattern = "[activated sensors]", fixed = TRUE)
     device_meta <- cats_meta[c(grep(cats_meta, pattern = "[device]", fixed = TRUE) :
                                  grep(cats_meta, pattern = "utc_offset", fixed = TRUE))]
@@ -299,7 +299,7 @@ save_sens_struct <- function(X, depid, sampling_rate, df = 1, fname, type, name,
   cols <- grep(type, names(X))
   if (length(cols) > 0) {
     if (length(cols) < naxes) {
-      warning(sprintf(" Warning: %d axes of %s missing in data\n", naxes - length(k), name))
+      warning(sprintf(" Warning: %d axes of %s missing in data\n", naxes - length(cols), name))
     }
     if (naxes > 1) {
       # make sure column indices are ordered x, then y, then z

@@ -1,24 +1,19 @@
-// filter_cpp() code from: SigPack - the C++ signal processing library
-// https://sigpack.sourceforge.net/index.html
-// This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 #include <RcppArmadillo.h>
 #include <string>
 #include <stdexcept>
 using namespace Rcpp;
 
-//' @title C++ convolution
-//' @description Performs 1D convolution of two vectors.
+//' @title Convolution (in C++)
+//' @description Performs 1D convolution of two vectors in C++ via FFT.
 //' @param a The first numeric vector.
 //' @param b The second numeric vector.
 //' @param shape (optional) The shape of the output: "full", "same", or "valid". Default is "full," matching \code{\link[signal]{conv}} and the Armadillo default, which means that the output array is \code{length(a)} + \code{length(b)} - 1.
 //' @return A numeric vector containing the convolution result.
 //' @export
 // [[Rcpp::export]]
- arma::vec conv_cpp(arma::vec a, arma::vec b, std::string shape = "full") {
-   
+ arma::vec conv_cpp(const arma::vec& a, const arma::vec& b, std::string shape = "full") {
+   // note the const ...& is to pass inputs in by reference so copies are not made (help w/speed)
+   // only really matters for the big vectors/matrices but we don't need to mod copies anyway
    if (shape!= "full" && shape!= "same" && shape!= "valid") {
      Rcpp::stop("Shape must be 'full', 'same', or 'valid'.");
    }

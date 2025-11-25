@@ -30,7 +30,7 @@ fix_pressure <- function(p, t, sampling_rate, maxp = NULL) {
       stop("depth data cannot be empty")
     }
     if ("cal_tcomp" %in% names(p) == TRUE) {
-      pp <- pp - signal::polyval(c(p$cal_tcomp, 0), tt - p$cal_tref)
+      pp <- pp - pracma::polyval(c(p$cal_tcomp, 0), tt - p$cal_tref)
     }
     if (nargs() > 3) {
       maxp <- sampling_rate
@@ -127,10 +127,10 @@ fix_pressure <- function(p, t, sampling_rate, maxp = NULL) {
   }
   # correct the original pressure
   if (!is.list(p)) {
-    p <- p + signal::polyval(c(pc$tcomp, pc$poly[2]), (t - TREF))
+    p <- p + pracma::polyval(c(pc$tcomp, pc$poly[2]), (t - TREF))
     return(list(p = p, pc = pc))
   }
-  p$data <- p$data + signal::polyval(c(pc$tcomp, pc$poly[2]), (t$data - TREF))
+  p$data <- p$data + pracma::polyval(c(pc$tcomp, pc$poly[2]), (t$data - TREF))
   p$cal_tref <- TREF
   p$cal_tcomp <- pc$tcomp
   if ("cal_poly" %in% names(p) == TRUE) {

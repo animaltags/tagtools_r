@@ -4,12 +4,14 @@
 \alias{decdc}
 \title{Reduce the sampling rate}
 \usage{
-decdc(x, df)
+decdc(x, df, go_slow = FALSE)
 }
 \arguments{
 \item{x}{A data structure, vector or matrix containing the signal(s) to be decimated. If x is a matrix, each column is decimated separately.}
 
 \item{df}{The decimation factor. The output sampling rate is the input sampling rate divided by df. df must be an integer greater than 1.}
+
+\item{go_slow}{if TRUE the function will NOT use Rcpp to speed up convolution. Default is FALSE. This input is for testing and benchmarking.}
 }
 \value{
 y The decimated signal vector or matrix. It has the same number of columns as x but has 1/df of the rows.
