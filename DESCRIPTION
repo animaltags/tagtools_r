@@ -44,7 +44,7 @@ Imports:
     ncdf4,
     plotly,
     pracma,
-    Rcpp (>= 1.1.0),
+    Rcpp,
     readr,
     stats,
     stringr,
