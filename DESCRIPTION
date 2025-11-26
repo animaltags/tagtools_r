@@ -40,7 +40,6 @@ Imports:
     gsignal,
     latex2exp,
     lubridate,
-    matlab,
     ncdf4,
     plotly,
     pracma,

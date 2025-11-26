@@ -9,9 +9,9 @@
 #' @note After Kinsler and Frey pp. 159-160.
 #' @export
 #' @examples mean_absorption(c(25e3, 60e3), 1000, c(0, 700))
-mean_absorption <- function(freq, r, depth, Ttab = NULL) {
-  if (missing(depth)) {
-    stop("inputs for few, r, and depth are all required")
+mean_absorption <- function(freq, r, depth, Ttab = 13) {
+  if (missing(depth) | missing(r) | missing(freq)) {
+    stop("inputs for freq, r, and depth are all required")
   }
   if (is.null(Ttab)) {
     tempr <- 13
@@ -25,7 +25,7 @@ mean_absorption <- function(freq, r, depth, Ttab = NULL) {
     if (!is.null(Ttab) & length(Ttab) > 1) {
       tempr <- pracma::interp1(Ttab[, 1], Ttab[, 2], depth)
     } else {
-      tempr <- pracma::repmat(tempr, nrow(depth), ncol(depth))
+      tempr <- matrix(tempr, nrow = nrow(depth), ncol = ncol(depth))
     }
   }
   # handle case of a single frequency

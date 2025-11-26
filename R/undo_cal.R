@@ -11,10 +11,10 @@
 #'
 undo_cal <- function(X, temperature) {
   if (missing(X)) {
-    stop("Need X to continue")
+    stop("X is a required input")
   }
   if (!is.list(X)) {
-    stop("Input to undo_cal must be a list")
+    stop("Input to undo_cal must be an animaltag object or a sensor data list")
   }
   if ("info" %in% names(X)) {
     namez <- names(X)
@@ -49,8 +49,9 @@ undo_cal1 <- function(X, temperature) {
   }
   if ("cal_poly" %in% names(X)) {
     p <- X$cal_poly
-    X$data <- (X$data - pracma::repmat(t(p[, 2]), nrow(X$data), 1)) * pracma::repmat(1 / t(p[, 1]), nrow(X$data), 1)
-    X$cal_poly <- pracma::repmat(c(1, 0), ncol(X$data), 1)
+    X$data <- (X$data - matrix(p[,2], nrow = nrow(X$data), ncol = nrow(p), byrow = TRUE)) * 
+      matrix(1 / p[,1], nrow = nrow(X$data), ncol = nrow(p), byrow = TRUE)
+    X$cal_poly <- matrix(c(1,0), nrow = ncol(X$data), ncol = 2, byrow = TRUE)
   }
   if ("source_unit" %in% names(X)) {
     X$unit <- X$source_unit

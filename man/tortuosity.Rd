@@ -2,7 +2,7 @@
 % Please edit documentation in R/tortuosity.R
 \name{tortuosity}
 \alias{tortuosity}
-\title{Measure tortuosity index}
+\title{Compute tortuosity index}
 \usage{
 tortuosity(track, sampling_rate, intvl)
 }

@@ -4,7 +4,7 @@
 \alias{spectrum_level}
 \title{Compute the spectrum level of a signal x.}
 \usage{
-spectrum_level(x, nfft, sampling_rate, w, nov)
+spectrum_level(x, nfft = 512, sampling_rate = 1, w = nfft, nov = round(w/2))
 }
 \arguments{
 \item{x}{A vector containing the signal to be processed. For signals with multiple channels, each channel should be in a column of x.}
@@ -31,7 +31,7 @@ This function is used to compute the spectrum level of a signal x.
 The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
 }
 \examples{
-BW <- beaked_whale
-list <- spectrum_level(x = BW$P$data, nfft = 4, sampling_rate = BW$P$sampling_rate)
+list <- spectrum_level(x = beaked_whale$P$data, 
+nfft = 4, sampling_rate = beaked_whale$P$sampling_rate)
 
 }

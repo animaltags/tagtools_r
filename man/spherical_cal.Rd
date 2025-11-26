@@ -4,12 +4,12 @@
 \alias{spherical_cal}
 \title{Deduce the calibration constants}
 \usage{
-spherical_cal(X, n = NULL, method = NULL)
+spherical_cal(X, tfm = NULL, method = "offset_scaling")
 }
 \arguments{
 \item{X}{The segment of triaxial sensor data to calibrate. It must be a 3-column matrix. X can come from any triaxial field sensor and can be in any unit and any frame.}
 
-\item{n}{The target field magnitude e.g., 9.81 for accelerometer data using m/s^2 as the unit.}
+\item{tfm}{The target field magnitude e.g., 9.81 for accelerometer data using m/s^2 as the unit.}
 
 \item{method}{An optional string selecting the type of calibration. The default is to calibrate for offset and scaling only. Other options are: 'gain' adjust gain of axes 2 and 3 relative to 1, or 'cross' adjust gain and remove cross-axis correlations}
 }
@@ -19,7 +19,6 @@ A list with 2 elements:
  \item{\strong{Y: }} The matrix of converted sensor values. These will have the same units as for input argument n. The size of Y is the same as the size of X and it has the same frame and sampling rate.
  \item{\strong{G: }} The calibration structure containing fields: G.poly is a matrix of polynomials. The first column of G.poly is the three scale factors applied to the columns of X. The second column is the offset added to each column of X after scaling. G.cross is a 3x3 matrix of cross-factors. If there are no cross-terms, this is the identity matrix. Off-axis terms correct for cross-axis sensitivity.
 }
-A message will also be printed to the screen presenting
 }
 \description{
 This function is used to deduce the calibration constants for a triaxial field sensor, such as an accelerometer or magnetometer, based on movement data. This can be used to do a 'bench' calibration of a sensor.
@@ -42,12 +41,11 @@ remove outliers from the sensor data before using this function
 to reduce errors from specific acceleration and sensor noise.
 }
 \note{
-This function uses a Simplex search for optimal calibration parameters and so can be slow if the data size is large.
+This function uses a simplex search for optimal calibration parameters and so can be slow if the data size is large.
 For this reason it is most suitable for bench calibrations rather than
 field data. This function is only usable for field sensors.
 It will not work for gyroscope data.
 }
 \examples{
-p <- spherical_cal(harbor_seal$A$data)
-
+p <- spherical_cal(X = harbor_seal$A$data)
 }

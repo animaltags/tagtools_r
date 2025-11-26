@@ -31,16 +31,16 @@ fix_offset_3d <- function(X) {
   k <- stats::complete.cases(x)
   bsq <- rowSums(x[k, ]^2)
   mb <- sqrt(mean(bsq))
-  XX <- cbind((2 * x[k, ]), pracma::repmat(mb, length(k), 1))
+  XX <- cbind((2 * x[k, ]), matrix(mb, nrow = length(k), ncol = 1))
   R <- t(XX) %*% XX
   if (kappa(R, exact = TRUE) > 1e3) {
     stop("condition too poor to get reliable solution")
   }
-  P <- colSums(pracma::repmat(as.matrix(bsq), 1, 4) * XX)
+  P <- colSums(matrix(bsq, nrow = length(bsq), ncol = 4, byrow = FALSE) * XX)
   H <- -solve(R) %*% as.matrix(P)
   ones <- matrix(1, 3, 1)
   G$poly <- cbind(ones, H[1:3])
-  x <- x + pracma::repmat(t(H[1:3]), nrow(x), 1)
+  x <- x + matrix(H[1:3], nrow = nrow(x), ncol = 3, byrow = TRUE)
   if (!is.list(X)) {
     X <- x
     return(list(X = X, G = G))

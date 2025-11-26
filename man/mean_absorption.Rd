@@ -4,7 +4,7 @@
 \alias{mean_absorption}
 \title{Calculate the mean absorption in salt water}
 \usage{
-mean_absorption(freq, r, depth, Ttab = NULL)
+mean_absorption(freq, r, depth, Ttab = 13)
 }
 \arguments{
 \item{freq}{Specifies the frequency range, freq = c(fmin, fmax) in Hz. For a single frequency, use a scalar value for freq.}
