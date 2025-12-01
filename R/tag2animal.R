@@ -32,9 +32,9 @@
 #' 
 
 tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
-  #*******************************************
+  
   # input checking
-  #*******************************************
+  
   Xa <- NULL
 
   if (missing(sampling_rate) & !is.list(X)) {
@@ -67,9 +67,9 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
     stop("No X data (or empty data) provided.\n")
   }
 
-  #*******************************************
+  
   # Checks/adjustments to OTAB
-  #*******************************************
+  
 
   # first OTAB entry must be a fixed-point (i.e., cue2=0)
   if (any(OTAB[1, 1:2] != 0)) {
@@ -95,16 +95,16 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
     prh <- matrix(OTAB[, 3:5], nrow = 1)
   }
 
-  #*******************************************
+  
   # Apply OTAB (rotate data)
-  #*******************************************
+  
 
   Q <- euler2rotmat(p = prh[, 1], r = prh[, 2], h = prh[, 3])
   X <- rotate_vecs(X, Q)
 
-  #*******************************************
+  
   # Add metadata to Xa, if structure output needed
-  #*******************************************
+  
   if (is.list(Xa)) {
     Xa$otab <- matrix(t(OTAB), ncol = 1)
     Xa$frame <- "animal"
@@ -120,42 +120,41 @@ tag2animal <- function(X, sampling_rate, OTAB, Ya = NULL) {
   }
 
   return(Xa)
-
-  #*******************************************
-  # o2p (helper to create PTAB from OTAB)
-  #*******************************************
-  o2p <- function(OTAB) {
-    SMALL <- 0.1 # duration in seconds of the shortest move
-    n <- nrow(OTAB)
-    k <- 1
-
-    while (k < nrow(OTAB)) {
-      # remove overlapping events
-      kk <- which(OTAB[k, 2] + SMALL < OTAB[c((k + 1):nrow(OTAB)), 1])
-      OTAB <- OTAB[c(1:k, k + kk), ]
-      k <- k + 1
-    }
-
-    if (nrow(OTAB) < n) {
-      message("Overlapping events found in OTAB and removed\n")
-    }
-
-    # force sudden moves to have duration SMALL
-    k <- which(OTAB[, 1] == OTAB[, 2])
-    OTAB[k, 2] <- OTAB[k, 1] + SMALL
-
-    PTAB <- matrix(OTAB[1, c(1, 3:5)], nrow = 1) # initialise PTAB
-    for (k in c(2:nrow(OTAB))) { # add any moves in the OTAB
-      if (OTAB[k, 2] > OTAB[k, 1]) {
-        # mat: PTAB = [PTAB; OTAB(k,1) PTAB(end,2:4)] ;
-        PTAB <- rbind(PTAB, cbind(OTAB[k, 1], t(PTAB[nrow(PTAB), c(2:4)])))
-        PTAB <- rbind(PTAB, OTAB[k, c(2:5)])
-      } else {
-        PTAB <- rbind(PTAB, OTAB[k, c(1, 3:5)])
-      }
-    }
-    # check for angles wrapping at +/- 180 degrees
-    PTAB[, 2:4] <- apply(X = PTAB[, c(2:4)], MARGIN = 2, FUN = gsignal::unwrap)
-    return(PTAB)
-  } # end of o2p function
 } # end of tag2animal function
+
+
+# o2p (helper to create PTAB from OTAB)
+o2p <- function(OTAB) {
+  SMALL <- 0.1 # duration in seconds of the shortest move
+  n <- nrow(OTAB)
+  k <- 1
+  
+  while (k < nrow(OTAB)) {
+    # remove overlapping events
+    kk <- which(OTAB[k, 2] + SMALL < OTAB[c((k + 1):nrow(OTAB)), 1])
+    OTAB <- OTAB[c(1:k, k + kk), ]
+    k <- k + 1
+  }
+  
+  if (nrow(OTAB) < n) {
+    message("Overlapping events found in OTAB and removed\n")
+  }
+  
+  # force sudden moves to have duration SMALL
+  k <- which(OTAB[, 1] == OTAB[, 2])
+  OTAB[k, 2] <- OTAB[k, 1] + SMALL
+  
+  PTAB <- matrix(OTAB[1, c(1, 3:5)], nrow = 1) # initialise PTAB
+  for (k in c(2:nrow(OTAB))) { # add any moves in the OTAB
+    if (OTAB[k, 2] > OTAB[k, 1]) {
+      # mat: PTAB = [PTAB; OTAB(k,1) PTAB(end,2:4)] ;
+      PTAB <- rbind(PTAB, cbind(OTAB[k, 1], t(PTAB[nrow(PTAB), c(2:4)])))
+      PTAB <- rbind(PTAB, OTAB[k, c(2:5)])
+    } else {
+      PTAB <- rbind(PTAB, OTAB[k, c(1, 3:5)])
+    }
+  }
+  # check for angles wrapping at +/- 180 degrees
+  PTAB[, 2:4] <- apply(X = PTAB[, c(2:4)], MARGIN = 2, FUN = gsignal::unwrap)
+  return(PTAB)
+} # end of o2p function
