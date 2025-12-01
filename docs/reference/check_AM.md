@@ -1,0 +1,70 @@
+# Compute field intensity of tag acceleration and magnetometer data.
+
+Compute field intensity of acceleration and magnetometer data, and the
+inclination angle of the magnetic field. This is useful for checking the
+quality of a calibration, for detecting drift, and for validating the
+mapping of the sensor axes to the tag axes.
+
+## Usage
+
+``` r
+check_AM(A, M = NULL, fs = NULL, find_incl = TRUE)
+```
+
+## Arguments
+
+- A:
+
+  An accelerometer sensor structure or matrix with columns \[ax ay az\].
+  Acceleration can be in any consistent unit, e.g., g or m/s^2.
+
+- M:
+
+  A magnetometer sensor structure or matrix, M=\[mx,my,mz\] in any
+  consistent unit (e.g., in uT or Gauss).
+
+- fs:
+
+  (optional) The sampling rate of the sensor data in Hz (samples per
+  second). This is only needed if A and M are not sensor structures and
+  filtering is required.
+
+- find_incl:
+
+  (optional; logical) Should inclination be computed and returned?
+  Default is TRUE.
+
+## Value
+
+If find_incl is false, then the matrix fstr is returned. Otherwise,
+check_AM returns a list with elements:
+
+- `fstr, ` The estimated field intensity of A and or M in the same units
+  as A and M. fstr is a vector or a two column matrix. If only one type
+  of data is input, fstr will be a column vector. If both A and M are
+  input, fstr will have two columns with the field strength of A in the
+  1st column and the field strength of M in the 2nd column.
+
+- `incl, ` The estimated field inclination angle (i.e., the angle with
+  respect to the horizontal plane) in radians. incl is a column vector.
+  By convention, a field vector pointing below the horizon has a
+  positive inclination angle. This is only returned if the function is
+  called with both A and M data.
+
+## Details
+
+The sampling rate of fstr and incl is the same as the input sampling
+rate. This function automatically low-pass filters the data with a
+cut-off frequency of 5 Hz if the sampling rate is greater than 10 Hz.
+Frame: This function assumes a \[north,east,up\] navigation frame and a
+\[forward,right,up\] local frame.
+
+## Examples
+
+``` r
+AMcheck <- check_AM(
+  A = matrix(c(-0.3, 0.52, 0.8), nrow = 1),
+  M = matrix(c(22, -22, 14), nrow = 1),
+  fs = 1
+)
+```

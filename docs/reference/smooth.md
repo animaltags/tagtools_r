@@ -1,0 +1,46 @@
+# Low pass filter a time series
+
+This function is used to low pass filter (smooth) a regularly-sampled
+time series.
+
+## Usage
+
+``` r
+smooth(x, n)
+```
+
+## Arguments
+
+- x:
+
+  The signal to be filtered. It can be multi-channel with a signal in
+  each column, e.g., an acceleration matrix. The number of samples
+  (i.e., the number of rows in x) must be larger than the filter length,
+  n.
+
+- n:
+
+  The smoothing parameter - use a larger number to smooth more. n must
+  be greater than 1. Signal components above 1/n of the Nyquist
+  frequency are filtered out.
+
+## Value
+
+The input signal has the first and fifth harmonic. Applying the low-pass
+filter removes most of the fifth harmonic so the output appears as a
+sinewave except for the first few samples which are affected by the
+filter startup transient. Smooth uses fir_nodelay to perform the
+filtering and so introduces no delay.
+
+## Examples
+
+``` r
+y1 <- sin((2 * pi * 0.05) %*% t(c(1:100))) + cos((2 * pi * 0.25) %*% t(c(1:100)))
+x1 = c(1:length(y1))
+plot(x = x1, y = y1)
+
+y2 <- smooth(x1, n = 4)
+x2 = c(1:length(y2))
+plot(x = x2, y = y2)
+
+```

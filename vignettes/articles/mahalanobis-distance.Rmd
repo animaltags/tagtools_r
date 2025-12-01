@@ -82,8 +82,13 @@ plot(MD$t, MD$dist, type = 'l')
 MDdata <- data.frame(jerk = njerk(zc$A, sampling_rate = zc$A$sampling_rate)$data, Mx = zc$P$data)
 est <- as.numeric(as.POSIXct('2011-09-24 14:45:00') - as.POSIXct(zc$info$dephist_device_datetime_start))*3600
 eet <- as.numeric(as.POSIXct('2011-09-24 15:15:00') - as.POSIXct(zc$info$dephist_device_datetime_start))*3600
-MD <- m_dist(data = MDdata, sampling_rate=zc$P$sampling_rate, smoothDur = 10, overlap = 9.5, expStart = est, expEnd = eet)
-plott(X=list(MahalanobisDist = MD$dist), fsx = zc$A$sampling_rate)
+MD <- m_dist(data = MDdata, 
+             sampling_rate = zc$P$sampling_rate, 
+             smooth_dur = 10, 
+             overlap = 9.5, 
+             bl_start = 0,
+             bl_end = est)
+plott(X = list(MahalanobisDist = MD$dist), fsx = zc$A$sampling_rate)
 ```
 
 </div>

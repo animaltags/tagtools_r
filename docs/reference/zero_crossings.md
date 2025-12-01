@@ -1,0 +1,71 @@
+# Find zero-crossings in a vector
+
+This function is used to find the zero-crossings in a vector using a
+hysteretic detector. This is useful, e.g., to locate cyclic postural
+changes due to propulsion.
+
+## Usage
+
+``` r
+zero_crossings(x, TH, Tmax = NULL)
+```
+
+## Arguments
+
+- x:
+
+  A vector of data. This can be from any sensor and with any sampling
+  rate.
+
+- TH:
+
+  The magnitude threshold for detecting a zero-crossing. A zero-crossing
+  is only detected when values in x pass from -TH to +TH or vice versa.
+
+- Tmax:
+
+  (optional) The maximum duration in samples between threshold
+  crossings. To be accepted as a zero-crossing, the signal must pass
+  from below -TH to above TH, or vice versa, in no more than Tmax
+  samples. This is useful to eliminate slow transitions. If Tmax is not
+  given, there is no limit on the number of samples between threshold
+  crossings.
+
+## Value
+
+A list with elements
+
+- **K:** A vector of cues (in samples) to zero-crossings in x.
+
+- **s:** A vector containing the sign of each zero-crossing (1 =
+  positive-going, -1 = negative-going). s is the same size as K. If no
+  zero-crossings are found, K and s will be empty
+
+- **KK:** The zero crossings of the vertical velocity vector
+
+## Note
+
+Frame: This function assumes a \[north,east,up\] navigation frame and a
+\[forward,right,up\] local frame. Both A and M must be rotated if needed
+to match the animal's cardinal axes otherwise the track will not be
+meaningful.
+
+CAUTION: dead-reckoned tracks are usually very inaccurate. They are
+useful to get an idea of HOW animals move rather than WHERE they go. Few
+animals probably travel in exactly the direction of their longitudinal
+axis and anyway measuring the precise orientation of the longitudinal
+axis of a non-rigid animal is fraught with error. Moreover, if there is
+net flow in the medium, the animal will be advected by the flow in
+addition to its autonomous movement. For swimming animals this can lead
+to substantial errors. The forward speed is assumed to be with respect
+to the medium so the track derived here is NOT the 'track-made-good',
+i.e., the geographic movement of the animal. It estimates the movement
+of the animal with respect to the medium. There are numerous other
+sources of error so use at your own risk!
+
+## Examples
+
+``` r
+R <- zero_crossings(sin(2 * pi * 0.033 * c(1:100)), 0.3)
+s <- c(-1, 1, -1, 1, -1, 1)
+```

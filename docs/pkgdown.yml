@@ -1,22 +1,24 @@
-pandoc: 3.1.11
-pkgdown: 2.0.9
+pandoc: 3.6.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
-  acceleration-filtering: acceleration-filtering.html
-  data-quality-error-correction: data-quality-error-correction.html
-  Detectors: Detectors.html
-  dive-stats: dive-stats.html
-  find-dives: find-dives.html
-  fine-scale-tracking: fine-scale-tracking.html
-  install-load-tagtools: install-load-tagtools.html
-  jerk-transients: jerk-transients.html
-  load-tag-data: load-tag-data.html
-  magnetometer-filtering: magnetometer-filtering.html
-  mahalanobis-distance: mahalanobis-distance.html
-  plots-and-cropping: plots-and-cropping.html
-  rotation-test: rotation-test.html
-  tag-to-whale-frame: tag-to-whale-frame.html
-  TagTools: TagTools.html
-  vectors-vs-structures: vectors-vs-structures.html
-last_built: 2024-06-28T00:12Z
-
+  articles/acceleration-filtering: acceleration-filtering.html
+  articles/data-quality-error-correction: data-quality-error-correction.html
+  articles/Detectors: Detectors.html
+  articles/dive-stats: dive-stats.html
+  articles/find-dives: find-dives.html
+  articles/fine-scale-tracking: fine-scale-tracking.html
+  articles/install-load-tagtools: install-load-tagtools.html
+  articles/jerk-transients: jerk-transients.html
+  articles/load-tag-data: load-tag-data.html
+  articles/magnetometer-filtering: magnetometer-filtering.html
+  articles/mahalanobis-distance: mahalanobis-distance.html
+  articles/plots-and-cropping: plots-and-cropping.html
+  articles/rotation-test: rotation-test.html
+  articles/tag-to-whale-frame: tag-to-whale-frame.html
+  articles/TagTools: TagTools.html
+  articles/vectors-vs-structures: vectors-vs-structures.html
+last_built: 2025-12-01T20:12Z
+urls:
+  reference: https://animaltags.github.io/tagtools_r/reference
+  article: https://animaltags.github.io/tagtools_r/articles

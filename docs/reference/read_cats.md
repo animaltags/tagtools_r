@@ -1,0 +1,147 @@
+# Read CATS csv data file(s) and convert to .nc
+
+Read .csv file(s) with data from a CATS tag deployment, including
+associated metadata, and store the resulting data in a .nc file.
+
+## Usage
+
+``` r
+read_cats(
+  file_dir = NULL,
+  fname = NULL,
+  depid,
+  txt_fname = NULL,
+  nc_dir = getwd(),
+  device_serial = NULL,
+  device_model_name = NULL,
+  device_model_version = NULL,
+  device_url = "https://cats.is/",
+  dephist_device_tzone = NULL,
+  animal_species_common = "unknown",
+  animal_species_science = "unknown"
+)
+```
+
+## Arguments
+
+- file_dir:
+
+  String containing the name (including full or relative path) of the
+  directory where the CATS csv file(s) are stored. If omitted, `fname`
+  must include full or relative path information for the csv file(s).
+
+- fname:
+
+  Name(s) of the CATS csv file(s) to read. If `fname` is not provided,
+  then the function will try to read all csv files in `file_dir`. If
+  `file_dir` is provided, the path(s) to the file(s) will be constructed
+  by appending the file name(s) to the `file_dir`. If `file_dir` is
+  omitted, then `fname` is assumed to include the path to the file(s).
+  The .csv file extension is optional.
+
+- depid:
+
+  String containing the deployment identification code assigned to this
+  deployment, for example, 'mn12_186a'. If `fname` is not input, csv
+  files are assumed to have names of the form "`depid`\_001.csv" (002,
+  003 etc if multiple files) or "`depid`.csv" (if data is in a single
+  file).
+
+- txt_fname:
+
+  Name of the .txt file with metadata about the CATS deployment. If not
+  input, the function will try to construct it from file_dir and depid
+  (like `file.path(file_dir, paste0(depid, ".txt"))`). If present, this
+  file will be used to determine sensor sampling rates; if not, sampling
+  rates will be guessed based on timestamps in the csv file.
+
+- nc_dir:
+
+  String containing the name (including full or relative path) of the
+  directory where the output nc file should be stored. Defaults to the
+  current working directory.
+
+- device_serial:
+
+  String containing the serial number of the CATS tag. Obtained from
+  `txt_fname` or else defaults to NULL; stored in the info structure of
+  the output NetCDF file.
+
+- device_model_name:
+
+  String containing the model of the CATS tag used for data collection,
+  for example "CATS Cam." Obtained from `txt_fname` or else defaults to
+  NULL. This information is stored in the info structure of the output
+  NetCDF file.
+
+- device_model_version:
+
+  String; CATS tag version. Obtained from `txt_fname` or else defaults
+  to NULL; stored in the info structure of the output NetCDF file.
+
+- device_url:
+
+  String containing URL of tag manufacturer; defaults to
+  "https://cats.is/" and is stored in the info structure of the output
+  NetCDF file.
+
+- dephist_device_tzone:
+
+  String indicating the time zone in which the tag was deployed.
+  Obtained from `txt_fname` or else defaults to NULL. Stored in the info
+  structure of the output NetCDF file. For CATS tags this is the local
+  offset from UTC time in hours.
+
+- animal_species_common:
+
+  Common name of species on which tag was deployed. Defaults to
+  "unknonwn" and is stored in the info structure of the output NetCDF
+  file.
+
+- animal_species_science:
+
+  Scientific name of species on which tag was deployed. Defaults to
+  "unknonwn" and is stored in the info structure of the output NetCDF
+  file.
+
+## Value
+
+A string (constructed by: '`depid`\_raw.nc'; for example,
+'mn12_186a_raw.nc') containing the file name of the netCDF (.nc) file in
+which the output has been saved. This function generates a netCDF file
+in the current working directory containing the tag data variables,
+including:
+
+- A, Accelerometer data structure
+
+- M, Magnetometer data structure
+
+- temp, Temperature sensor data structure
+
+- info Information structure for the deployment
+
+## Note
+
+CATS loggers can produce very large csv files which are slow to process.
+This function is (somewhat) optimised for speed and memory use so will
+tolerate large files. But processing could be slow. Note also that
+although CATs tags use a NED axis orientation for 3D sensors, \*\*this
+function converts to the NEU orientation\*\* expected by the animaltag
+tool kit. To revert (if continuing analysis with CATs-specific tools
+outside animaltags), simply multiply all z-axis values by -1, and
+consider editing the metadata. Also note that according to Cade et al.
+2021, not all CATs tags have the same internal orientation of the
+triaxial sensors – such that the first column in the data may or may not
+be the "x axis." Here, we assume that the three columns of data for any
+triaxial sensor are correctly labeled with X,Y,Z included in the column
+name in the CATs csv file. If not, further data-based bench calibration
+of the device may be needed to determine correct axis orientation.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+nc_filename <- read_cats("my_cats_file.csv", "my_cats_deployment_name")
+load_nc("my_cats_deployment_name_raw.nc")
+} # }
+```

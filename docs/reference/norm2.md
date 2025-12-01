@@ -1,0 +1,34 @@
+# Compute the row-wise vector norm
+
+This function is used to compute the row-wise vector norm of X if X is a
+matrix. If X is a vector (row or column), v is the vector norm.
+
+## Usage
+
+``` r
+norm2(X)
+```
+
+## Arguments
+
+- X:
+
+  A data structure, vector or matrix.
+
+## Value
+
+The row-wise vector-norm of matrix X, i.e., the square-root of the sum
+of the squares for each row. If X is a vector (row or column), v is the
+vector norm and norm2() is equivalent to the built-in function norm().
+But if X is a matrix e.g., a triaxial accelerometer or magnetometer
+matrix, norm() gives the overall norm of the matrix whereas norm2()
+gives the vector norm of each row (i.e., the field strength in the case
+of a magnetometer matrix).
+
+## Examples
+
+``` r
+sampleMatrix <- matrix(c(0.2, 0.4, -0.7, -0.3, 1.1, 0.1), byrow = TRUE, nrow = 2, ncol = 3)
+norm2(X = sampleMatrix)
+#> [1] 0.8306624 1.1445523
+```

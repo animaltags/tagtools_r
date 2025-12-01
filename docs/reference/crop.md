@@ -1,0 +1,64 @@
+# Interactive data cropping tool.
+
+This function plots the input data \# and allows the user to select
+start and end times for cropping.
+
+## Usage
+
+``` r
+crop(X, sampling_rate = NULL, times = NULL, quiet = FALSE)
+```
+
+## Arguments
+
+- X:
+
+  A sensor list, vector or matrix. X can be regularly or irregularly
+  sampled data in any frame and unit.
+
+- sampling_rate:
+
+  The sampling rate of X in Hz. This is only needed if X is not a sensor
+  list. If X is regularly sampled, sampling_rate is one number.
+
+- times:
+
+  A vector of sampling times for X. This is only needed if X is not a
+  sensor list and X is not regularly sampled.
+
+- quiet:
+
+  If quiet is false, print to the screen
+
+## Value
+
+A list with 3 elements:
+
+- **Y:** A sensor list, vector or matrix containing the cropped data
+  segment. If the input is a sensor list, the output will also be. The
+  output has the same units, frame and sampling characteristics as the
+  input.
+
+- **times:** A vector of sampling times for Y. This is only returned if
+  X is irregularly sampled and X is not a sensor list. If X is a sensor
+  list, the sampling times are stored in the list.
+
+- **tcues:** tcues is a two-element vector containing the start and end
+  time cue in seconds of the data segment kept, i.e., tcues =
+  c(start_time, end_time).
+
+## Details
+
+Possible input combinations include: crop(X) if X is a sensor list,
+crop(X, sampling_rate) if X is a vector or matrix.
+
+## Examples
+
+``` r
+data <- beaked_whale
+Pc <- crop(data$P, quiet=TRUE) 
+
+
+Ydata <- Pc$data
+plot(-Ydata)
+```

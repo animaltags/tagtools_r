@@ -1,0 +1,32 @@
+# Decompose a rotation (or direction cosine) matrix
+
+This function is used to decompose a rotation (or direction cosine)
+matrix into Euler angles, pitch, roll, and heading.
+
+## Usage
+
+``` r
+rotmat2euler(Q)
+```
+
+## Arguments
+
+- Q:
+
+  is a 3x3 rotation matrix.
+
+## Value
+
+A 1x3 vector containing: prh=\[p,r,h\] where p is the pitch angle in
+radians, r is the roll angle in radians, and h is the heading or yaw
+angle in radians.
+
+## Examples
+
+``` r
+set <- matrix(c(0.6765458, 0.7227523, 0.1411200,
+0.3675912, -0.4975063, 0.7857252,
+0.6380928, -0.4797047, -0.6022632), nrow = 3, ncol = 3)
+rotmat2euler(set)
+#> [1] 0.1415926 2.2247779 0.8184074
+```

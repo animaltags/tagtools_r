@@ -1,0 +1,59 @@
+# Estimate scale factors and offsets
+
+This function is used to estimate scale factors and offsets for
+measurements from a triaxial field sensor. This function estimates the
+scale factor needed to make the magnitude of X close to the expected
+field strength. It then calls fix_offset_3d to correct any offset errors
+in X. This function does not try to optimize the results. See
+spherical_cal for a more powerful data-driven calibration method.
+
+## Usage
+
+``` r
+rough_cal_3d(X, fstr)
+```
+
+## Arguments
+
+- X:
+
+  A sensor structure or matrix containing measurements from a triaxial
+  field sensor such as an accelerometer or magnetometer. X can be in any
+  units and frame.
+
+- fstr:
+
+  The expected field strength at the measurement location in the same
+  units as X
+
+## Value
+
+A list with 2 elements:
+
+- **X:** A sensor structure or matrix containing the adjusted triaxial
+  sensor measurements. It is the same size and has the same sampling
+  rate and units as the input data. If the input is a sensor structure,
+  the output will be also.
+
+- **G:** A list of calibration information containing one field:
+  G\$poly, a 3x2 matrix. Rows correspond to X,Y,Z axes. with one column
+  for each of the X, Y, Z axes. The first column of G\$poly contains
+  scale factors and second column of G\$poly is the offset added to each
+  column of X after scaling.
+
+## Note
+
+This function requires a lot of data as it is looking for extreme values
+in each axis. A minimum data size of 1000 samples should be used. This
+function is only usable for field sensors. It will not work for
+gyroscope data.
+
+## Examples
+
+``` r
+plot(x = c(1:length(beaked_whale$M$data)), y = beaked_whale$M$data)
+
+rcal <- rough_cal_3d(beaked_whale$M$data, fstr = 38.2)
+cal <- list(x = c(1:length(rcal$X)), y = rcal$X)
+plot(cal)
+```
