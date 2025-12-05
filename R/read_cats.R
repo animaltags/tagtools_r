@@ -91,7 +91,7 @@ read_cats <- function(file_dir = NULL,
                                       # csv file names include depid and then
                                       # maybe an _ or other separator
                                       # and then maybe a number eg 001, 002
-                                      pattern = paste0( depid, '.*\\d*\\.csv$'), 
+                                      pattern = paste0( depid, '.*\\d+\\.csv$'), 
                                       full.names = TRUE))
     if (length(fname) == 0){
       # if there are no csv files in file_dir
