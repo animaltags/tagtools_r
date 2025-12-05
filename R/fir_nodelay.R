@@ -56,12 +56,8 @@ fir_nodelay <- function(x, n, fc, qual = "low", return_coefs = FALSE) {
     # filter the signal
     # ============================================================
     # apply filter to padded signal
-    y <- apply(x_pad, 
-               MARGIN = 2, 
-               FUN = gsignal::filter, 
-               filt = h, 
-               nrow = nrow(x_pad))
-    
+    y <- gsignal::filter(x_pad,
+                         filt = h)
     # account for filter offset (remove padding)
     y <- y[n - 1 + (1:nrow(x)), ]
     
