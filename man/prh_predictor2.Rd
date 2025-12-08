@@ -4,7 +4,7 @@
 \alias{prh_predictor2}
 \title{Predict the tag position on a diving animal from depth and acceleration data}
 \usage{
-prh_predictor2(P, A, sampling_rate = NULL, MAXD = 10)
+prh_predictor2(P, A, sampling_rate = NULL, MAXD = 10, interactive = TRUE)
 }
 \arguments{
 \item{P}{is a dive depth vector or sensor structure with units of m H2O.}
@@ -14,6 +14,8 @@ prh_predictor2(P, A, sampling_rate = NULL, MAXD = 10)
 \item{sampling_rate}{is the sampling rate of the sensor data in Hz (samples per second). This is only needed if neither A nor M are sensor structures.}
 
 \item{MAXD}{is the optional maximum depth of near-surface dives. The default value is 10 m. This is used to find contiguous surface intervals suitable for analysis.}
+
+\item{interactive}{logical; run the interactive graphic interface that allows the user to adjust the time windows used for PRH estimation? Default: TRUE}
 }
 \value{
 PRH, a data frame with columns \code{cue} \code{p0}, \code{r0}, \code{h0}, and \code{q}

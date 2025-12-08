@@ -44,7 +44,7 @@ If present, this file will be used to determine sensor sampling rates; if not, s
 
 \item{device_url}{String containing URL of tag manufacturer; defaults to "https://cats.is/" and is stored in the info structure of the output NetCDF file.}
 
-\item{dephist_device_tzone}{String indicating the time zone in which the tag was deployed. Obtained from \code{txt_fname} or else defaults to NULL. Stored in the info structure of the output NetCDF file. For CATS tags this is the local offset from UTC time in hours.}
+\item{dephist_device_tzone}{String indicating the time zone in which the tag was deployed. Obtained by default from \code{txt_fname} or else defaults to NULL. Stored in the info structure of the output NetCDF file. For CATS tags this is the local offset from UTC time in hours.}
 
 \item{animal_species_common}{Common name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.}
 

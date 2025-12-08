@@ -4,7 +4,14 @@
 \alias{prh_predictor1}
 \title{Predict the tag position on a diving animal from depth and acceleration data}
 \usage{
-prh_predictor1(P, A, sampling_rate = NULL, TH = 100, DIR = "descent")
+prh_predictor1(
+  P,
+  A,
+  sampling_rate = NULL,
+  TH = 100,
+  DIR = "descent",
+  interactive = TRUE
+)
 }
 \arguments{
 \item{P}{is a dive depth vector or sensor structure with units of m H2O.}
@@ -16,6 +23,8 @@ prh_predictor1(P, A, sampling_rate = NULL, TH = 100, DIR = "descent")
 \item{TH}{is an optional minimum dive depth threshold (default is 100m). Only the descents at the start of dives deeper than TH will be analysed (and the ascents at the end of dives deeper than TH if ALL is true).}
 
 \item{DIR}{is an optional dive direction constraint. The default (DIR = 'descent') is to only analyse descents as these tend to give better results. But if DIR = 'both', both descents and ascents are analysed.}
+
+\item{interactive}{logical; run the interactive graphic interface that allows the user to adjust the time windows used for PRH estimation? Default: TRUE}
 }
 \value{
 PRH, a data frame with columns \code{cue} \code{p0}, \code{r0}, \code{h0}, and \code{q}
