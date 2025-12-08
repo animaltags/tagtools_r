@@ -26,5 +26,5 @@ norm2 <- function(X) {
       v <- sqrt(sum(X^2))
     }
   }
-  return(v)
+  return(matrix(v, ncol = 1))
 }
