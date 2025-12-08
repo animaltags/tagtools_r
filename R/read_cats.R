@@ -15,7 +15,7 @@
 #' @param device_model_name String containing the model of the CATS tag used for data collection, for example "CATS Cam." Obtained from \code{txt_fname} or else defaults to NULL. This information is stored in the info structure of the output NetCDF file.
 #' @param device_model_version String; CATS tag version. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.
 #' @param device_url String containing URL of tag manufacturer; defaults to "https://cats.is/" and is stored in the info structure of the output NetCDF file.
-#' @param dephist_device_tzone String indicating the time zone in which the tag was deployed. Obtained from \code{txt_fname} or else defaults to NULL. Stored in the info structure of the output NetCDF file. For CATS tags this is the local offset from UTC time in hours.
+#' @param dephist_device_tzone String indicating the time zone in which the tag was deployed. Obtained by default from \code{txt_fname} or else defaults to NULL. Stored in the info structure of the output NetCDF file. For CATS tags this is the local offset from UTC time in hours.
 #' @param animal_species_common Common name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.
 #' @param animal_species_science Scientific name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.
 

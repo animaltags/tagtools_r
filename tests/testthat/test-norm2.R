@@ -1,7 +1,7 @@
 sample <- matrix(c(1, -0.9, 0.16, 0.85, -2, 0.26, 0.53, -0.79, -0.743),
                  byrow = TRUE, nrow = 3, ncol = 3
 )
-set <- c(1.354843164, 2.188629708, 1.207082847)
+set <- matrix(c(1.354843164, 2.188629708, 1.207082847), ncol = 1)
 
 test_that("function works", {
   expect_equal(norm2(sample),set)
