@@ -106,6 +106,16 @@ read_cats <- function(file_dir = NULL,
                                       pattern = paste0( depid, '.*\\d+\\.csv$'), 
                                       full.names = TRUE))
     if (length(fname) == 0){
+      # for the case where there's a single data file
+      fname <- normalizePath(list.files(path = file_dir, 
+                                        # csv file names include depid and then
+                                        # maybe an _ or other separator
+                                        # and then maybe a number eg 001, 002
+                                        pattern = paste0( depid, '.csv$'), 
+                                        full.names = TRUE))
+      fname[grepl(pattern = "_gps.csv$", fname)] <- NULL
+    }
+    if (length(fname) == 0){
       # if there are no csv files in file_dir
       stop(paste0("No files found in folder: ", file_dir, "."))
     }
@@ -282,7 +292,8 @@ read_cats <- function(file_dir = NULL,
         cols <- grep(pattern = sampling_rates$sensor_names[k], names(V), fixed = TRUE)
       }
       save_sens_struct(V[, cols], 
-                       depid, 
+                       depid,
+                       nc_file,
                        sampling_rate = sampling_rates[k, "fs"],
                        df = sampling_rates[k, "df"],
                        fname,
@@ -297,8 +308,7 @@ read_cats <- function(file_dir = NULL,
 } # end of read_cats
 
 # HELPER FUNCTION to save CATS sensor structure to nc file
-save_sens_struct <- function(X, depid, sampling_rate, df = 1, fname, type, name, description = NULL, naxes) {
-  nc_file <- paste(depid, "_raw.nc", sep = "")
+save_sens_struct <- function(X, depid, nc_file, sampling_rate, df = 1, fname, type, name, description = NULL, naxes) {
   if (is.null(names(X)) & naxes == 1){
     # if there is only one col it becomes a nameless vector
     # which causes trouble if we want to use the colnames for ordering the Acc Mag etc
