@@ -10,6 +10,7 @@ read_cats(
   depid,
   txt_fname = NULL,
   nc_dir = getwd(),
+  nc_fname = paste(depid, "_raw.nc", sep = ""),
   device_serial = NULL,
   device_model_name = NULL,
   device_model_version = NULL,
@@ -33,6 +34,8 @@ If present, this file will be used to determine sensor sampling rates; if not, s
 
 \item{nc_dir}{String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to the current working directory.}
 
+\item{nc_fname}{String containing the file name to use for the output netCDF file. Defaults to "(depid)_raw.nc" - for example, "mn12_186a_raw.nc"}
+
 \item{device_serial}{String containing the serial number of the CATS tag. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.}
 
 \item{device_model_name}{String containing the model of the CATS tag used for data collection, for example "CATS Cam." Obtained from \code{txt_fname} or else defaults to NULL. This information is stored in the info structure of the output NetCDF file.}
@@ -48,7 +51,7 @@ If present, this file will be used to determine sensor sampling rates; if not, s
 \item{animal_species_science}{Scientific name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.}
 }
 \value{
-A string (constructed by: '\code{depid}_raw.nc'; for example, 'mn12_186a_raw.nc') containing the file name of the netCDF (.nc) file in which the output has been saved. This function
+A string containing the file name of the netCDF (.nc) file in which the output has been saved. This function
 generates a netCDF file in the current working directory containing
 		the tag data variables, including:
 		\itemize{
@@ -76,6 +79,6 @@ If not, further data-based bench calibration of the device may be needed to dete
 \examples{
 \dontrun{
 nc_filename <- read_cats("my_cats_file.csv", "my_cats_deployment_name")
-load_nc("my_cats_deployment_name_raw.nc")
+load_nc(nc_filename)
 }
 }

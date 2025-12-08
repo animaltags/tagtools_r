@@ -10,6 +10,7 @@
 #' @param txt_fname Name of the .txt file with metadata about the CATS deployment. If not input, the function will try to construct it from file_dir and depid (like \code{file.path(file_dir, paste0(depid, ".txt"))}). 
 #' If present, this file will be used to determine sensor sampling rates; if not, sampling rates will be guessed based on timestamps in the csv file.
 #' @param nc_dir String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to the current working directory.
+#' @param nc_fname String containing the file name to use for the output netCDF file. Defaults to "(depid)_raw.nc" - for example, "mn12_186a_raw.nc"
 #' @param device_serial String containing the serial number of the CATS tag. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.
 #' @param device_model_name String containing the model of the CATS tag used for data collection, for example "CATS Cam." Obtained from \code{txt_fname} or else defaults to NULL. This information is stored in the info structure of the output NetCDF file.
 #' @param device_model_version String; CATS tag version. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.
@@ -19,7 +20,7 @@
 #' @param animal_species_science Scientific name of species on which tag was deployed. Defaults to "unknonwn" and is stored in the info structure of the output NetCDF file.
 
 
-#' @return A string (constructed by: '\code{depid}_raw.nc'; for example, 'mn12_186a_raw.nc') containing the file name of the netCDF (.nc) file in which the output has been saved. This function
+#' @return A string containing the file name of the netCDF (.nc) file in which the output has been saved. This function
 #' generates a netCDF file in the current working directory containing
 #' 		the tag data variables, including:
 #' 		\itemize{
@@ -41,13 +42,14 @@
 #' @export
 #' @examples \dontrun{
 #' nc_filename <- read_cats("my_cats_file.csv", "my_cats_deployment_name")
-#' load_nc("my_cats_deployment_name_raw.nc")
+#' load_nc(nc_filename)
 #' }
 read_cats <- function(file_dir = NULL, 
                       fname = NULL, 
                       depid, 
                       txt_fname = NULL,
                       nc_dir = getwd(),
+                      nc_fname = paste(depid, "_raw.nc", sep = ""),
                       device_serial = NULL,
                       device_model_name = NULL,
                       device_model_version = NULL,
@@ -58,6 +60,16 @@ read_cats <- function(file_dir = NULL,
   # Input checking
   if (missing(depid)){
     stop("required input argument 'depid' is missing.")
+  }
+  
+  # make sure there is not a / or \ or \\ at end of nc_dir
+  nc_dir <- gsub(pattern = "[\\/*]$", replacement = "", x = nc_dir)
+  # construct file name with path for output nc file
+  nc_file <- file.path(nc_dir, nc_fname)
+  
+  if (file.exists(nc_file)){
+    # if the file already exists, stop
+    stop(paste("netCDF file", nc_file, "already exists. Delete it or choose a new file name."))
   }
   
   if (!is.null(file_dir)){
@@ -220,9 +232,6 @@ read_cats <- function(file_dir = NULL,
     # this might include sensor names read_cats can't process (yet)
     info$sensors_list <- paste0(sampling_rates$sensor_names, collapse = ",")
   }
-
-  nc_file <- file.path(nc_dir, 
-                       paste(depid, "_raw.nc", sep = ""))
 
   
   # time stuff if we have to guess (if not gotten from txt file)
