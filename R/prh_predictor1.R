@@ -122,6 +122,9 @@ prh_predictor1 <- function(P, A,
     PRH[k, ] <- matrix(c(mean(S[k, 1:2]), prh), nrow = 1)
   }
   
+  PRH <- data.frame(PRH)
+  names(PRH) <- c("Seconds", "p0", "r0", "h0", "Quality")
+  
   if (!interactive){
     return(PRH)
   }else{

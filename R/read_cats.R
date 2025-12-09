@@ -315,6 +315,11 @@ save_sens_struct <- function(X, depid, nc_file, sampling_rate, df = 1, fname, ty
     X = data.frame(X)
     names(X) <- type
   }
+  
+  if (ncol(X) != naxes){
+    stop(paste("Mismatch between number of columns in data and expected number for sensor: ", type))
+  }
+  
   cols <- grep(type, names(X))
   if (length(cols) > 0) {
     if (length(cols) < naxes) {
@@ -349,8 +354,10 @@ save_sens_struct <- function(X, depid, nc_file, sampling_rate, df = 1, fname, ty
     
     if (naxes == 3){
       # for triaxial sensors need to change from NED to NEU orientation
+      # and also flips the sign of the y axis as well, to accommodate the 
+      # tagtools sign convention for direction of roll
       # (DELETE THIS PART or make it an input option dependent on tag type if ever moving this fn outside of read_cats!!)
-      X <- X %*% matrix(c(1,0,0, 0,1,0, 0,0,-1), ncol = 3, byrow = TRUE)
+      X <- X %*% matrix(c(1,0,0, 0,-1,0, 0,0,-1), ncol = 3, byrow = TRUE)
     }
     
     dimnames(X) <- NULL

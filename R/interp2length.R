@@ -93,10 +93,11 @@ interp2length <- function(X, Z, fs_in = NULL, fs_out = NULL, n_out = NULL) {
 
 check_size <- function(y, n_out) {
   if (nrow(y) < n_out) {
-    warning(paste('Data size mismatch: data is shorter than expected by ', n_out - nrow(y), ' rows.'))
+    n_rep <- n_out - nrow(y)
+    warning(paste('Data size mismatch: data is shorter than expected by ', n_rep, ' rows.'))
     y <- rbind(y,
-               matrix(data = y[nrow(y),],
-                      nrow = n_out - nrow(y),
+               matrix(data = rep(y[nrow(y),], n_rep),
+                      nrow = n_rep,
                       byrow = TRUE))
   }
   if (nrow(y) > n_out) {
