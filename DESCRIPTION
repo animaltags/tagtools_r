@@ -38,7 +38,6 @@ Imports:
     ggplot2,
     graphics,
     gsignal,
-    latex2exp,
     lubridate,
     ncdf4,
     plotly,

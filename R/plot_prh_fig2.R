@@ -42,7 +42,7 @@ plot_prh_fig2 <- function(A, sampling_rate, seg, prh, prompt) {
     xlim = xl2, ylim = c(YEXT * c(-1, 1)),
     xaxt = "n",
     main = prompt,
-    xlab = "", ylab = latex2exp::TeX("Tag frame A, m/s^2")
+    xlab = "", ylab = "Tag frame A, m/s/s"
   )
   # add x axis with no tick labels
   graphics::axis(side = 1, labels = FALSE)
@@ -76,7 +76,7 @@ plot_prh_fig2 <- function(A, sampling_rate, seg, prh, prompt) {
   graphics::plot(c(1:nrow(Aw)) / sampling_rate, Aw[, 1] * 9.81,
     type = "l", col = hex_cols[1],
     xlim = xl2, ylim = c(YEXT * c(-1, 1)),
-    xlab = "", ylab = latex2exp::TeX("Animal frame A, m/s^2"),
+    xlab = "", ylab = "Animal frame A, m/s/s",
     main = msg
   )
   for (col in c(2:3)) {

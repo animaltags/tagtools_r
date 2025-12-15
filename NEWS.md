@@ -1,3 +1,34 @@
+# tagtools 0.3.0
+This release removes a dependency, speeds up filtering and decimation via C++, fixes several bugs.
+
+## Breaking changes
+
+* `m_dist()` documentation and inputs have undergone several corrections, including re-naming inputs for consistency and removing some inputs that were never actually used. If you used the function before with named inputs, it is likely you will need to update code to the new input argument names.
+
+## New features
+
+* Dependency on latex2exp package has been removed, as requested by CRAN Team.
+
+* Updates to `read_cats()` now allow reading deployments with multiple csv files
+
+* Convolution in  `dec_dc()` is now implemented via RCppArmadillo, which speeds it up a LOT.
+
+* Dependence on the package signal has been replaced by gsignal, which should be faster for some important cases. 
+
+* interactivity in `prh_predictor1()` and `prh_predictor2()` is now optional (toggle via a new input argument). 
+
+## Bug fixes
+
+* Ensure output of `norm2()` is a column vector, not a neither-row-nor-column vector
+
+* Move in-file helper functions outside curly braces in `o2p()` and `read_cats()` to avert function not found errors
+
+* Correct documentation for `m_dist()`
+
+* Update `save_nc()` to accept dots input
+
+* Allow `add_nc()` to work correctly even if sensor data stream name is not input 
+
 # tagtools 0.2.0
 
 This release adds several new features and fixes several bugs.
