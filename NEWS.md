@@ -1,33 +1,43 @@
 # tagtools 0.3.0
-This release removes a dependency, speeds up filtering and decimation via C++, fixes several bugs.
+This release removes a dependency, speeds up filtering and decimation via C++, 
+and fixes several bugs.
 
 ## Breaking changes
 
-* `m_dist()` documentation and inputs have undergone several corrections, including re-naming inputs for consistency and removing some inputs that were never actually used. If you used the function before with named inputs, it is likely you will need to update code to the new input argument names.
+* `m_dist()` documentation clarified and input names changed to match rest of
+   `tagtools` (all now snake case); unused inputs `expStart` and `expEnd` 
+   removed. To update old code, change input names: `smoothDur` to `smooth_dur`,
+   `cumSum` to `cum_sum`, and `baselineStart`, `baselineEnd`, and `BL_COV` to 
+   `baseline_start`, `baseline_end`, and `bl_cov`.
 
 ## New features
 
-* Dependency on latex2exp package has been removed, as requested by CRAN Team.
+* read_cats()` now can now read deployments with multiple csv files.
 
-* Updates to `read_cats()` now allow reading deployments with multiple csv files
+* `dec_dc()` now implements convolution via RCppArmadillo, which speeds it up.
 
-* Convolution in  `dec_dc()` is now implemented via RCppArmadillo, which speeds it up a LOT.
+* `gsignal` package dependency replaces `signal`, for speed and flexibility. 
 
-* Dependence on the package signal has been replaced by gsignal, which should be faster for some important cases. 
+* `prh_predictor1()` and `prh_predictor2()` interactivity is now optional,
+   toggled via a new input argument. 
 
-* interactivity in `prh_predictor1()` and `prh_predictor2()` is now optional (toggle via a new input argument). 
+## Minor improvements and fixes
 
-## Bug fixes
+* `latex2exp` package dependency removed, as requested by CRAN Team.
 
-* Ensure output of `norm2()` is a column vector, not a neither-row-nor-column vector
+* `m_dist()` documentation clarified and input names changed to match rest of
+   `tagtools` (all now snake case); unused inputs `expStart` and `expEnd` 
+   removed. To update old code, change input names: `smoothDur` to `smooth_dur`,
+   `cumSum` to `cum_sum`, and `baselineStart`, `baselineEnd`, and `BL_COV` to 
+   `baseline_start`, `baseline_end`, and `bl_cov`.
+   
+* `norm2()` checks that output is a column vector (1-column matrix).
 
-* Move in-file helper functions outside curly braces in `o2p()` and `read_cats()` to avert function not found errors
+* `o2p()` and `read_cats()` helper functions moved outside function definitions.
 
-* Correct documentation for `m_dist()`
+* `save_nc()` now accepts dots input.
 
-* Update `save_nc()` to accept dots input
-
-* Allow `add_nc()` to work correctly even if sensor data stream name is not input 
+* `add_nc()` works correctly even if sensor data stream name `vname` not input. 
 
 # tagtools 0.2.0
 
