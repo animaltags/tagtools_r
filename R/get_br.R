@@ -12,7 +12,7 @@
 #' @param Ma is the triaxial magnetometer data in the animal frame. Ma can be a sensor structure or a three-column matrix. The sampling rate of Ma must be at least 2x the highest stroke rate of the animal. The magnetometer data can be in any units as long as all three	columns have the same unit.
 #' @param sampling_rate is the sampling rate of Ma in Hz, and is only needed if Ma is not a sensor structure.
 #' @param fh is the high-pass filter frequency in Hz to use to separate orientation changes from locomotory strokes. It should be about half of the dominant stroke frequency. Use \code{dsf()} to estimate the dominant stroke frequency.
-#' @param thr is an optional minimum field strength threshold to prevent errors in the computation. Errors arise if the plane of rotations is nearly perpendicular to the local magnetic field vector. To avoid these, the body rotation signal is replaced with NaN if the field strength in the locomotory plane drops below thr fraction of the total field strength. The default value is 0.2 (i.e., the locomotory plane must have at least 20% of the total field strength to compute the body rotations). 
+#' @param thr is an optional minimum field strength threshold to prevent errors in the computation. Errors arise if the plane of rotations is nearly perpendicular to the local magnetic field vector. To avoid these, the body rotation signal is replaced with NaN if the field strength in the locomotory plane drops below thr fraction of the total field strength. The default value is 0.2 (i.e., the locomotory plane must have at least 20 percent of the total field strength to compute the body rotations). 
 #' @param axis is an optional indicator that the locomotion is in the x-y plane. The default is \code{axis = 'x'}, that is, the function expects the locomotion to be in the x-z plane (e.g., cetacean swimming) by default. To compute body rotations in the x-y plane (e.g., for pinnipeds and many fish), use \code{ax = 'y'}.                                                                                                                            
 #' @return A one-column matrix containing the body rotation signal in radians. It has the same sampling rate and number of samples as Ma.
 #' @export
@@ -20,12 +20,11 @@
 #' ph <- get_br(harbor_seal$M, fh = 0.06, axis = 'y')
 #' # choose an angle threshold, e.g., thr = 2 degrees, and find strokes in ph
 #' thr <- 2 / 180 * pi
-#' zc_result <- zero_crossings(ph, thr, harbor_seal$M$samping_rate / 0.2)
+#' zc_result <- zero_crossings(ph, thr, harbor_seal$M$sampling_rate / 0.2)
 #' # positive-going half strokes
-#' ps <- zc_result$K(zc_result$s>0) / harbor_seal$M$samping_rate
+#' ps <- zc_result$K[zc_result$s>0] / harbor_seal$M$sampling_rate
 #' # negative-going half strokes	
-#' ns <- zc_result$K(zc_result$s<0) / harbor_seal$M$samping_rate
-#' 
+#' ns <- zc_result$K[zc_result$s<0] / harbor_seal$M$sampling_rate
 
 get_br <- function(Ma, sampling_rate, fh, thr = 0.2, axis = 'x') {
   # if Ma is a sensor data structure
@@ -74,5 +73,5 @@ get_br <- function(Ma, sampling_rate, fh, thr = 0.2, axis = 'x') {
   # blank out rotations when the planar field is too small
   ph[m2 < (thr * mfs^2)] <- NA
   
-  return(ph)
+  return(matrix(ph, ncol = 1))
 }
