@@ -34,6 +34,8 @@
 #' \item \code{dest_dur}  The duration in seconds of destination phase
 #' \item \code{to_dur}  The duration in seconds of to phase
 #' \item \code{from_dur}  The duration in seconds of from phase
+#' \item \code{to_rate}  The ascent (or descent) rate in to phase, in (units of P) per sec
+#' \item \code{from_rate}  The ascent (or descent) rate in from phase, in (units of P) per sec
 #' \item \code{mean_angle}  If angular=TRUE and X is input, the mean angle for the entire excursion. Values for each phase are also provided in columns \code{mean_to_angle}, \code{mean_dest_angle}, and \code{mean_from_angle}.
 #' \item \code{angle_var}  If angular=TRUE and X is input, the angular variance for the entire excursion. Values for each phase are also provided individually in columns \code{to_angle_var}, \code{dest_angle_var}, and \code{from_angle_var}.
 #' \item \code{mean_aux}  If angular=FALSE and X is input, the mean value of X for the entire excursion. Values for each phase are also provided in columns \code{mean_to_aux}, \code{mean_dest_aux}, and \code{mean_from_aux}.
@@ -93,7 +95,7 @@ dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
   for (d in 1:nrow(dive_cues)) { # loop over dives
     z <- P[di[d, 1]:di[d, 2]]
     Y$max[d] <- max(z, na.rm = TRUE)
-    pt <- range(which(z > prop * max(z)), na.rm = TRUE)
+    pt <- range(which(z > prop * max(z, na.rm = TRUE)), na.rm = TRUE)
     Y$dur[d] <- dive_cues[d, 2] - dive_cues[d, 1]
     Y$dest_st[d] <- pt[1] / fs + dive_cues[d, 1]
     Y$dest_et[d] <- pt[2] / fs + dive_cues[d, 1]
