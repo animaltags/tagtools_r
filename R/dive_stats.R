@@ -93,17 +93,29 @@ dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
   Y <- data.frame(num = c(1:nrow(dive_cues)))
 
   for (d in 1:nrow(dive_cues)) { # loop over dives
-    z <- P[di[d, 1]:di[d, 2]]
-    Y$max[d] <- max(z, na.rm = TRUE)
-    pt <- range(which(z > prop * max(z, na.rm = TRUE)), na.rm = TRUE)
+    z <- P[max(c(round(fs*1), di[d, 1]), na.rm = TRUE) : min(c(di[d, 2], round(fs*length(P))), na.rm = TRUE)]
+    Y$max[d] <- max(z, na.rm = na.rm)
+    pt <- range(which(z > prop * max(z, na.rm = na.rm)), na.rm = na.rm)
     Y$dur[d] <- dive_cues[d, 2] - dive_cues[d, 1]
     Y$dest_st[d] <- pt[1] / fs + dive_cues[d, 1]
     Y$dest_et[d] <- pt[2] / fs + dive_cues[d, 1]
     Y$dest_dur[d] <- Y$dest_et[d] - Y$dest_st[d]
-    Y$to_dur[d] <- pt[1] / fs
+    # if using findall = TRUE then to_/from_dur could be 0 (if dive start/end is during bottom)
+    # should be missing (unknown), never 0
+    # if start time dive_cues[d,1] is NA, then to_dur and to_rate should be too.
+    # if end time dive_cues[d, 2] is NA, then so should from_dur and from_rate be.
+    Y$to_dur[d] <- ifelse(is.na(dive_cues[d,1]),
+                          NA,
+                          pt[1] / fs)
     Y$to_rate[d] <- (z[pt[1]] - z[1]) / Y$to_dur[d]
     Y$from_dur[d] <- (1 / fs) * (length(z) - pt[2])
-    Y$from_rate[d] <- (utils::tail(z, 1) - z[pt[2]]) / Y$from_dur[d]
+    Y$from_dur[d] <- ifelse(Y$from_dur[d] == 0 |
+                              is.na(dive_cues[d,2]), 
+                            NA,
+                            Y$from_dur[d])
+    Y$from_rate[d] <- ifelse(is.na(dive_cues[d, 2]),
+                             NA,
+                             (utils::tail(z, 1) - z[pt[2]]) / Y$from_dur[d])
     if (!is.null(X)) {
       if (xfs != fs) {
         dix <- round(dive_cues * xfs)
@@ -113,13 +125,13 @@ dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
         ptx <- pt
       }
       if (angular) { # angular data
-        a <- X[dix[d, 1]:dix[d, 2]]
+        a <- X[max(c(round(xfs*1), dix[d, 1]), na.rm = TRUE) : min(c(dix[d, 2], round(xfs * length(X))), na.rm = TRUE)]
         at <- a[c(1:ptx[1])]
         af <- a[c(ptx[2]:length(a))]
         ad <- a[c(ptx[1]:ptx[2])]
         if (na.rm) {
           # CircStats functions return NA if any NAs present
-          # (no stats::na.omit input avail)
+          # (no na.omit=TRUE input avail)
           a <- stats::na.omit(a)
           at <- stats::na.omit(at)
           af <- stats::na.omit(af)
@@ -135,35 +147,50 @@ dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
         Y$from_angle_var[d] <- CircStats::circ.disp(af)$var
       } else {
         # not angular data
-        a <- X[dix[d, 1]:dix[d, 2]]
+        a <- X[max(c(round(xfs*1), dix[d, 1]), na.rm = TRUE) : min(c(dix[d, 2], round(xfs * length(X))), na.rm = TRUE)]
         at <- a[c(1:ptx[1])]
         af <- a[c(ptx[2]:length(a))]
         ad <- a[c(ptx[1]:ptx[2])]
-        Y$mean_aux[d] <- mean(a, na.rm = TRUE)
-        Y$aux_sd[d] <- stats::sd(a, na.rm = TRUE)
-        Y$mean_to_aux[d] <- mean(at, na.rm = TRUE)
-        Y$mean_dest_aux[d] <- mean(ad, na.rm = TRUE)
-        Y$mean_from_aux[d] <- mean(af, na.rm = TRUE)
-        Y$to_aux_sd[d] <- stats::sd(at, na.rm = TRUE)
-        Y$dest_aux_sd[d] <- stats::sd(ad, na.rm = TRUE)
-        Y$from_aux_sd[d] <- stats::sd(af, na.rm = TRUE)
+        Y$mean_aux[d] <- mean(a, na.rm = na.rm)
+        Y$aux_sd[d] <- stats::sd(a, na.rm = na.rm)
+        Y$mean_to_aux[d] <- mean(at, na.rm = na.rm)
+        Y$mean_dest_aux[d] <- mean(ad, na.rm = na.rm)
+        Y$mean_from_aux[d] <- mean(af, na.rm = na.rm)
+        Y$to_aux_sd[d] <- stats::sd(at, na.rm = na.rm)
+        Y$dest_aux_sd[d] <- stats::sd(ad, na.rm = na.rm)
+        Y$from_aux_sd[d] <- stats::sd(af, na.rm = na.rm)
       }
     } # end processing X
   } # end loop over dives
-
-  # change output column names if needed
-  if (!(X_name %in% c("angle", "aux"))) {
-    names(Y) <- gsub(pattern = "angle", replacement = X_name, x = names(Y))
-    names(Y) <- gsub(pattern = "aux", replacement = X_name, x = names(Y))
-  }
 
   # add in dive start/end times from input dive_cues
   # and start-end times of each phase
   Y$st <- dive_cues[, 1]
   Y$et <- dive_cues[, 2]
-
+  
+  # ensure all "to" values are NA if start time is NA
+  # and all "from" values are NA if end time is NA
+  # and all overall mean/sd are NA if either st/et is NA
+  Y <- dplyr::mutate(Y, 
+                     dplyr::across(dplyr::contains("to_"),
+                                   function(x) ifelse(is.na(st), NA, x)),
+                     dplyr::across(dplyr::contains("from_"),
+                                   function(x) ifelse(is.na(et), NA, x)),
+                     dplyr::across(dplyr::any_of(c("mean_aux", "mean_angle",
+                                                 "aux_sd", "angle_sd")),
+                                   function(x) ifelse(is.na(st) | is.na(et),
+                                                      NA,
+                                                      x)))
+  
+  # change output column names if needed
+  if (!(X_name %in% c("angle", "aux"))) {
+    names(Y) <- gsub(pattern = "angle", replacement = X_name, x = names(Y))
+    names(Y) <- gsub(pattern = "aux", replacement = X_name, x = names(Y))
+  }
+  
   Y <- dplyr::select(
-    Y, num, max, st, et, dur,
+    Y, 
+    num, max, st, et, dur,
     dest_st, dest_et, dest_dur,
     to_dur, from_dur,
     dplyr::everything()
