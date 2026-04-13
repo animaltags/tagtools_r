@@ -1,6 +1,6 @@
 #' Predict the tag position on a diving animal from depth and acceleration data
 #'
-#' Predict the tag position on a diving animal parametrized by p0, r0, and
+#' Predict the tag position on a diving animal parameterized by p0, r0, and
 #' h0, the canonical angles between the principal axes of the tag and the animal.
 #' The tag orientation on the animal can change with time and this function
 #' provides a way to estimate the orientation at the start and end of each suitable

@@ -38,18 +38,20 @@ odba <- function(A, sampling_rate = NULL, fh = NULL, method = "fir", n = NULL) {
       }
       n <- 2 * floor(n / 2) + 1 # make sure n is odd
       nz <- floor(n / 2)
-      h <- rbind(
-        matrix(0, nrow = nz, ncol = 1),
-        matrix(1, nrow = 1, ncol = 1),
-        matrix(0, nrow = nz, ncol = 1)
-      ) -
-        matrix(1, nrow = n, ncol = 1) / n
+      h <- c(
+        rep(0, times = nz),
+        rep(1, times = 1),
+        rep(0, times = nz)
+      ) - rep(1/n, times = n)
       # filter A with h
-      Ah <- gsignal::filter(h, 1, x = rbind(
-        matrix(0, nrow = nz, ncol = ncol(A)),
-        A,
-        matrix(0, nrow = nz, ncol = ncol(A))
-      ))
+      Ah <- 
+        gsignal::filter(filt = h,
+                        a = 1,
+                        x = rbind(
+                          matrix(0, nrow = nz, ncol = ncol(A)),
+                          A,
+                          matrix(0, nrow = nz, ncol = ncol(A))
+                        ))
       Ah <- matrix(Ah, byrow = FALSE, ncol = 3)
       Ah <- Ah[n - 1 + c(1:nrow(A)), ]
       if (method == "vedba") {

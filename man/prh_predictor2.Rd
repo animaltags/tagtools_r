@@ -24,7 +24,7 @@ with a row for each dive edge analysed. \code{cue} is the time in second-since-t
 \code{q} is the quality indicator with a low value (near 0, e.g., <0.05) indicating that the data fit more consistently with the assumptions of the method.
 }
 \description{
-Predict the tag position on a diving animal parametrized by p0, r0, and
+Predict the tag position on a diving animal parameterized by p0, r0, and
 h0, the canonical angles between the principal axes of the tag and the animal.
 The tag orientation on the animal can change with time and this function
 provides a way to estimate the orientation at the start and end of each suitable
