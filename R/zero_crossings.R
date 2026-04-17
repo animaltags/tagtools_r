@@ -76,14 +76,18 @@ zero_crossings <- function(x, TH, Tmax = NULL) {
   }
 
   K <- K[(1:cnt), ]
+  if (!is.matrix(K)){ K <- matrix(K, ncol = 3, byrow = TRUE) }
   if (!is.null(Tmax)) {
     K <- K[which(K[, 2] - K[, 1] <= Tmax), ]
+    if (!is.matrix(K)){ K <- matrix(K, ncol = 3, byrow = TRUE) }
   }
 
   s <- K[, 3]
   KK <- K[, 1:2]
+  if (!is.matrix(KK)){ KK <- matrix(K, ncol = 2, byrow = TRUE) }
   X <- matrix(c(x[K[, 1]], x[K[, 2]]), byrow = FALSE, ncol = 2)
   K <- (X[, 2] * K[, 1] - X[, 1] * K[, 2]) / (X[, 2] - X[, 1])
+  if (!is.matrix(K)){ K <- matrix(K, ncol = 3, byrow = TRUE) }
   return(list(K = K, s = s, KK = KK))
 }
 
