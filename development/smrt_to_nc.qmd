@@ -1,0 +1,46 @@
+---
+title: "Read in data from SMRT tag deployment and save calibrated data in netCDF format"
+format: typst
+editor: source
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tagtools)
+# AARGH it has a wav object classlibrary(tuneR) # for reading wav files - make it a tagtools dependency or suggestion if it works well.
+library(wav)
+```
+
+```{r}
+#| label: paths-metadata
+
+# note: functions in the smrt_r folder could/will be added to the R tagtools package when ready.
+data_dir <- "/Volumes/Boomin/Zica-20191117-195993"
+depid <- "Zica-20191117-195993"
+sm_dir <- paste0(datapath, "/SMFiles")
+gps_file <- paste0(datapath, "/WCfiles/DAP580/Zica-20191117-195993-19U1753-FastGPS.csv")
+archive_file <- paste0(datapath, "/WCfiles/DAP580/Zica-20191117-195993-19U1753-Archive")
+tz <- "UTC"
+species <- "zc"
+
+info <- make_info(depid = depid, tagtype = "SMRT", species = species, owner = "gss")
+info$project_name <- "Freakin Beakin"
+info$dephist_device_tzone = "UTC"
+
+mag_strength = 45.2689; 
+# expected field strength in uT 
+# obtained from https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml#igrfwmm
+# you can also get heading declination/inclination from this site too
+```
+
+```{r}
+# read_smrt() will call the three main functions to read the different pieces of SMRT data:
+# read_smrt_gps() for GPS data
+# read_smrt_archive() for data from WC board
+# read_smrt_sm() for data from SM board
+```
+
+
+
+

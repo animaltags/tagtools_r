@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Stacy DeRuiter \email{stacy.deruiter@calvin.edu} (\href{https://orcid.org/0000-0002-0571-0306}{ORCID}) [copyright holder]
   \item Mark Johnson [copyright holder]
   \item David Sweeney
   \item Ye Joo McNamara-Oh

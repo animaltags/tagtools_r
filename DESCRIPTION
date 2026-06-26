@@ -52,12 +52,14 @@ Imports:
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    wav,
+    xml2
 URL: https://animaltags.org, https://animaltags.github.io/tagtools_r/index.html
 BugReports: https://github.com/animaltags/tagtools_r/issues
 Config/Needs/website: rmarkdown
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
