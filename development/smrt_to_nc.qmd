@@ -42,5 +42,7 @@ mag_strength = 45.2689;
 ```
 
 
+# Notes: Expected DTAG problems if using these R SMRT tools with DTAGs
 
-
+- d3builtincal.m is not implemented in R, so functions to read swv files don't call it and don't make this correction. get_sm_config() also does not look for a CAL structure within the xml files. These would need to be added for d3 compatibility, I think. The "builtincal" m-file says, "This is called by d3parseswv and d3getswv to apply calibrations to the temperature and pressure channels for tags with I2C pressure sensors."
+- cuetabs and file name lists ARE NOT stored in a temp directory. The would need to be regenerated each time they are used...or alternatively stored in SA (sound archive) sensor data list or in the deployment level info list, within an nc file!

@@ -43,6 +43,23 @@ sm_channels <- function(ch = NULL,
     }
     sensor_defs <- sensor_defs[sensor_defs$ch_nums %in% sm_sensor_config$unique_channels,]
   }
+  
+  # if a list of names is input for ch
+  # (RARE - these are complicated/detailed names...)
+  if ("character" %in% class(ch)){
+    sensor_defs <- sensor_defs[sensor_defs$ch_names %in% ch,]
+    orphans <- ch[!(ch %in% sensor_defs$ch_names)]
+    warning(paste0("Sensor names from ch not found in database: ", paste0(orphans, collapse = ", ")))
+  }
+  
+  # if ch contains a list of numeric channel ID numbers
+  if ("numeric" %in% class(ch)){
+    sensor_defs <- sensor_defs[sensor_defs$ch_nums %in% ch,]
+    orphans <- ch[!(ch %in% sensor_defs$ch_nums)]
+    if (length(orphans) > 0){
+      warning(paste0("Sensor numbers from ch not found in database: ", paste0(orphans, collapse = ", "))) 
+    }
+  }
 
   return(sensor_defs)
 } # end of sm_channels

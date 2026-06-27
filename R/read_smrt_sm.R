@@ -5,6 +5,7 @@
 #' @param info list with metadata about the deployment (used to obtain recording start time)
 #' @param sm_dir name of directory (including path) where SM data files (.swv and .csv files) are stored
 #' @param ch a vector of strings (e.g. 'acc', 'mag', 'pres') or channel numbers indicating which sensor channels to read data from. The channel numbers are the same as those used in the xml metadata files. Default: NULL (read all channels in the .swv file).
+#' @param recn a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{get_sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...
 #' @return A list of sensor data lists with sensor data, including:
 #' 		\itemize{
 #' 		\item {A}
@@ -16,7 +17,8 @@
 read_smrt_sm <- function(depid,
                          info,
                          sm_dir,
-                         ch = NULL) {
+                         ch = NULL,
+                         recn = NULL) {
   
   if (!requireNamespace("wav", quietly = TRUE)) {
     stop(
@@ -30,49 +32,91 @@ read_smrt_sm <- function(depid,
     stop("read_smrt_sm() requires inputs depid, info, and sm_dir")
   }
   
+  # make sure sm_dir ends with / (and uses only / not \, for mac compatibility)
+  if (!missing(sm_dir)){
+    if (!stringr::str_ends(sm_dir, pattern = stringr::fixed("/"))){
+      sm_dir <- paste0(sm_dir, "/")
+    }
+    sm_dir <- gsub(sm_dir, pattern = "\\", replacement = "/", fixed = TRUE)
+  }
+  
+  if (!missing(sm_dir) & !dir.exists(sm_dir)){
+    stop(paste("Folder ", sm_dir, " not found. Please check sm_dir input to get_sm_fnames()." ))
+  }
+  
   if (!dir.exists(sm_dir)){
     stop(paste("Folder ", sm_dir, " not found. Please check sm_dir input to read_smrt_sm()." ))
   }
   
-  recording_start <- lubridate::ymd_hms(info$deploy_datetime_start,
-                                        tz = "UTC")
+  # collect metadta from xml file
+  xml_info <- get_sm_config(sm_dir)
+  
+  # if user has input a subset of channels to read...
+  # and they are character...
+  if (!is.null(ch)){
+    channel_meta <- sm_channels(xml_info$unique_channels) 
+    if ("character" %in% class(ch)){
+      # subset the tag's available channels to include just the ones requested
+      # by matching the NAMES
+      channel_meta <- 
+        channel_meta[grepl(pattern = paste0(ch, collapse = "|"), 
+                           channel_meta$ch_names, 
+                           ignore.case = TRUE),]
+    }
+    # and if ch are numeric...
+    if ("numeric" %in% class(ch)){
+      # subset the tag's available channels to include just the ones requested
+      # by matching the NUMBERS
+      channel_meta <-
+        channel_meta[channel_meta$ch_nums %in% ch, ]
+    }
+    if (nrow(channel_meta) == 0){
+      stop(paste("No sensor data channels matching ", ch, " found in .swv files in ", sm_dir))
+    }
+  }
+  # at this point channel_meta has metadata about either all the sensors in the data files,
+  # or the subset the user has requested to read in.
   
   # get list of swv files
-  swv_fnames <- list.files(sm_dir, 
-                           full.names = TRUE,
-                           pattern = "*.swv")
+  sm_file_meta <- get_sm_fnames(sm_dir, depid)
   
+  if (!is.null(recn)){
+    recn <- sort(recn)
+    if (any(diff(recn) > 1)){
+      warning("Non-consecutive data files in recn; be sure you want to concatenate them together!")
+    }
+    sm_file_meta <- sm_file_meta[sm_file_meta$recn %in% recn,]
+  }
+  swv_fnames <- paste0(sm_dir, sm_file_meta$file_name, ".swv")
+  
+  for (f in c(1:length(swv_fnames))){
+    if (!file.exists(swv_fnames[f])){
+      warning(paste0("File ", basename(swv_fnames[f]), " not found in ", sm_dir))
+    }
+  }
+  
+  # WORKING HERE
+  # # translating parseswv @ line 125
+  # we want to only read in, or at least only keep, the channels named in channel_meta
   swv_data <- list()
   for (f in c(1:length(swv_fnames))){
+    # to be parallel w/matlab dtag tools we would include an option to read in
+    # only PART of the SWV file (certain samples) but that's not as easy in R.
+    # wav::read_wav() cannot read just part of a file. so it might mean reading all and then junking some.
+    # here we need to write a separate per-swv-file function instead of just reading the files in a loop.
     swv_data[[f]] <- wav::read_wav(swv_fnames[f])
     if (f == 1){
       swv_fs <- attr(swv_data[[f]], "sample_rate")
       swv_bits <- attr(swv_data[[f]], "bit_depth")
     }
+    # the per-wav-file function will also need to do the stuff around line 163+ in d3parseswv
   }
-  swv_data <- do.call(cbind, swv_data)
-  # note that each ROW is one sensor's timeseries
-  ###### WORKING HERE JUN 26. Check d3readswv to see how to pull out the sensors of interest.
-  # how does it work when the sampling rates are not the same??
   
-  # collect metadta from xml file
-  xml_info <- get_sm_config(sm_dir)
+  # the per-swv-file function will need to be called by an analogue of d3readswv that will put them together and deal with timing etc.
+  # it should also have an option to decimate data if desired
 
-  # if user has input a subset of channels to read...
-  if (!is.null(ch)){
-    if ("character" %in% class(ch)){
-      channel_meta <- sm_channels(xml_info$unique_channels) ## NEED TO WRITE THIS FUN
-      #ch <- ...# convert ch from strings to numbers: get a vector of all the NUMBERS represented in chans corresponding to strings in ch
-      # subset xml_info$channels and xml_info$fs to the ones named in cn
-    }
-  }
   
-  if (length(xml_info$unique_channels) == 0){
-    stop(paste("No sensor data channels matching ", ch, " found in .swv files in ", sm_dir))
-  }
-  
-  # # WORKING HERE
-  # # translating parseswv @ line 125
+  # Also need to read the data from the WC board recorded by SM board (in csv files)
   # 
   # csv_fnames <- list.files(sm_dir, 
   #                          full.names = TRUE,
