@@ -96,21 +96,7 @@ read_smrt_sm <- function(depid,
   }
   
   # WORKING HERE
-  # # translating parseswv @ line 125
-  # we want to only read in, or at least only keep, the channels named in channel_meta
-  swv_data <- list()
-  for (f in c(1:length(swv_fnames))){
-    # to be parallel w/matlab dtag tools we would include an option to read in
-    # only PART of the SWV file (certain samples) but that's not as easy in R.
-    # wav::read_wav() cannot read just part of a file. so it might mean reading all and then junking some.
-    # here we need to write a separate per-swv-file function instead of just reading the files in a loop.
-    swv_data[[f]] <- wav::read_wav(swv_fnames[f])
-    if (f == 1){
-      swv_fs <- attr(swv_data[[f]], "sample_rate")
-      swv_bits <- attr(swv_data[[f]], "bit_depth")
-    }
-    # the per-wav-file function will also need to do the stuff around line 163+ in d3parseswv
-  }
+  # need to call sm_parse_swv() here
   
   # the per-swv-file function will need to be called by an analogue of d3readswv that will put them together and deal with timing etc.
   # it should also have an option to decimate data if desired

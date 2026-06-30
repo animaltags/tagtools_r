@@ -7,11 +7,11 @@
 sm_channels(ch = NULL, sm_dir = NULL, depid = NULL)
 }
 \arguments{
-\item{ch}{a vector of sensor numbers or names for which numbers, names, and/or descriptions are required}
+\item{ch}{a vector of sensor numbers or names for which numbers, names, and/or descriptions are required. This input is optional; if not specified, information about all channels recorded by the tag is returned.}
 
 \item{sm_dir}{directory where data files from the SM board or DTAG (e.g., xml and swv files) are stored}
 
-\item{depid}{Deployment ID string (e.g., "Zica-20260927-12345" or "sw26_123a")}
+\item{depid}{Deployment ID string (e.g., "Zica-20260927-12345" or "sw26_123a"). Optional - if not specified then all files in sm_dir will be included}
 }
 \value{
 A data.frame of metadata including variables:

@@ -4,7 +4,7 @@
 \alias{get_sm_fnames}
 \title{Get SMRT SM data file names, given a directory to search and a deployment ID}
 \usage{
-get_sm_fnames(sm_dir, depid)
+get_sm_fnames(sm_dir, depid = "")
 }
 \arguments{
 \item{sm_dir}{directory where xml file(s) are stored}

@@ -1,9 +1,9 @@
 #' Get metadata about SM board / DTAG3 / DTAG4 sensor channels
 #'
 #' SM boards in SMRT tags, and DTAG 3-4 tags, have a system of numeric and string identifiers for different sensors. This function allows conversion between numeric channel IDs and human-readable string IDs.
-#' @param ch a vector of sensor numbers or names for which numbers, names, and/or descriptions are required
+#' @param ch a vector of sensor numbers or names for which numbers, names, and/or descriptions are required. This input is optional; if not specified, information about all channels recorded by the tag is returned.
 #' @param sm_dir directory where data files from the SM board or DTAG (e.g., xml and swv files) are stored
-#' @param depid Deployment ID string (e.g., "Zica-20260927-12345" or "sw26_123a")
+#' @param depid Deployment ID string (e.g., "Zica-20260927-12345" or "sw26_123a"). Optional - if not specified then all files in sm_dir will be included
 
 #' @note If no inputs are provided, sm_channels returns metadata about all sensor channels known. If ch is not input but sm_dir and depid are, then information about sensor channels available for deployment depid in tag data files in sm_dir will be read from the data files.
 #' @return A data.frame of metadata including variables:
@@ -29,11 +29,12 @@ sm_channels <- function(ch = NULL,
     return(sensor_defs)
   }
   
-  if (is.null(ch) && !is.null(sm_dir) && !is.null(depid)){
-    # if inputs are sm_dir and depid, get file name info
+  if (is.null(ch) && !is.null(sm_dir) ){
+    # if inputs are sm_dir (and maybe depid), get file name info
+    if (is.null(depid)){depid <- ""}
     sm_fname_info <- get_sm_fnames(sm_dir, depid)
     if (nrow(sm_fname_info) == 0){
-      stop(paste0("No data files for ", depid, " found in ", sm_dir))
+      stop(paste0("No data files for deployment ", depid, " found in ", sm_dir))
     }
     # if there's data, get sensor metadata from xml file
     sm_sensor_config <- get_sm_config(sm_dir, sm_fname_info$file_name[1])
@@ -45,7 +46,8 @@ sm_channels <- function(ch = NULL,
   }
   
   # if a list of names is input for ch
-  # (RARE - these are complicated/detailed names...)
+  # (RARE - these are complicated/detailed names...
+  # however we DETECT the input strings in the "long" names, so inputs like "acc" should work)
   if ("character" %in% class(ch)){
     sensor_defs <- sensor_defs[sensor_defs$ch_names %in% ch,]
     orphans <- ch[!(ch %in% sensor_defs$ch_names)]

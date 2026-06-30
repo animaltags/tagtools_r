@@ -14,13 +14,17 @@ get_sm_config(sm_dir = NULL, xml_file = NULL)
 \value{
 A list of metadata including elements:
 		\itemize{
-		\item {device_serial: ID number of the SMRT tag}
 		\item {device_id: ID of the SMRT tag as a string (hexadecimal representation of device_serial)}
+		\item {device_serial: ID number of the SMRT tag}
 		\item {recording_start: datetime when tag recording began}
 		\item {dtype: "D4" for DTAG4-type SM board}
-		\item {sid: index for location of sensor info within xml file}
 		\item {fb: base (highest) sampling rate of sensors}
 		\item {CFG: list of configuration information about sensor data stored in swv files. CFG$CHANS[[1]] is a string containing a comma-separated list of sensor channel ID numbers. The list xml_info$CFG$CHANS has attribute "N" specifying the number of channels.}
+		\item {sid: index for location of sensor info within xml file}
+		\item {n_chans} number of sensor channels recorded in swv files
+	  \item {all_channels} names of all channels in swv files
+	  \item {unique_channels} names of unique channels in swv files (some sensors record data in multiple channels, if their sampling rate is higher than fb)
+   \item {sampling_rate} sampling rate (in Hz) of each channel in unique_channels. These values match fb * (# of times the unique channel appears in all_channels)
 		}
 }
 \description{

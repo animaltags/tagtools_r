@@ -15,7 +15,7 @@
 #' @export
 
 get_sm_fnames <- function(sm_dir,
-                          depid) {
+                          depid = "") {
   
   if (!requireNamespace("xml2", quietly = TRUE)) {
     stop(
@@ -25,8 +25,8 @@ get_sm_fnames <- function(sm_dir,
   }
   
   # Input checking
-  if (missing(sm_dir) & missing(depid)){
-    stop("get_sm_fnames() requires both inputs sm_dir and depid")
+  if (missing(sm_dir)){
+    stop("get_sm_fnames() requires input sm_dir")
   }
   
   # make sure sm_dir ends with / (and uses only / not \, for mac compatibility)
