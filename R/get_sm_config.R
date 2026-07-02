@@ -10,7 +10,8 @@
 #' 		\item {device_serial: ID number of the SMRT tag}
 #' 		\item {recording_start: datetime when tag recording began}
 #' 		\item {dtype: "D4" for DTAG4-type SM board}
-#' 		\item {fb: base (highest) sampling rate of sensors}
+#' 		\item {fb: base (lowest) sampling rate of sensors, in Hz}
+#'    \item {afs: acoustic sampling rate, in Hz}
 #' 		\item {CFG: list of configuration information about sensor data stored in swv files. CFG$CHANS[[1]] is a string containing a comma-separated list of sensor channel ID numbers. The list xml_info$CFG$CHANS has attribute "N" specifying the number of channels.}
 #' 		\item {sid: index for location of sensor info within xml file}
 #' 		\item {n_chans} number of sensor channels recorded in swv files
@@ -30,29 +31,21 @@ get_sm_config <- function(sm_dir = NULL,
     )
   }
   
-  
   # Input checking
   if (is.null(sm_dir) & is.null(xml_file)){
     stop("get_sm_config() requires either sm_dir or xml_file input")
   }
   
-  # make sure sm_dir ends with / (and uses only / not \, for mac compatibility)
-  if (!missing(sm_dir)){
-    if (!stringr::str_ends(sm_dir, pattern = stringr::fixed("/"))){
-      sm_dir <- paste0(sm_dir, "/")
+  if (is.null(xml_file)){
+    # check formatting of sm_dir input
+    sm_dir <- check_sm_dir(sm_dir)
+    
+    # try to get from xml file: device_serial
+    if (is.null(xml_file) & !is.null(sm_dir) & dir.exists(sm_dir)){
+      sm_files <- list.files(sm_dir)
+      sm_xml <- sm_files[grepl(sm_files, pattern = ".xml")]
+      xml_file <- paste0(sm_dir, sm_xml[1])
     }
-    sm_dir <- gsub(sm_dir, pattern = "\\", replacement = "/", fixed = TRUE)
-  }
-  
-  if (!missing(sm_dir) & !dir.exists(sm_dir)){
-    stop(paste("Folder ", sm_dir, " not found. Please check sm_dir input to get_sm_config()." ))
-  }
-  
-  # try to get from xml file: device_serial
-  if (is.null(xml_file) & !is.null(sm_dir) & dir.exists(sm_dir)){
-    sm_files <- list.files(sm_dir)
-    sm_xml <- sm_files[grepl(sm_files, pattern = ".xml")]
-    xml_file <- sm_xml[1]
   }
   
   # make sure xml_file has ".xml" at the end
@@ -60,18 +53,18 @@ get_sm_config <- function(sm_dir = NULL,
     xml_file <- paste0(xml_file, ".xml")
   }
   
-  xml_file <- xml2::read_xml(paste0(sm_dir, xml_file))
+  xml_doc <- xml2::read_xml(xml_file)
 
-  xml_info <- get_sm_xml_devid(xml_file)
+  xml_info <- get_sm_xml_devid(xml_doc)
   
   
   xml_info$recording_start <- 
     lubridate::ymd_hms(
-      xml2::xml_find_first(xml_file, "EVENT/@TIME") |> xml2::xml_text(),
+      xml2::xml_find_first(xml_doc, "EVENT/@TIME") |> xml2::xml_text(),
       tz = "UTC")
   
   # Dtag "generation"
-  xml_info$dtype <- xml2::xml_find_all(xml_file, "DGEN") |> 
+  xml_info$dtype <- xml2::xml_find_all(xml_doc, "DGEN") |> 
     xml2::xml_text() |> 
     stringr::str_trim()
     
@@ -85,7 +78,7 @@ get_sm_config <- function(sm_dir = NULL,
   xml_info$CFG <- NULL
   xml_info$fb <- 0
   if (xml_info$dtype == "D4"){
-    xml_config <- xml2::xml_find_all(xml_file, "CFG")
+    xml_config <- xml2::xml_find_all(xml_doc, "CFG")
     for (k in c(1:length(xml_config))){
       this_config = xml_config[[k]]
       if ("PROC" %in% xml2::xml_name(xml2::xml_children(this_config))){
@@ -97,6 +90,27 @@ get_sm_config <- function(sm_dir = NULL,
           break
         } # end of if "SENS" or "ACC"
       } # end of if "PROC" 
+    } # end of loop over entries of xml_config (k) 
+    for (k in c(1:length(xml_config))){
+      this_config = xml_config[[k]]
+      # get information about acoustic recordings
+      # look for items with entry FTYPE with value "wav" AND entry SUFFIX matching input suffix
+      if (!is.na(xml2::xml_find_first(this_config, "@FTYPE")) &&
+          !is.na(xml2::xml_find_first(this_config, "SUFFIX"))){
+        if (grepl(pattern = "wav", xml2::xml_find_first(this_config, "SUFFIX") |> xml2::xml_text())){
+          # pull out values of FS and EXP: acous fs is FS * 10^EXP (if not there EXP is 0)
+          afs0 <- as.numeric(xml2::xml_find_all(this_config, "FS") |> xml2::xml_double())
+          if ("EXP" %in% xml2::xml_name(xml2::xml_children(this_config))){
+            expn <- xml2::xml_find_first(this_config, "EXP") |> xml2::xml_double()
+          }else{
+            expn <- 0
+          }
+          xml_info$afs0 <- afs0
+          xml_info$afs <- afs0 * 10^expn
+          break
+          # note the original dtag function deals with cases of duty cycling which we have NOT
+        } # end of extracting FS and EXP
+      } # end of if "FTYPE" and "SUFFIX" are present
     } # end of loop over entries of xml_config (k) 
   } # end of if D4
   
@@ -141,6 +155,9 @@ get_sm_config <- function(sm_dir = NULL,
   if (xml_info$n_chans != length(xml_info$all_channels)){
     warning("n_chans does not match the number of channels listed in all_channels; check SM board .xml file.")
   }
+  
+  # keep the whole document also to avoid need to read it multiple times
+  xml_info$xml_doc <- xml_doc
 
   return(xml_info)
 } # end of get_sm_config()

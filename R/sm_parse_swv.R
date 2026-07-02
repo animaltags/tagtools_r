@@ -18,8 +18,8 @@
 
 sm_parse_swv <- function(swv_file,
                         ch = NULL,
-                        start_sec = NULL,
-                        end_sec = NULL,
+                        start_samp = NULL,
+                        end_samp = NULL,
                         depid = NULL){
   
   # make sure required package for reading wav files is installed
@@ -35,13 +35,7 @@ sm_parse_swv <- function(swv_file,
   
   # get path to directory where sm (.swv, .xml) files are stored
   sm_dir <- dirname(swv_file)
-  # make sure sm_dir ends with / (and uses only / not \, for mac compatibility)
-  if (!missing(sm_dir)){
-    if (!stringr::str_ends(sm_dir, pattern = stringr::fixed("/"))){
-      sm_dir <- paste0(sm_dir, "/")
-    }
-    sm_dir <- gsub(sm_dir, pattern = "\\", replacement = "/", fixed = TRUE)
-  }
+  sm_dir <- check_sm_dir(sm_dir)
   
   # get sm board configuration metadata from xml files in sm_dir
   # this includes sensor channel count (xml_info$n_chans) 
@@ -73,10 +67,16 @@ sm_parse_swv <- function(swv_file,
   
   wav_info <- av::av_media_info(paste0(swv_file, ".swv"))
   
-  if (!is.null(end_sec)){
+  if (!is.null(end_samp)){
     # if given, end_sec can't be more than the dur of the file
-    end_sec <- min(wav_info$duration , end_sec)    
+    end_sec <- min(wav_info$duration, end_samp * wav_info$audio$sample_rate)    
   }
+  
+  if (!is.null(start_samp)){
+    start_sec <- start_samp * wav_info$audio$sample_rate
+  }else{
+    start_sec <- NULL
+    }
   
   swv_base <- av::read_audio_bin(paste0(swv_file, ".swv"),
                      start_time = start_sec,

@@ -25,22 +25,7 @@ get_sm_fnames <- function(sm_dir,
   }
   
   # Input checking
-  if (missing(sm_dir)){
-    stop("get_sm_fnames() requires input sm_dir")
-  }
-  
-  # make sure sm_dir ends with / (and uses only / not \, for mac compatibility)
-  if (!missing(sm_dir)){
-    if (!stringr::str_ends(sm_dir, pattern = stringr::fixed("/"))){
-      sm_dir <- paste0(sm_dir, "/")
-    }
-    sm_dir <- gsub(sm_dir, pattern = "\\", replacement = "/", fixed = TRUE)
-  }
-  
-  if (!missing(sm_dir) & !dir.exists(sm_dir)){
-    stop(paste("Folder ", sm_dir, " not found. Please check sm_dir input to get_sm_fnames()." ))
-  }
-  
+  sm_dir <- check_sm_dir(sm_dir)
   # (End of input checks)
   
   # get list of xml files in sm_dir including depid in the name

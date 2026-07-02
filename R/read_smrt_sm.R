@@ -20,9 +20,9 @@ read_smrt_sm <- function(depid,
                          ch = NULL,
                          recn = NULL) {
   
-  if (!requireNamespace("wav", quietly = TRUE)) {
+  if (!requireNamespace("av", quietly = TRUE)) {
     stop(
-      "Package \"wav\" must be installed to use this function.",
+      "Package \"av\" must be installed to use this function.",
       call. = FALSE
     )
   }
@@ -32,21 +32,7 @@ read_smrt_sm <- function(depid,
     stop("read_smrt_sm() requires inputs depid, info, and sm_dir")
   }
   
-  # make sure sm_dir ends with / (and uses only / not \, for mac compatibility)
-  if (!missing(sm_dir)){
-    if (!stringr::str_ends(sm_dir, pattern = stringr::fixed("/"))){
-      sm_dir <- paste0(sm_dir, "/")
-    }
-    sm_dir <- gsub(sm_dir, pattern = "\\", replacement = "/", fixed = TRUE)
-  }
-  
-  if (!missing(sm_dir) & !dir.exists(sm_dir)){
-    stop(paste("Folder ", sm_dir, " not found. Please check sm_dir input to get_sm_fnames()." ))
-  }
-  
-  if (!dir.exists(sm_dir)){
-    stop(paste("Folder ", sm_dir, " not found. Please check sm_dir input to read_smrt_sm()." ))
-  }
+  sm_dir <- check_sm_dir(sm_dir)
   
   # collect metadta from xml file
   xml_info <- get_sm_config(sm_dir)
@@ -96,10 +82,12 @@ read_smrt_sm <- function(depid,
   }
   
   # WORKING HERE
-  # need to call sm_parse_swv() here
+  # need to call sm_read_swv() -> sm_parse_swv() here
   
-  # the per-swv-file function will need to be called by an analogue of d3readswv that will put them together and deal with timing etc.
-  # it should also have an option to decimate data if desired
+  # need to pull sm_get_cues() out from sound_archive() and verify it works for swv SMRT files
+  
+  # (the per-swv-file function will need to be called by an analogue of d3readswv that will put them together and deal with timing etc.
+  # it should also have an option to decimate data if desired)
 
   
   # Also need to read the data from the WC board recorded by SM board (in csv files)

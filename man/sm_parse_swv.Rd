@@ -7,8 +7,8 @@
 sm_parse_swv(
   swv_file,
   ch = NULL,
-  start_sec = NULL,
-  end_sec = NULL,
+  start_samp = NULL,
+  end_samp = NULL,
   depid = NULL
 )
 }
@@ -17,11 +17,11 @@ sm_parse_swv(
 
 \item{ch}{a vector of sensor numbers or names to read in. If ch is specified, only the sensor channels matching the type (or numbers) given will be read. To find out which channels are available in a dataset, use: \code{\link{sm_channels}}.}
 
-\item{depid}{Deployment ID string. Optional, but may be helpful to include if the directory where .swv files are stored contains data from more than one tag deployment.}
-
 \item{start_samp}{time (in samples since file start) to start reading data. Default: start of file.}
 
 \item{end_samp}{time (in samples since file start) to start reading data. Default: end of file.}
+
+\item{depid}{Deployment ID string. Optional, but may be helpful to include if the directory where .swv files are stored contains data from more than one tag deployment.}
 }
 \value{
 A list containing metadata and sensor data vectors (for triaxial sensors, there will be one per axis). Each may be a different length according to the sampling rate of the sensor channel.
@@ -29,6 +29,7 @@ A list containing metadata and sensor data vectors (for triaxial sensors, there 
 		\item {data: sensor data vectors (each vector's length depends on sampling rate; number of entries in data matches length of sampling_rate and ch_nums)}
 		\item {sampling_rate: vector of sampling rates. Length corresponds to the number of sensors represented in \code{data}.}
 		\item {ch_nums: vector of channel ID numbers. Length corresponds to the number of sensors represented in \code{data}.}
+   \item {ch_names: vector of detailed names of channels}
 		}
 }
 \description{
