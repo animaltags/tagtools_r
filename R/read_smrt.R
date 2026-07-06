@@ -116,7 +116,7 @@ read_smrt <- function(data_dir = NULL,
   
   # try to get from xml file: device_serial
   if (!is.null(sm_dir) & dir.exists(sm_dir)){
-    xml_info <- get_sm_config(sm_dir)
+    xml_info <- sm_get_config(sm_dir)
     # device serial number / ID number
     if (is.null(device_serial)){
       info$device_serial <- xml_info$device_serial

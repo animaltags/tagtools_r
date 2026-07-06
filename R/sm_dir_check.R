@@ -5,7 +5,7 @@
 
 #' @return sm_dir formatted as tagtools functions expect (including final / and using / not \)
 
-check_sm_dir <- function(sm_dir) {
+sm_dir_check <- function(sm_dir) {
   # Input checking
   if (missing(sm_dir)){
     stop("sm_dir is a required input")

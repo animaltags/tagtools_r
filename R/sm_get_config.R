@@ -21,7 +21,7 @@
 #' 		}
 #' @export
 
-get_sm_config <- function(sm_dir = NULL,
+sm_get_config <- function(sm_dir = NULL,
                           xml_file = NULL) {
   
   if (!requireNamespace("xml2", quietly = TRUE)) {
@@ -33,12 +33,12 @@ get_sm_config <- function(sm_dir = NULL,
   
   # Input checking
   if (is.null(sm_dir) & is.null(xml_file)){
-    stop("get_sm_config() requires either sm_dir or xml_file input")
+    stop("sm_get_config() requires either sm_dir or xml_file input")
   }
   
   if (is.null(xml_file)){
     # check formatting of sm_dir input
-    sm_dir <- check_sm_dir(sm_dir)
+    sm_dir <- sm_dir_check(sm_dir)
     
     # try to get from xml file: device_serial
     if (is.null(xml_file) & !is.null(sm_dir) & dir.exists(sm_dir)){
@@ -55,7 +55,7 @@ get_sm_config <- function(sm_dir = NULL,
   
   xml_doc <- xml2::read_xml(xml_file)
 
-  xml_info <- get_sm_xml_devid(xml_doc)
+  xml_info <- sm_xml_devid(xml_doc)
   
   
   xml_info$recording_start <- 
@@ -160,5 +160,5 @@ get_sm_config <- function(sm_dir = NULL,
   xml_info$xml_doc <- xml_doc
 
   return(xml_info)
-} # end of get_sm_config()
+} # end of sm_get_config()
 

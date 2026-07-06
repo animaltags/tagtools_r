@@ -6,7 +6,7 @@
 #' @return a list with entries device_id (the ID as a hexadecimal string) and device_serial (the short ID -- an 8-digit number) 
 #' @export
 
-get_sm_xml_devid <- function(xml_file) {
+sm_xml_devid <- function(xml_file) {
   
   if (!requireNamespace("xml2", quietly = TRUE)) {
     stop(
@@ -17,7 +17,7 @@ get_sm_xml_devid <- function(xml_file) {
   
   # Input checking
   if (missing(xml_file)){
-    stop("get_sm_xml_devid() requires xml_file input")
+    stop("sm_xml_devid() requires xml_file input")
   }
 
   # read in xml file (if not input as xml doc already)
@@ -50,5 +50,5 @@ get_sm_xml_devid <- function(xml_file) {
   xml_devid$device_serial <- as.numeric(paste0("0x", id_vec))
 
   return(xml_devid)
-} # end of get_sm_xml_devid()
+} # end of sm_xml_devid()
 

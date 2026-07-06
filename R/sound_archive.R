@@ -42,27 +42,27 @@ sound_archive <- function(sm_dir,
   }
   
   # format sm_dir: final /, using / not \ in path
-  sm_dir <- check_sm_dir(sm_dir)
+  sm_dir <- sm_dir_check(sm_dir)
   
   # get data.frame with file_name, sm_dir, recn, device_serial, device_id
-  sm_fnames <- get_sm_fnames(sm_dir, depid)
-  xml_file <- paste0(sm_dir, sm_fnames$file_name[1], ".xml")
+  sm_file_info <- sm_fnames(sm_dir, depid)
+  xml_file <- paste0(sm_dir, sm_file_info$file_name[1], ".xml")
   
   # get metadata from xml file
-  xml_info <- get_sm_config(xml_file = xml_file)
+  xml_info <- sm_get_config(xml_file = xml_file)
   # note: xml_info$afs is acous sampling rate
   
   # get cuetab
-  cuetab <- sm_cuetab(sm_dir, sm_fnames, xml_info)
+  cuetab <- sm_cuetab(sm_dir, sm_file_info, xml_info)
   
   # compute file size in samples
-  sz <- rep(0, nrow(sm_fnames))
-  for (f in c(1:nrow(sm_fnames))){
-    sz[f] <- sum(cuetab$n_samples[cuetab$recn == sm_fnames$recn[f] &
+  sz <- rep(0, nrow(sm_file_info))
+  for (f in c(1:nrow(sm_file_info))){
+    sz[f] <- sum(cuetab$n_samples[cuetab$recn == sm_file_info$recn[f] &
                                     cuetab$status  >= 0])
   }
   
-  wav_file <- paste0(sm_dir, sm_fnames$file_name[1], '.', suffix)
+  wav_file <- paste0(sm_dir, sm_file_info$file_name[1], '.', suffix)
   # get acoustic recording metadata
   wav_info <- av::av_media_info(wav_file)
   
@@ -76,8 +76,8 @@ sound_archive <- function(sm_dir,
   SA$name <- "SA"
   SA$full_name <- "sound_archive"
   SA$description <- "sound data archive listing"
-  SA$file_names <- paste(paste0(sm_fnames$file_name, ".wav"), collapse = ", ")
-  SA$file_number <- nrow(sm_fnames)
+  SA$file_names <- paste(paste0(sm_file_info$file_name, ".wav"), collapse = ", ")
+  SA$file_number <- nrow(sm_file_info)
   SA$file_format <- "wav"
   SA$file_resolution <- wav_info$audio$bitrate / wav_info$audio$sample_rate / wav_info$audio$channels
   SA$file_compression <- "none"
@@ -111,7 +111,7 @@ sound_archive <- function(sm_dir,
   SA$start_time_tzone <- "UTC"
   SA$calibration_method <- "unknown"
   SA$calibration_date <- "unknown"
-  SA$selfnoise_file <- paste0(sm_fnames$file_name[1], ".wav")
+  SA$selfnoise_file <- paste0(sm_file_info$file_name[1], ".wav")
   SA$selfnoise_cue_start <- 0
   SA$selfnoise_cue_end <- 6
   SA$selfnoise_cue_unit <- "second into file"

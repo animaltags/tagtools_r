@@ -35,14 +35,14 @@ sm_parse_swv <- function(swv_file,
   
   # get path to directory where sm (.swv, .xml) files are stored
   sm_dir <- dirname(swv_file)
-  sm_dir <- check_sm_dir(sm_dir)
+  sm_dir <- sm_dir_check(sm_dir)
   
   # get sm board configuration metadata from xml files in sm_dir
   # this includes sensor channel count (xml_info$n_chans) 
   # and ID numbers (xml_info$all_channels and xml_info$unique_channels)
   # and xml_info$sampling_rate (sensor sampling rate, length matches unique_channels)
   # xml_info$sampling_rate also matches .swv file sampling rate * (# of times the unique channel is in all_channels)
-  xml_info <- get_sm_config(sm_dir)
+  xml_info <- sm_get_config(sm_dir)
   
   # get metadata about channels (names, numbers, etc.)
   # if user has input a subset of channels to read in input ch, this will be subsetted accordingly

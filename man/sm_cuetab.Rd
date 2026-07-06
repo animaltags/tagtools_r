@@ -6,8 +6,8 @@
 \usage{
 sm_cuetab(
   sm_dir,
-  sm_fnames = get_sm_fnames(sm_dir),
-  xml_info = get_sm_config(sm_dir),
+  sm_file_info = sm_fnames(sm_dir),
+  xml_info = sm_get_config(sm_dir),
   err_thr_sec = 0.005,
   err_thr_samp = 10,
   suffix = "wav"
@@ -16,9 +16,9 @@ sm_cuetab(
 \arguments{
 \item{sm_dir}{directory where data files from the SM board or DTAG (e.g., xml and swv files) are stored}
 
-\item{sm_fnames}{a data frame with information about SM data file names in sm_dir. If not input, it is obtained by a call to \code{\link{get_sm_fnames}}; providing it as input may save a little time.}
+\item{sm_file_info}{a data frame with information about SM data file names in sm_dir. If not input, it is obtained by a call to \code{\link{sm_fnames}}; providing it as input may save a little time.}
 
-\item{xml_info}{a list of metadata extracted from the SM xml files. If not input, it is obtained by a call to \code{\link{get_sm_config}}; providing it as input may save a little time.}
+\item{xml_info}{a list of metadata extracted from the SM xml files. If not input, it is obtained by a call to \code{\link{sm_get_config}}; providing it as input may save a little time.}
 
 \item{err_thr_sec}{threshold in seconds for reporting timing errors (that also exceed err_thr_samp). Default: 0.005 sec.}
 

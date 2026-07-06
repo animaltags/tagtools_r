@@ -5,7 +5,7 @@
 #' @param info list with metadata about the deployment (used to obtain recording start time)
 #' @param sm_dir name of directory (including path) where SM data files (.swv and .csv files) are stored
 #' @param ch a vector of strings (e.g. 'acc', 'mag', 'pres') or channel numbers indicating which sensor channels to read data from. The channel numbers are the same as those used in the xml metadata files. Default: NULL (read all channels in the .swv file).
-#' @param recn a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{get_sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...
+#' @param recn a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...
 #' @return A list of sensor data lists with sensor data, including:
 #' 		\itemize{
 #' 		\item {A}
@@ -32,10 +32,10 @@ read_smrt_sm <- function(depid,
     stop("read_smrt_sm() requires inputs depid, info, and sm_dir")
   }
   
-  sm_dir <- check_sm_dir(sm_dir)
+  sm_dir <- sm_dir_check(sm_dir)
   
   # collect metadta from xml file
-  xml_info <- get_sm_config(sm_dir)
+  xml_info <- sm_get_config(sm_dir)
   
   # if user has input a subset of channels to read...
   # and they are character...
@@ -64,7 +64,7 @@ read_smrt_sm <- function(depid,
   # or the subset the user has requested to read in.
   
   # get list of swv files
-  sm_file_meta <- get_sm_fnames(sm_dir, depid)
+  sm_file_meta <- sm_fnames(sm_dir, depid)
   
   if (!is.null(recn)){
     recn <- sort(recn)

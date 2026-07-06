@@ -32,12 +32,12 @@ sm_channels <- function(ch = NULL,
   if (is.null(ch) && !is.null(sm_dir) ){
     # if inputs are sm_dir (and maybe depid), get file name info
     if (is.null(depid)){depid <- ""}
-    sm_fname_info <- get_sm_fnames(sm_dir, depid)
+    sm_fname_info <- sm_fnames(sm_dir, depid)
     if (nrow(sm_fname_info) == 0){
       stop(paste0("No data files for deployment ", depid, " found in ", sm_dir))
     }
     # if there's data, get sensor metadata from xml file
-    sm_sensor_config <- get_sm_config(sm_dir, sm_fname_info$file_name[1])
+    sm_sensor_config <- sm_get_config(sm_dir, sm_fname_info$file_name[1])
     undoc_sensors <- sm_sensor_config$unique_channels[!(sm_sensor_config$unique_channels %in% sensor_defs$ch_nums)]
     if (length(undoc_sensors) > 0){
       warning(paste0("Tag data includes sensor number(s) not in database which will be missing from sm_channels() output: ", paste0(undoc_sensors, collapse = ", ")))
