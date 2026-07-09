@@ -73,10 +73,21 @@ decz <- function(x, df = NULL, Z = NULL, nf = 12, frbw = 0.8) {
     # do not change!
     npre <- floor(Z$df * (Z$nf - 1) / 2 - 1)
     # =====================================
-    Z$z <- rbind(
-      2 * x[1, ] - x[(1 + seq(from = (Z$n - Z$df - npre), to = 1)), ],
-      x[1:npre, ]
-    )
+    # extracting values from x with [] yields a vector not a matrix
+    # so have to re-matrix it after construction
+    if (ncol(x) > 1){
+      # if multi cols bind together the chosen rows
+      Z$z <- rbind(
+        2 * x[1, ] - x[(1 + seq(from = (Z$n - Z$df - npre), to = 1)), ],
+        x[1:npre, ]
+      )
+    }else{
+      # one-col data will get vector-ified by [] indexing
+      Z$z <- matrix(c(
+        2 * x[1, ] - x[(1 + seq(from = (Z$n - Z$df - npre), to = 1)), ],
+        x[1:npre, ]
+      ), ncol = 1)
+    }
     Z$ov <- NULL
   }
 
@@ -84,6 +95,9 @@ decz <- function(x, df = NULL, Z = NULL, nf = 12, frbw = 0.8) {
   # =============================================
   if (first_call) {
     x <- x[c((npre + 1):nrow(x)), ]
+    if (!("matrix" %in% class(x))){
+      x <- matrix(x, ncol = 1)
+    }
   }
 
   # if it's the last call - no more data
@@ -92,7 +106,11 @@ decz <- function(x, df = NULL, Z = NULL, nf = 12, frbw = 0.8) {
     # reuse the last few inputs to squeeze some more output
     # from the filter.
     x <- rbind(Z$z, Z$ov)
-    x <- rbind(Z$ov, (2 * x[nrow(x), ] - x[(nrow(x) - (1:(npre - 1))), ]))
+    if (ncol(x) == 1){
+      x <- matrix(c(Z$ov, (2 * x[nrow(x), ] - x[(nrow(x) - (1:(npre - 1))), ])), ncol = 1)
+    }else{
+      x <- rbind(Z$ov, (2 * x[nrow(x), ] - x[(nrow(x) - (1:(npre - 1))), ]))
+    }
   } else {
     # if it's neither the first nor the last call
     # =============================================
@@ -105,10 +123,10 @@ decz <- function(x, df = NULL, Z = NULL, nf = 12, frbw = 0.8) {
   Z$ov <- NULL
   for (k in 1:ncol(x)) {
     buff_out <- buffer(
-      x = x[, k],
+      x = matrix(x[, k], ncol = 1), 
       n = Z$n,
       overlap = Z$n - Z$df,
-      opt = Z$z[, k]
+      opt = matrix(Z$z[, k], ncol = 1)
     )
     if (k == 1) {
       y <- matrix(0, ncol(buff_out$X), ncol(x))
