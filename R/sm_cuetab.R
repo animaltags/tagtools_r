@@ -95,7 +95,8 @@ sm_cuetab <- function(sm_dir,
       # get acoustic recording metadata
       wav_info <- av::av_media_info(wav_file)
       # check that wav file and xml file sampling rates agree
-      if (wav_info$audio$sample_rate != xml_info$afs0){
+      xml_fs <- ifelse(suffix == "wav", xml_info$afs, xml_info$fb)
+      if (wav_info$audio$sample_rate != xml_fs){
         warning(paste0('Sampling rate mismatch in recording: ', sm_file_info$file_name[k]))
       }
       if (nrow(cuetab[[k]]) > 0){
@@ -130,7 +131,7 @@ sm_cuetab <- function(sm_dir,
   }# end loop over wav/xml/wavt data files
   cuetab <- do.call(rbind, cuetab)
   
-  if (is.null(xml_info$afs)){
+  if (is.null(xml_fs)){
     warning("Warning: Unable to determine sampling rate for this configuration")
   }
   
@@ -140,10 +141,10 @@ sm_cuetab <- function(sm_dir,
     frst <- 1
     overrun <- 0
     while (1){
-      tpred <- cumsum(as.numeric(cuetab$NSAMPS[c(1:(nrow(cuetab) - 1))])) / xml_info$afs
+      tpred <- cumsum(as.numeric(cuetab$NSAMPS[c(1:(nrow(cuetab) - 1))])) / xml_fs
       tnxt <- (cuetab$RTIME[c(2:nrow(cuetab))] - cuetab$RTIME[1]) + (cuetab$MTICKS[c(2:nrow(cuetab))] - cuetab$MTICKS[1])*1e-6
       terr <- tnxt - tpred
-      serr <- round(terr * xml_info$afs)
+      serr <- round(terr * xml_fs)
       err_ix <- which(terr > err_thr_sec & serr > err_thr_samp)
       if (length(err_ix) == 0){
         cuetab$MTICKS[c(2:nrow(cuetab))] <- cuetab$MTICKS[c(2:nrow(cuetab))] - terr * 1e6

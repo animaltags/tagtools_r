@@ -2,10 +2,10 @@
 #'
 #' Helper function for \link[tagtools]{read_smrt} - not ordinarily used independently. Read data from SM board (.swv files) and return list of sensor data lists.
 #' @param depid string containing the deployment identification code assigned
-#' @param info list with metadata about the deployment (used to obtain recording start time)
 #' @param sm_dir name of directory (including path) where SM data files (.swv and .csv files) are stored
 #' @param ch a vector of strings (e.g. 'acc', 'mag', 'pres') or channel numbers indicating which sensor channels to read data from. The channel numbers are the same as those used in the xml metadata files. Default: NULL (read all channels in the .swv file).
 #' @param recn a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...
+#' @param df decimation factor. Default: 1 (no decimation). If a single df value is input, data will be decimated to give a sampling rate for each channel of 1/df of the full original sampling rate. df can also be a vector the same length as ch (or the total number of sensor channels recorded by the SM board as shown by a call to \code{\link{sm_channels}}), if different decimation factors are desired per sensor channel. Decimation is done via \code{\link{decz}} (which calls \code{\link{decdc}}), and includes application of a low-pass anti-alias filter and correction for the group delay of the filter (for "DC accuracy").
 #' @return A list of sensor data lists with sensor data, including:
 #' 		\itemize{
 #' 		\item {A}
@@ -15,10 +15,10 @@
 #' sm_data <- read_smrt_sm(depid, info, sm_dir)
 #' }
 read_smrt_sm <- function(depid,
-                         info,
                          sm_dir,
                          ch = NULL,
-                         recn = NULL) {
+                         recn = NULL,
+                         df = 1) {
   
   if (!requireNamespace("av", quietly = TRUE)) {
     stop(
@@ -28,7 +28,7 @@ read_smrt_sm <- function(depid,
   }
   
   # Input checking
-  if (missing(depid) | missing(sm_dir) | missing(info)){
+  if (missing(depid) | missing(sm_dir)){
     stop("read_smrt_sm() requires inputs depid, info, and sm_dir")
   }
   
@@ -39,41 +39,24 @@ read_smrt_sm <- function(depid,
   
   # if user has input a subset of channels to read...
   # and they are character...
+  sensor_defs <- sm_channels(xml_info$unique_channels)
   if (!is.null(ch)){
-    channel_meta <- sm_channels(xml_info$unique_channels) 
-    if ("character" %in% class(ch)){
-      # subset the tag's available channels to include just the ones requested
-      # by matching the NAMES
-      channel_meta <- 
-        channel_meta[grepl(pattern = paste0(ch, collapse = "|"), 
-                           channel_meta$ch_names, 
-                           ignore.case = TRUE),]
-    }
-    # and if ch are numeric...
-    if ("numeric" %in% class(ch)){
-      # subset the tag's available channels to include just the ones requested
-      # by matching the NUMBERS
-      channel_meta <-
-        channel_meta[channel_meta$ch_nums %in% ch, ]
-    }
-    if (nrow(channel_meta) == 0){
-      stop(paste("No sensor data channels matching ", ch, " found in .swv files in ", sm_dir))
-    }
+    sensor_defs <- sm_ch_subset(sensor_defs, ch)
   }
-  # at this point channel_meta has metadata about either all the sensors in the data files,
+  # at this point sensor_defs has metadata about either all the sensors in the data files,
   # or the subset the user has requested to read in.
   
   # get list of swv files
-  sm_file_meta <- sm_fnames(sm_dir, depid)
+  sm_file_info <- sm_fnames(sm_dir, depid)
   
   if (!is.null(recn)){
     recn <- sort(recn)
     if (any(diff(recn) > 1)){
       warning("Non-consecutive data files in recn; be sure you want to concatenate them together!")
     }
-    sm_file_meta <- sm_file_meta[sm_file_meta$recn %in% recn,]
+    sm_file_info <- sm_file_info[sm_file_info$recn %in% recn,]
   }
-  swv_fnames <- paste0(sm_dir, sm_file_meta$file_name, ".swv")
+  swv_fnames <- paste0(sm_dir, sm_file_info$file_name, ".swv")
   
   for (f in c(1:length(swv_fnames))){
     if (!file.exists(swv_fnames[f])){
@@ -81,14 +64,20 @@ read_smrt_sm <- function(depid,
     }
   }
   
-  # WORKING HERE
-  # need to call sm_read_swv() -> sm_parse_swv() here
-  
-  # need to pull sm_get_cues() out from sound_archive() and verify it works for swv SMRT files
-  
-  # (the per-swv-file function will need to be called by an analogue of d3readswv that will put them together and deal with timing etc.
-  # it should also have an option to decimate data if desired)
-
+  # WORKING HERE...
+  # this DOES WORK for a whole set of files w/ or w/o decimation
+  # need to check if output matches matlab's (in length and in values)
+  # need to see if a big deployment crashes it
+  # then test it works with df and with a "fill missing" block
+  sensor_data <- sm_assemble_swv(sm_dir = sm_dir,
+                                 depid = depid,
+                                 ch = ch,
+                                 recn = recn,
+                                 sm_file_info = sm_file_info,
+                                 xml_info = xml_info,
+                                 sensor_defs = sensor_defs,
+                                 df = c(4,4,4,1,1,1,1),
+                                 quiet = FALSE)
   
   # Also need to read the data from the WC board recorded by SM board (in csv files)
   # 

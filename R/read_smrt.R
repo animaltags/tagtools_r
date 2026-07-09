@@ -150,7 +150,8 @@ read_smrt <- function(data_dir = NULL,
   
   # Read data from SM files
 
-  # TODO!!!!! Generate acoustic metadata file ("make_SA")
+  # Generate acoustic metadata file ("make_SA")
+  SA <- sound_archive(sm_dir, depid)
   
   ##### WORKING HERE on read_smrt_sm()
   # question: should read_smrt_x() RETURN a list of sensor lists or just save them into the NC file as they go?

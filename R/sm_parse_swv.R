@@ -69,11 +69,13 @@ sm_parse_swv <- function(swv_file,
   
   if (!is.null(end_samp)){
     # if given, end_sec can't be more than the dur of the file
-    end_sec <- min(wav_info$duration, end_samp * wav_info$audio$sample_rate)    
+    end_sec <- min(wav_info$duration, end_samp / wav_info$audio$sample_rate)    
+  }else{
+    end_sec <- NULL
   }
   
   if (!is.null(start_samp)){
-    start_sec <- start_samp * wav_info$audio$sample_rate
+    start_sec <- (start_samp-1) * wav_info$audio$sample_rate
   }else{
     start_sec <- NULL
     }

@@ -1,4 +1,4 @@
-#' Create a "sound archive" (SA) sensor data list with metadata about acoustic recordings from a SMRT or DTAG deployment.
+#' Create a "sound archive" (SA) list for SMRT wav files
 #'
 #' SMRT tags and DTAGs record acoustic data in wav files. These files are too large to include inside a netCDF file. However, we can include metadata about the recordings (file names, duration, sampling rate, and information about any gaps in recording) in a "SA" ("sound archive") list for inclusion in the netCDF archive. This function creates the SA list, which can also be used to figure out where (which file, and when within the file) to find a sound clip at a particular time.
 #' @param sm_dir directory where xml file(s) are stored

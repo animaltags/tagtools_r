@@ -2,7 +2,7 @@
 % Please edit documentation in R/sound_archive.R
 \name{sound_archive}
 \alias{sound_archive}
-\title{Create a "sound archive" (SA) sensor data list with metadata about acoustic recordings from a SMRT or DTAG deployment.}
+\title{Create a "sound archive" (SA) list for SMRT wav files}
 \usage{
 sound_archive(
   sm_dir,

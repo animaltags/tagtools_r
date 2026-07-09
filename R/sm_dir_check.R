@@ -4,6 +4,7 @@
 #' @param sm_dir directory where data files from the SM board or DTAG (e.g., xml and swv files) are stored
 
 #' @return sm_dir formatted as tagtools functions expect (including final / and using / not \)
+#' @export
 
 sm_dir_check <- function(sm_dir) {
   # Input checking
