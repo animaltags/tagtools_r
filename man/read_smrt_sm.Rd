@@ -4,7 +4,7 @@
 \alias{read_smrt_sm}
 \title{Read SMRT tag data from SM board (.swv and .csv files) and return list of sensor data lists}
 \usage{
-read_smrt_sm(depid, sm_dir, ch = NULL, recn = NULL, df = 1)
+read_smrt_sm(depid, sm_dir, ch = NULL, recn = NULL, df = 1, quiet = TRUE)
 }
 \arguments{
 \item{depid}{string containing the deployment identification code assigned}
@@ -16,6 +16,8 @@ read_smrt_sm(depid, sm_dir, ch = NULL, recn = NULL, df = 1)
 \item{recn}{a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...}
 
 \item{df}{decimation factor. Default: 1 (no decimation). If a single df value is input, data will be decimated to give a sampling rate for each channel of 1/df of the full original sampling rate. df can also be a vector the same length as ch (or the total number of sensor channels recorded by the SM board as shown by a call to \code{\link{sm_channels}}), if different decimation factors are desired per sensor channel. Decimation is done via \code{\link{decz}} (which calls \code{\link{decdc}}), and includes application of a low-pass anti-alias filter and correction for the group delay of the filter (for "DC accuracy").}
+
+\item{quiet}{logical; set to TRUE (the default) to suppress messages (from internal helper function \code{\link{sm_assemble_swv}}) about "reading file..." You may want not-quiet operation to monitor progress if many large files are being read, slowly.}
 }
 \value{
 A list of sensor data lists with sensor data, including:

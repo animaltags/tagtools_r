@@ -137,7 +137,6 @@ sm_cuetab <- function(sm_dir,
   
   # if cuetab has at least 2 rows, check the timing
   if (nrow(cuetab) > 1){
-    # matlab cuetab cols: [recn, RTIME, MTICKS, NSAMPS, STATUS] 
     frst <- 1
     overrun <- 0
     while (1){
@@ -166,12 +165,13 @@ sm_cuetab <- function(sm_dir,
                        round(terr[err_ix], digits = 3), ' seconds (',
                        serr[err_ix], ' samples).'))
       }
-      st <- tpred[err_ix] + cuetab$RTIME[1] + cuetab$MTICKS[1] * 1e6
+      st <- tpred[err_ix] + cuetab$RTIME[1] + cuetab$MTICKS[1] * 1e-6
       ablks <- data.frame(RECN = cuetab$RECN[err_ix],
                           RTIME = floor(st),
                           MTICKS = (st %% 1) * 1e6,
                           NSAMPS = serr[err_ix],
-                          STATUS = -1)
+                          STATUS = -1,
+                          SUFFIX = suffix)
       cuetab <- rbind(cuetab[c(1:err_ix), ],
                       ablks,
                       cuetab[c((err_ix + 1):nrow(cuetab)), ])

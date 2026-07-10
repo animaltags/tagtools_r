@@ -6,6 +6,7 @@
 #' @param ch a vector of strings (e.g. 'acc', 'mag', 'pres') or channel numbers indicating which sensor channels to read data from. The channel numbers are the same as those used in the xml metadata files. Default: NULL (read all channels in the .swv file).
 #' @param recn a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...
 #' @param df decimation factor. Default: 1 (no decimation). If a single df value is input, data will be decimated to give a sampling rate for each channel of 1/df of the full original sampling rate. df can also be a vector the same length as ch (or the total number of sensor channels recorded by the SM board as shown by a call to \code{\link{sm_channels}}), if different decimation factors are desired per sensor channel. Decimation is done via \code{\link{decz}} (which calls \code{\link{decdc}}), and includes application of a low-pass anti-alias filter and correction for the group delay of the filter (for "DC accuracy").
+#' @param quiet logical; set to TRUE (the default) to suppress messages (from internal helper function \code{\link{sm_assemble_swv}}) about "reading file..." You may want not-quiet operation to monitor progress if many large files are being read, slowly. 
 #' @return A list of sensor data lists with sensor data, including:
 #' 		\itemize{
 #' 		\item {A}
@@ -18,7 +19,8 @@ read_smrt_sm <- function(depid,
                          sm_dir,
                          ch = NULL,
                          recn = NULL,
-                         df = 1) {
+                         df = 1,
+                         quiet = TRUE) {
   
   if (!requireNamespace("av", quietly = TRUE)) {
     stop(
@@ -63,12 +65,7 @@ read_smrt_sm <- function(depid,
       warning(paste0("File ", basename(swv_fnames[f]), " not found in ", sm_dir))
     }
   }
-  
-  # WORKING HERE...
-  # this DOES WORK for a whole set of files w/ or w/o decimation
-  # need to check if output matches matlab's (in length and in values)
-  # need to see if a big deployment crashes it
-  # then test it works with df and with a "fill missing" block
+
   sensor_data <- sm_assemble_swv(sm_dir = sm_dir,
                                  depid = depid,
                                  ch = ch,
@@ -76,9 +73,10 @@ read_smrt_sm <- function(depid,
                                  sm_file_info = sm_file_info,
                                  xml_info = xml_info,
                                  sensor_defs = sensor_defs,
-                                 df = c(4,4,4,1,1,1,1),
-                                 quiet = FALSE)
+                                 df = df,
+                                 quiet = quiet)
   
+  # WORKING HERE 7/10
   # Also need to read the data from the WC board recorded by SM board (in csv files)
   # 
   # csv_fnames <- list.files(sm_dir, 
@@ -95,7 +93,9 @@ read_smrt_sm <- function(depid,
   # # make list object to hold output sensor data lists
   # archive_data <- list()
   # 
-  # # make sensor data lists for each sensor in sensor_var_names
+  # # make sensor data lists for each sensor
+  # note that for A and M this will have to grab all three axes and keep them in order xyz
+  # the col "ch_names" and "cal" and "description" will contain acc or mag, and qualifier1 and description and comment will contain letter x/y/z. description and comment will contain "x/y/z axis"
   # for (s in c(1:length(sensor_var_names))){
   #   # if this sensor is in the dataset...
   #   this_sensor_ix <- stringr::str_starts(pattern = tolower(sensor_var_names[s]),
