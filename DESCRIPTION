@@ -32,32 +32,31 @@ Description: High-resolution movement-sensor tags typically include acceleromete
 Depends: R (>= 4.1)
 LinkingTo: Rcpp, RcppArmadillo
 Imports:
-    CircStats,
-    cowplot,
-    dplyr,
-    ggplot2,
     graphics,
     gsignal,
     lubridate,
     ncdf4,
-    plotly,
     pracma,
     Rcpp,
-    readr,
     stats,
     stringr,
-    utils,
-    zoo,
-    zoom
+    utils
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Suggests: 
     av,
+    CircStats,
+    cowplot,
+    ggplot2,
     knitr,
+    plotly,
     rmarkdown,
     testthat (>= 3.0.0),
-    xml2
+    vroom,
+    xml2,
+    zoo,
+    zoom
 URL: https://animaltags.org, https://animaltags.github.io/tagtools_r/index.html
 BugReports: https://github.com/animaltags/tagtools_r/issues
 Config/Needs/website: rmarkdown

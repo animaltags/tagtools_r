@@ -8,10 +8,17 @@
 
 metadata_editor <- function(masterHTML = system.file("extdata", "tagmetadata.html", package = "tagtools"),
                             csvfilename = system.file("extdata", "blank_template.csv", package = "tagtools")) {
+  if (!requireNamespace("vroom", quietly = TRUE)) {
+    stop(
+      "Package \"vroom\" must be installed to use this function",
+      call. = FALSE
+    )
+  }
+  
   csvFile <- parseCSV(csvfilename)
   htmlFile <- scan(file = masterHTML, what = character(0), sep = "\n", quote = "")
   newHTML <- htmlFile
-  csvFile2 <- suppressMessages(readr::read_csv(csvfilename))
+  csvFile2 <- suppressMessages(vroom::vroom(csvfilename))
   param2 <- csvFile2$params
   req2 <- csvFile2$required
   field2 <- csvFile2$field
@@ -134,7 +141,7 @@ metadata_editor <- function(masterHTML = system.file("extdata", "tagmetadata.htm
 
 
 parseCSV <- function(csvfilename) {
-  ret_frame <- readr::read_csv(csvfilename)
+  ret_frame <- vroom::vroom(csvfilename)
   deploy_date_index <- grep("dephist.deploy.datetime.start", ret_frame$field)
   deploy_date_id0 <- paste(ret_frame[deploy_date_index, 1], "0", sep = "")
   deploy_date_id1 <- paste(ret_frame[deploy_date_index, 1], "1", sep = "")

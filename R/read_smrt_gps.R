@@ -19,7 +19,12 @@
 read_smrt_gps <- function(depid,
                           info,
                           gps_file) {
-  
+  if (!requireNamespace("vroom", quietly = TRUE)) {
+    stop(
+      "Package \"vroom\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   # Input checking
   if (missing(depid) | missing(info) | missing(gps_file)){
     stop("read_smrt_gps() requires inputs depid, info, and gps_file")
@@ -33,7 +38,7 @@ read_smrt_gps <- function(depid,
                                         tz = "UTC")
   
   gps_raw <- suppressMessages(
-    readr::read_csv(gps_file, col_names = TRUE, skip = 3, show_col_types = FALSE) )
+    vroom::vroom(gps_file, col_names = TRUE, skip = 3, show_col_types = FALSE) )
   
   # rename some columns to standardize names...
   names(gps_raw) <- stringr::str_replace_all(names(gps_raw), pattern = " ", replacement = "")

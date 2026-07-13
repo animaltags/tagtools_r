@@ -30,16 +30,19 @@ make_info <- function(depid, tagtype, species, owner) {
     }
   }
 
-  template_file <- dplyr::case_when(
-    tagtype == "dtag2" ~ "d2_template.csv",
-    tagtype == "dtag3" ~ "d3_template.csv",
-    tagtype == "dtag4" ~ "d4_template.csv",
-    tagtype %in% c("sm", "smrt") ~ "sm_template.csv",
-    tagtype == "cats" ~ "cats_template.csv",
-    tagtype %in% c("ll", "leo", "lleo") ~ "ll_template.csv",
-    tagtype == "mk10" ~ "mk10_template.csv",
-    TRUE ~ "blank_template.csv"
-  )
+  template_file <- switch(tagtype,
+                          dtag2 = "d2_template.csv",
+                          dtag3 = "d3_template.csv",
+                          dtag4 = "d4_template.csv",
+                          sm = "sm_template.csv",
+                          smrt = "sm_template.csv",
+                          cats = "cats_template.csv",
+                          ll = "ll_template.csv",
+                          leo = "ll_template.csv",
+                          lleo = "ll_template.csv",
+                          mk10 = "mk10_template.csv",
+                          "blank_template.csv")
+
   if (template_file == "blank_template.csv") {
     warning("Unknown tag type - fill out device-related metadata by hand.\n")
   }

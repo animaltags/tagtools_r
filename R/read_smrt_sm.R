@@ -7,9 +7,11 @@
 #' @param recn a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...
 #' @param df decimation factor. Default: 1 (no decimation). If a single df value is input, data will be decimated to give a sampling rate for each channel of 1/df of the full original sampling rate. df can also be a vector the same length as ch (or the total number of sensor channels recorded by the SM board as shown by a call to \code{\link{sm_channels}}), if different decimation factors are desired per sensor channel. Decimation is done via \code{\link{decz}} (which calls \code{\link{decdc}}), and includes application of a low-pass anti-alias filter and correction for the group delay of the filter (for "DC accuracy").
 #' @param quiet logical; set to TRUE (the default) to suppress messages (from internal helper function \code{\link{sm_assemble_swv}}) about "reading file..." You may want not-quiet operation to monitor progress if many large files are being read, slowly. 
-#' @return A list of sensor data lists with sensor data, including:
+#' @param tz character: the time zone in which time-stamp data in csv file is stored. Default: UTC.
+#' @return A list including:
 #' 		\itemize{
-#' 		\item {A}
+#' 		\item swv_data, a list with one element per sensor channel in ch. (A data.frame is not used because sensors may be sampled at different rates.) The list items are named using the sensor ID numbers in ch. There is also an additional (last) list item, \code{sampling_rate}, which is a vector of sampling rates for the channels in ch. 
+#' 		\item csv_data, a data.frame with data from the csv files found in sm_dir. (This is generally data from the WC board recorded by the SM board such as the depth and wet-dry sensors.)
 #' 		}
 #' @export
 #' @examples \dontrun{
@@ -20,11 +22,19 @@ read_smrt_sm <- function(depid,
                          ch = NULL,
                          recn = NULL,
                          df = 1,
+                         tz = "UTC",
                          quiet = TRUE) {
   
   if (!requireNamespace("av", quietly = TRUE)) {
     stop(
       "Package \"av\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
+  
+  if (!requireNamespace("vroom", quietly = TRUE)) {
+    stop(
+      "Package \"vroom\" must be installed to read SMRT csv files",
       call. = FALSE
     )
   }
@@ -75,23 +85,68 @@ read_smrt_sm <- function(depid,
                                  sensor_defs = sensor_defs,
                                  df = df,
                                  quiet = quiet)
+  if (!sum(sapply(paste0(sm_file_info$sm_dir, sm_file_info$file_name, ".csv"), FUN = file.exists))){
+    stop(paste0("No csv files with names like ",
+                sm_file_info$file_name[1],
+                " found in ", sm_dir))
+  }
   
-  # WORKING HERE 7/10
-  # Also need to read the data from the WC board recorded by SM board (in csv files)
-  # 
-  # csv_fnames <- list.files(sm_dir, 
-  #                          full.names = TRUE,
-  #                          pattern = "*.csv")
-  # 
-  # archive_fs <- 1 / stats::median(
-  #   as.numeric(
-  #     difftime(
-  #       archive_raw$datetime[100 + (2:n_check)],
-  #       archive_raw$datetime[100 + (1:(-1+n_check))],
-  #       units = "secs")))
-  # 
-  # # make list object to hold output sensor data lists
-  # archive_data <- list()
+  row1 <- vroom::vroom(file = paste0(sm_file_info$sm_dir, sm_file_info$file_name, ".csv"),
+                       n_max = 1,
+                       col_names = FALSE,
+                       show_col_types = FALSE,
+                       progress = FALSE)[1,]
+  if (sum(apply(row1[c(2:ncol(row1)),], MARGIN = 2, FUN = is.character)) > 0){
+    # if there's a header row on the files
+    header = TRUE
+  }else{
+    # if there's no header row
+    header = FALSE
+  }
+  
+  # get nrows (of DATA not counting col names) per file (without reading in the data)
+  csv_meta <- 
+    data.frame(nrows = sapply(paste0(sm_file_info$sm_dir, sm_file_info$file_name, ".csv"),
+                              function(x) length(vroom::vroom_lines(x, altrep = TRUE, progress = FALSE)) - 1*as.numeric(header),
+                              USE.NAMES = FALSE))
+  # figure out start/end index (row) of each file in csv_data
+  csv_meta$start_ix <- 1 + cumsum(c(0, utils::head(csv_meta$nrows, -1)))
+  csv_meta$end_ix <- csv_meta$start_ix - 1 + csv_meta$nrows
+  
+  # preallocate space for output
+  csv_data <- list2DF(lapply(c(1:ncol(row1)),
+                     function(x) vector(mode = "numeric", length = sum(csv_meta$nrows))))
+  
+  if (header){
+    names(csv_data) <- row1
+  }
+  
+  # read in data from each file and add to csv_data
+  for (f in c(1:nrow(sm_file_info))){
+    csv_data[c(csv_meta$start_ix[f] : csv_meta$end_ix[f]), ] <- 
+      vroom::vroom(file = paste0(sm_file_info$sm_dir[f], sm_file_info$file_name[f], ".csv"),
+                   col_names = header,
+                   col_types = paste0(c("c", rep.int("d", times = ncol(row1) - 1)), collapse = ""),
+                   guess_max = 1000,
+                   show_col_types = FALSE)
+  }
+  # convert time stamps to datetimes (doing this in vroom() garbles tz somehow)
+  csv_data[,1] <- lubridate::ymd_hms(csv_data[,1], tz = tz)
+  
+  # obtain sampling rate from time stamps
+  csv_fs <- 1 / stats::median(as.numeric(diff(csv_data$Time, units = "sec")), na.rm = TRUE)
+  
+  # compute time in seconds since tagon including microseconds
+  csv_data$sec_since_start <- 
+    as.numeric(difftime(csv_data$Time,
+                        xml_info$recording_start,
+                        units = "sec")) +
+    csv_data$Microsecs / 1e6
+  
+  return(list(swv_data = sensor_data, csv_data = csv_data))
+  # make each variable into a sensor data structure (and save )
+  # NOTE: need to consider how we keep track of timing and exact start times if any difference between SM board data and csv data.
+
   # 
   # # make sensor data lists for each sensor
   # note that for A and M this will have to grab all three axes and keep them in order xyz

@@ -4,7 +4,15 @@
 \alias{read_smrt_sm}
 \title{Read SMRT tag data from SM board (.swv and .csv files) and return list of sensor data lists}
 \usage{
-read_smrt_sm(depid, sm_dir, ch = NULL, recn = NULL, df = 1, quiet = TRUE)
+read_smrt_sm(
+  depid,
+  sm_dir,
+  ch = NULL,
+  recn = NULL,
+  df = 1,
+  tz = "UTC",
+  quiet = TRUE
+)
 }
 \arguments{
 \item{depid}{string containing the deployment identification code assigned}
@@ -17,12 +25,15 @@ read_smrt_sm(depid, sm_dir, ch = NULL, recn = NULL, df = 1, quiet = TRUE)
 
 \item{df}{decimation factor. Default: 1 (no decimation). If a single df value is input, data will be decimated to give a sampling rate for each channel of 1/df of the full original sampling rate. df can also be a vector the same length as ch (or the total number of sensor channels recorded by the SM board as shown by a call to \code{\link{sm_channels}}), if different decimation factors are desired per sensor channel. Decimation is done via \code{\link{decz}} (which calls \code{\link{decdc}}), and includes application of a low-pass anti-alias filter and correction for the group delay of the filter (for "DC accuracy").}
 
+\item{tz}{character: the time zone in which time-stamp data in csv file is stored. Default: UTC.}
+
 \item{quiet}{logical; set to TRUE (the default) to suppress messages (from internal helper function \code{\link{sm_assemble_swv}}) about "reading file..." You may want not-quiet operation to monitor progress if many large files are being read, slowly.}
 }
 \value{
-A list of sensor data lists with sensor data, including:
+A list including:
 		\itemize{
-		\item {A}
+		\item swv_data, a list with one element per sensor channel in ch. (A data.frame is not used because sensors may be sampled at different rates.) The list items are named using the sensor ID numbers in ch. There is also an additional (last) list item, \code{sampling_rate}, which is a vector of sampling rates for the channels in ch. 
+		\item csv_data, a data.frame with data from the csv files found in sm_dir. (This is generally data from the WC board recorded by the SM board such as the depth and wet-dry sensors.)
 		}
 }
 \description{

@@ -28,6 +28,13 @@ plott_base <- function(X, fsx = NULL, r = FALSE, offset = 0,
                   panel_heights = rep.int(1, length(X)),
                   panel_labels = names(X), line_colors,
                   interactive = FALSE, par_opts, ...) {
+  if (!requireNamespace("zoom", quietly = TRUE) & interactive) {
+    stop(
+      "Package \"zoom\" must be installed to use this function (and generate interactive base-R plott()s).",
+      call. = FALSE
+    )
+  }
+  
   oldpar <- graphics::par(no.readonly = TRUE)
   on.exit(graphics::par(oldpar))
   

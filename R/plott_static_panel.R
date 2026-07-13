@@ -13,6 +13,12 @@
 #' @return A ggplot for "one panel," that is, with the data from one sensor
 
 plott_static_panel <- function(sensor, sensor_data, line_colors, panel_labels, axis_names = c("X", "Y", "Z"), times, x_lab, r) {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop(
+      "Package \"ggplot2\" must be installed to use this function (and generate plott()s).",
+      call. = FALSE
+    )
+  }
   
   if (missing(line_colors)) {
     line_colors <- c("#000000", "#009E73", "#9ad0f3", "#0072B2", "#e79f00", "#D55E00")

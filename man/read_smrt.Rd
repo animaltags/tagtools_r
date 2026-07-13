@@ -65,6 +65,8 @@ generates a netCDF file in the current working directory containing
 Read data file(s) with data from a SMRT tag deployment, including associated metadata; apply initial calibration to convert to engineering units and store the resulting data in a .nc file.
 }
 \note{
+Currently this function reads in all sensors from all data file types (SM board sensors from swv files, WC board data recorded by the SM board from csv files, and GPS data from the WC Archive file.) In the future input options might be added to allow the user to specify which file/sensor types are to be read, and which temporal subset of data to return.
+
 SMRT tags can produce very large csv files which are slow to
 process. This function is (somewhat) optimised for speed and memory use so will
 tolerate large files. But processing could be slow. Note also that data from 3D sensors 

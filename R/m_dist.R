@@ -21,6 +21,12 @@ m_dist <- function(data, sampling_rate = 1, smooth_dur = 0, overlap = 0 ,
                    consec = FALSE, cum_sum = FALSE, 
                    bl_start = 0, bl_end = floor(nrow(data)/sampling_rate), 
                    bl_cov = FALSE) {
+  if (!requireNamespace("zoo", quietly = TRUE)) {
+    stop(
+      "Package \"zoo\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   # Input checking
   if (smooth_dur == 0 & overlap != 0) {
     overlap <- 0

@@ -46,6 +46,12 @@
 dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
                        prop = 0.85, angular = FALSE, X_name = NULL,
                        na.rm = TRUE) {
+  if (!requireNamespace("CircStats", quietly = TRUE)) {
+    stop(
+      "Package \"CircStats\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   if (!is.list(P) & missing(sampling_rate)) {
     stop("For vector input data, sampling_rate must be provided")
   }
@@ -171,16 +177,14 @@ dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
   # ensure all "to" values are NA if start time is NA
   # and all "from" values are NA if end time is NA
   # and all overall mean/sd are NA if either st/et is NA
-  Y <- dplyr::mutate(Y, 
-                     dplyr::across(dplyr::contains("to_"),
-                                   function(x) ifelse(is.na(st), NA, x)),
-                     dplyr::across(dplyr::contains("from_"),
-                                   function(x) ifelse(is.na(et), NA, x)),
-                     dplyr::across(dplyr::any_of(c("mean_aux", "mean_angle",
-                                                 "aux_sd", "angle_sd")),
-                                   function(x) ifelse(is.na(st) | is.na(et),
-                                                      NA,
-                                                      x)))
+  Y[is.na(Y$st), grepl(names(Y), pattern = "to_", fixed = TRUE)] <- NA
+  Y[is.na(Y$et), grepl(names(Y), pattern = "from_", fixed = TRUE)] <- NA
+  Y[is.na(Y$st) | is.na(Y$et), 
+    grepl(names(Y), pattern = "mean_aux", fixed = TRUE) |
+      grepl(names(Y), pattern = "mean_angle", fixed = TRUE) |
+      grepl(names(Y), pattern = "aux_sd", fixed = TRUE) |
+      grepl(names(Y), pattern = "angle_sd", fixed = TRUE)] <- NA
+  
   
   # change output column names if needed
   if (!(X_name %in% c("angle", "aux"))) {
@@ -188,13 +192,21 @@ dive_stats <- function(P, X = NULL, dive_cues, sampling_rate = NULL,
     names(Y) <- gsub(pattern = "aux", replacement = X_name, x = names(Y))
   }
   
-  Y <- dplyr::select(
-    Y, 
-    num, max, st, et, dur,
-    dest_st, dest_et, dest_dur,
-    to_dur, from_dur,
-    dplyr::everything()
-  )
+  # reorder columns
+  Y <- Y[,c(which(colnames(Y) == "num"),
+            which(colnames(Y) == "max"),
+            which(colnames(Y) == "st"),
+            which(colnames(Y) == "et"),
+            which(colnames(Y) == "dur"),
+            which(colnames(Y) == "dest_st"),
+            which(colnames(Y) == "dest_et"),
+            which(colnames(Y) == "dest_dur"),
+            which(colnames(Y) == "to_dur"),
+            which(colnames(Y) == "from_dur"),
+            which(! (colnames(Y) %in% 
+                       c("num", "max", "st", "et", "dur", 
+                         "dest_st", "dest_et", "dest_dur", 
+                         "to_dur", "from_dur")) ))]
 
   return(Y)
 }

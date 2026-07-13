@@ -50,16 +50,22 @@ read_cats_csv <- function(fname, max_samps = Inf, skip_samps = 0) {
 
 # helper function to read a single CATS csv file
 read1_cats_csv <- function(file, skip_samps, max_samps){
+  if (!requireNamespace("vroom", quietly = TRUE)) {
+    stop(
+      "Package \"vroom\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   V <- suppressMessages(
-    readr::read_csv(
+    vroom::vroom(
       file = file, 
       col_names = TRUE,
-      col_types = readr::cols(
-        `Time (UTC)` = readr::col_character(),
-        # `GPS (raw) 1 [raw]` = readr::col_character(),
-        # `GPS (raw) 2 [raw]` = readr::col_character(),
-        # `GPS 1` = readr::col_character(),
-        # `GPS 2` = readr::col_character()
+      col_types = vroom::cols(
+        `Time (UTC)` = vroom::col_character(),
+        # `GPS (raw) 1 [raw]` = vroom::col_character(),
+        # `GPS (raw) 2 [raw]` = vroom::col_character(),
+        # `GPS 1` = vroom::col_character(),
+        # `GPS 2` = vroom::col_character()
       ),
       na = c(NA, "", " "),
       trim_ws = TRUE,

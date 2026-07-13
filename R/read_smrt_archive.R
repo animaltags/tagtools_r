@@ -17,7 +17,12 @@
 read_smrt_archive <- function(depid,
                           info,
                           archive_file) {
-  
+  if (!requireNamespace("vroom", quietly = TRUE)) {
+    stop(
+      "Package \"vroom\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   # Input checking
   if (missing(depid) | missing(archive_file) | missing(info)){
     stop("read_smrt_archive() requires inputs depid, info, and archive_file")
@@ -31,7 +36,7 @@ read_smrt_archive <- function(depid,
                                         tz = "UTC")
   
   archive_raw <- suppressMessages(
-    readr::read_csv(archive_file, show_col_types = FALSE) )
+    vroom::vroom(archive_file, show_col_types = FALSE) )
   
   # get datetimes as datetime object in R
   archive_raw$datetime <- lubridate::mdy_hms(archive_raw$Time, tz = "UTC")

@@ -28,6 +28,19 @@ plott <- function(X, fsx = NULL, r = FALSE, offset = 0,
                   panel_labels = names(X), line_colors,
                   interactive = FALSE,
                   draw = TRUE) {
+  if (!requireNamespace("plotly", quietly = TRUE) & interactive) {
+    stop(
+      "Package \"plotly\" must be installed to use this function (and generate plott()s).",
+      call. = FALSE
+    )
+  }
+  
+  if (!requireNamespace("cowplot", quietly = TRUE) & interactive) {
+    stop(
+      "Package \"cowplot\" must be installed to use this function (and generate plott()s).",
+      call. = FALSE
+    )
+  }
   
   if ("animaltag" %in% class(X)) {
     info <- X$info

@@ -16,6 +16,7 @@
 #' @param device_serial String containing the serial number of the SMRT tag. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.
 #' @param device_url String containing URL of tag manufacturer; defaults to "https://wildlifecomputers.com/" and is stored in the info structure of the output NetCDF file.
 
+#' @note Currently this function reads in all sensors from all data file types (SM board sensors from swv files, WC board data recorded by the SM board from csv files, and GPS data from the WC Archive file.) In the future input options might be added to allow the user to specify which file/sensor types are to be read, and which temporal subset of data to return.
 #' @return A string containing the file name of the netCDF (.nc) file in which the output has been saved. This function
 #' generates a netCDF file in the current working directory containing
 #' 		the tag data variables, including:
@@ -149,15 +150,13 @@ read_smrt <- function(data_dir = NULL,
   }
   
   # Read data from SM files
-
   # Generate acoustic metadata file ("make_SA")
   SA <- sound_archive(sm_dir, depid)
   
-  ##### WORKING HERE on read_smrt_sm()
-  # question: should read_smrt_x() RETURN a list of sensor lists or just save them into the NC file as they go?
-  # saving as they go *might* be faster for large deployments?
+  # read in data from data files in sm_dir (from SM board/swv files + csv files of WC board data recorded by SM board)
+  sm_data <- read_smrt_sm(depid, sm_dir)
   
-  
+  # WORKING HERE JULY 13: need to make each sensor into a sensor data list and then save.
   # check which sensors are present
   Sens <- c("Acc", "Mag", "Gyr", "Temp", "Depth", "Light")
   Sens_name <- c(

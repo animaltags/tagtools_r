@@ -9,6 +9,12 @@
 #' result <- interp_nan(A)
 #' 
 interp_nan <- function(data) {
+  if (!requireNamespace("zoo", quietly = TRUE)) {
+    stop(
+      "Package \"zoo\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
   # find indices of NAs (for a vector) or of row with NAs (for a matrix)
   k <- apply(data, 1, function(x) any(is.na(x)))
   # remove internal NAs
