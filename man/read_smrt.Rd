@@ -10,18 +10,25 @@ read_smrt(
   sm_dir = paste(data_dir, "/SMfiles"),
   gps_file = NULL,
   archive_file = NULL,
+  read_gps = TRUE,
+  read_archive = TRUE,
+  read_sm_swv = TRUE,
+  read_sm_csv = TRUE,
+  ch = NULL,
+  recn = NULL,
+  df = 1,
   tz = "UTC",
-  save_SAtimes = TRUE,
-  SAtimes_fname = paste(depid, "_wav_filetimes.csv", sep = ""),
+  save_SAtimes = FALSE,
+  SAtimes_file = paste(depid, "_wav_filetimes.csv", sep = ""),
   nc_dir = getwd(),
-  nc_fname = paste(depid, "_raw.nc", sep = ""),
+  nc_file = paste(depid, "_raw.nc", sep = ""),
   info = NULL,
   device_serial = NULL,
   device_url = "https://wildlifecomputers.com/"
 )
 }
 \arguments{
-\item{data_dir}{string containing the name (including full or relative path) of the directory where the data files are stored. If omitted, \code{fname} must include full or relative path information for the csv file(s).}
+\item{data_dir}{string containing the name (including full or relative path) of the directory where the data files are stored. If omitted, \code{sm_dir}, \code{gps_file}, and \code{archive_file} must include full or relative path information for the csv file(s).}
 
 \item{depid}{string containing the deployment identification code assigned
 to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv files are assumed to have names of the form "\code{depid}_001.csv" (002, 003 etc if multiple files) or "\code{depid}.csv" (if data is in a single file).}
@@ -32,31 +39,47 @@ to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv 
 
 \item{archive_file}{name of file (including path) with tag "Archive" data from the Wildlife Computers board. If not provided, this function will search for a file in \code{data_dir} which includes the string "Archive.csv".}
 
+\item{read_gps}{logical: read GPS data? Default: TRUE. If FALSE, input \code{gps_file} will be ignored.}
+
+\item{read_archive}{logical: read WC Archive file (wet-dry sensor and battery)? Default: TRUE. If FALSE, input \code{archive_file} will be ignored.}
+
+\item{read_sm_swv}{logical: read data from swv files recorded by the SM board (e.g. accelerometer, magnetometer)? Default: TRUE.}
+
+\item{read_sm_csv}{logical: read data from csv files recorded by the SM board (e.g. depth and temperature sensors). Default: TRUE.}
+
+\item{ch}{passed to \code{\link{read_smrt_sm}}. Default: NULL to read all channels recorded in swv files.}
+
+\item{recn}{passed to \code{\link{read_smrt_sm}}. Default: NULL to read all swv files.}
+
+\item{df}{passed to \code{\link{read_smrt_sm}}. Default: 1, to do no decimation of swv sensor data.}
+
 \item{tz}{string indicating the time zone used by the SMRT device clock. Default: "UTC".}
 
-\item{save_SAtimes}{Logical. Save a .csv file containing metadata about the acoustic recordings (.wav files) from \code{sm_dir}? Default: TRUE.}
+\item{save_SAtimes}{Logical. Save a .csv file containing metadata about the acoustic recordings (.wav files) from \code{sm_dir}? Default: FALSE (this info is already stored in the SA structure within the nc file...).}
 
-\item{SAtimes_fname}{Filename to which to save the metadata about acoustic .wav file data. Defaults to: "[depid]_wav_filetimes.csv" stored in the current working directory.}
+\item{SAtimes_file}{Filename to which to save the metadata about acoustic .wav file data. Defaults to: "[depid]_wav_filetimes.csv" stored in the current working directory.}
 
 \item{nc_dir}{String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to the current working directory.}
 
-\item{nc_fname}{String containing the file name to use for the output netCDF file. Defaults to "(depid)_raw.nc" - for example, "mn12_186a_raw.nc"}
+\item{nc_file}{String containing the file name to use for the output netCDF file. Defaults to "(depid)_raw.nc" - for example, "mn12_186a_raw.nc"}
 
 \item{info}{a list of deployment-specific metadata (create using \link[tagtools]{make_info}, potentially with manual additions after creation). Default: make_info(tagtype = "SMRT", depid = depid). This becomes the basis for the info structure of the output NetCDF file.}
 
-\item{device_serial}{String containing the serial number of the SMRT tag. Obtained from \code{txt_fname} or else defaults to NULL; stored in the info structure of the output NetCDF file.}
+\item{device_serial}{String containing the serial number of the SMRT tag. Obtained via a call to \code{\link{sm_get_config}} or else defaults to NULL; stored in the info structure of the output NetCDF file.}
 
 \item{device_url}{String containing URL of tag manufacturer; defaults to "https://wildlifecomputers.com/" and is stored in the info structure of the output NetCDF file.}
 }
 \value{
 A string containing the file name of the netCDF (.nc) file in which the output has been saved. This function
 generates a netCDF file in the current working directory containing
-		the tag data variables, including:
+		the tag data variables, which generally includes:
 		\itemize{
 		\item {A, Accelerometer data structure}
 		\item {M, Magnetometer data structure}
 		\item {depth, Depth data structure}
 		\item {temp, Temperature sensor data structure}
+		\item {wet_dry, Wet-dry sensor data structure}
+		\item {batt, Battery voltage data structure}
 		\item {SA, Metadata about acoustic recordings (.wav files)}
 		\item {info	Metadata about the deployment}
 		}
@@ -67,8 +90,8 @@ Read data file(s) with data from a SMRT tag deployment, including associated met
 \note{
 Currently this function reads in all sensors from all data file types (SM board sensors from swv files, WC board data recorded by the SM board from csv files, and GPS data from the WC Archive file.) In the future input options might be added to allow the user to specify which file/sensor types are to be read, and which temporal subset of data to return.
 
-SMRT tags can produce very large csv files which are slow to
-process. This function is (somewhat) optimised for speed and memory use so will
+SMRT tags can produce very large data files which are slow to
+process. This function is (somewhat) optimized for speed and memory use so will
 tolerate large files. But processing could be slow. Note also that data from 3D sensors 
 **will be in the NEU orientation** expected by the animaltag tool kit.
 }

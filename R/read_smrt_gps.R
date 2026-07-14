@@ -38,7 +38,8 @@ read_smrt_gps <- function(depid,
                                         tz = "UTC")
   
   gps_raw <- suppressMessages(
-    vroom::vroom(gps_file, col_names = TRUE, skip = 3, show_col_types = FALSE) )
+    vroom::vroom(gps_file, col_names = TRUE, skip = 3, show_col_types = FALSE,
+                 col_types = vroom::cols(Day = 'character', Time = 'character')) )
   
   # rename some columns to standardize names...
   names(gps_raw) <- stringr::str_replace_all(names(gps_raw), pattern = " ", replacement = "")
@@ -55,7 +56,7 @@ read_smrt_gps <- function(depid,
                                     'Residual',
                                     'TimeError')
   # make sure they ARE numeric
-  gps_raw[,num_cols] <- apply(X = gps_raw[,num_cols], MARGIN = 2, FUN = as.numeric)
+  gps_raw[,num_cols] <- suppressWarnings(apply(X = gps_raw[,num_cols], MARGIN = 2, FUN = as.numeric))
   
   # combine Day and Time to get a datetime timestamp
   gps_raw$datetime <- lubridate::dmy_hms(paste(gps_raw$Day, gps_raw$Time), tz = "UTC")

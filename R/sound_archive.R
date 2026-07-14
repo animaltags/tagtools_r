@@ -53,8 +53,9 @@ sound_archive <- function(sm_dir,
   # note: xml_info$afs is acous sampling rate
   
   # get cuetab
-  cuetab <- sm_cuetab(sm_dir, sm_file_info, xml_info)
+  cuetab <- sm_cuetab(sm_dir, sm_file_info, xml_info, suffix = 'wav')
   
+  if (nrow(cuetab) > 0){
   # compute file size in samples
   sz <- rep(0, nrow(sm_file_info))
   for (f in c(1:nrow(sm_file_info))){
@@ -120,6 +121,7 @@ sound_archive <- function(sm_dir,
   SA$creation_date <- as.character(now)
   SA$history <- c("sound_archive")
   SA <- SA[sort(names(SA))]
+  }else{SA <- list()} # (if there are not wav files return SA empty)
   
   return(SA)
 } # end of sound_archive

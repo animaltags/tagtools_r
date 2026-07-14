@@ -127,7 +127,9 @@ sm_cuetab <- function(sm_dir,
       } # end of ifelse "we have/don't have cuetab now"
     } # end of extracting info from the kth wav file
     # record in cuetab which file the wavblk info corresponds to
-    cuetab[[k]]$RECN <- k
+    if (nrow(cuetab[[k]]) > 0){
+      cuetab[[k]]$RECN <- k      
+    }
   }# end loop over wav/xml/wavt data files
   cuetab <- do.call(rbind, cuetab)
   

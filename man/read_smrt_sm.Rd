@@ -7,6 +7,8 @@
 read_smrt_sm(
   depid,
   sm_dir,
+  read_sm_swv = TRUE,
+  read_sm_csv = TRUE,
   ch = NULL,
   recn = NULL,
   df = 1,
@@ -19,6 +21,10 @@ read_smrt_sm(
 
 \item{sm_dir}{name of directory (including path) where SM data files (.swv and .csv files) are stored}
 
+\item{read_sm_swv}{logical: whether to read data from swv files. Default: TRUE}
+
+\item{read_sm_csv}{logical: whether to read data from csv files. Default: TRUE}
+
 \item{ch}{a vector of strings (e.g. 'acc', 'mag', 'pres') or channel numbers indicating which sensor channels to read data from. The channel numbers are the same as those used in the xml metadata files. Default: NULL (read all channels in the .swv file).}
 
 \item{recn}{a numeric vector indicating which swv/csv files should be read. The record numbers are included in file names (last 3 digits), and can be obtained via \code{sm_fnames(sm_dir, depid)}. Default: all files present in sm_dir. This might be used to avoid reading in a long series of data recorded after a tag fell off, for example...but otherwise beware introducing synchronization errors between sensors -- probably best to read all data and then use \code{crop()} later...}
@@ -30,17 +36,13 @@ read_smrt_sm(
 \item{quiet}{logical; set to TRUE (the default) to suppress messages (from internal helper function \code{\link{sm_assemble_swv}}) about "reading file..." You may want not-quiet operation to monitor progress if many large files are being read, slowly.}
 }
 \value{
-A list including:
-		\itemize{
-		\item swv_data, a list with one element per sensor channel in ch. (A data.frame is not used because sensors may be sampled at different rates.) The list items are named using the sensor ID numbers in ch. There is also an additional (last) list item, \code{sampling_rate}, which is a vector of sampling rates for the channels in ch. 
-		\item csv_data, a data.frame with data from the csv files found in sm_dir. (This is generally data from the WC board recorded by the SM board such as the depth and wet-dry sensors.)
-		}
+A list of sensor data structures with all data read from swv and csv data files recorded by the SMRT SM board
 }
 \description{
 Helper function for \link[tagtools]{read_smrt} - not ordinarily used independently. Read data from SM board (.swv files) and return list of sensor data lists.
 }
 \examples{
 \dontrun{
-sm_data <- read_smrt_sm(depid, info, sm_dir)
+sm_data <- read_smrt_sm(depid, sm_dir)
 }
 }

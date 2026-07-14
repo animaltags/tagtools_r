@@ -36,10 +36,22 @@ read_smrt_archive <- function(depid,
                                         tz = "UTC")
   
   archive_raw <- suppressMessages(
-    vroom::vroom(archive_file, show_col_types = FALSE) )
+    vroom::vroom(archive_file, show_col_types = FALSE,
+                 col_types = vroom::cols(Time = 'character')) )
   
   # get datetimes as datetime object in R
-  archive_raw$datetime <- lubridate::mdy_hms(archive_raw$Time, tz = "UTC")
+  archive_raw$datetime <- suppressWarnings(lubridate::mdy_hms(archive_raw$Time, tz = "UTC"))
+  if (sum(is.na(archive_raw$datetime)) > sum(is.na(archive_raw$Time))){
+    if (sum(is.na(archive_raw$datetime)) > 0.5 * nrow(archive_raw)){
+      # some tags have HH:MM:SS DD-Mon-YYYY ARGH!
+      # note: could do as.POSIXct(archive_raw$Time, format = "%H:%M:%S %d-%b-%Y" , tz = "UTC") 
+      # but I am worried about "current locale" for %b and general inflex if sep changes, etc
+      archive_raw$datetime <- 
+        lubridate::dmy_hms(
+          paste(substring(archive_raw$Time, first = 10),
+                substring(archive_raw$Time, first = 1, last = 8)))
+    }
+  }
   # WC board may start a couple seconds before SM board.
   # to keep all sensors synced easily with acoustics, keep only data after SM start
   archive_raw <- archive_raw[archive_raw$datetime >= recording_start,]
