@@ -49,3 +49,4 @@ vignettes/*.pdf
 # experimental
 tagtoolscpp/
 inst/shiny/
+inst/doc

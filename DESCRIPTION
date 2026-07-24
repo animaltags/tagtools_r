@@ -62,3 +62,4 @@ BugReports: https://github.com/animaltags/tagtools_r/issues
 Config/Needs/website: rmarkdown
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
+VignetteBuilder: knitr

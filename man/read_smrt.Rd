@@ -5,9 +5,9 @@
 \title{Read SMRT tag data file(s) and convert to .nc}
 \usage{
 read_smrt(
-  data_dir = NULL,
+  data_dir,
   depid,
-  sm_dir = paste(data_dir, "/SMfiles"),
+  sm_dir = NULL,
   gps_file = NULL,
   archive_file = NULL,
   read_gps = TRUE,
@@ -20,11 +20,12 @@ read_smrt(
   tz = "UTC",
   save_SAtimes = FALSE,
   SAtimes_file = paste(depid, "_wav_filetimes.csv", sep = ""),
-  nc_dir = getwd(),
+  nc_dir = data_dir,
   nc_file = paste(depid, "_raw.nc", sep = ""),
   info = NULL,
   device_serial = NULL,
-  device_url = "https://wildlifecomputers.com/"
+  device_url = "https://wildlifecomputers.com/",
+  quiet = TRUE
 )
 }
 \arguments{
@@ -33,7 +34,7 @@ read_smrt(
 \item{depid}{string containing the deployment identification code assigned
 to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv files are assumed to have names of the form "\code{depid}_001.csv" (002, 003 etc if multiple files) or "\code{depid}.csv" (if data is in a single file).}
 
-\item{sm_dir}{directory where files from the SM board of the SMRT tag are stored (these are the files "unpacked" from the .dtg files, and include .swv, .xml, .csv, and .wav files). If not provided, the defaul will be subdirectory "SMfiles" within \code{data_dir}.}
+\item{sm_dir}{directory where files from the SM board of the SMRT tag are stored (these are the files "unpacked" from the .dtg files, and include .swv, .xml, .csv, and .wav files). If not provided, the defaul will be subdirectory "SMFiles" within \code{data_dir}.}
 
 \item{gps_file}{name of file (including path) with tag GPS data. If not provided, this function will search for a file in \code{data_dir} which includes the string "FastGPS.csv".}
 
@@ -59,7 +60,7 @@ to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv 
 
 \item{SAtimes_file}{Filename to which to save the metadata about acoustic .wav file data. Defaults to: "[depid]_wav_filetimes.csv" stored in the current working directory.}
 
-\item{nc_dir}{String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to the current working directory.}
+\item{nc_dir}{String containing the name (including full or relative path) of the directory where the output nc file should be stored. Defaults to \code{data_dir}.}
 
 \item{nc_file}{String containing the file name to use for the output netCDF file. Defaults to "(depid)_raw.nc" - for example, "mn12_186a_raw.nc"}
 
@@ -68,6 +69,8 @@ to this deployment, for example, 'mn12_186a'. If \code{fname} is not input, csv 
 \item{device_serial}{String containing the serial number of the SMRT tag. Obtained via a call to \code{\link{sm_get_config}} or else defaults to NULL; stored in the info structure of the output NetCDF file.}
 
 \item{device_url}{String containing URL of tag manufacturer; defaults to "https://wildlifecomputers.com/" and is stored in the info structure of the output NetCDF file.}
+
+\item{quiet}{Whether or not to print progress updates to screen. Default: TRUE to give no console output. (Could be desirable to use \code{quiet = FALSE} track progress of processing large datasets, which can be a bit slow!)}
 }
 \value{
 A string containing the file name of the netCDF (.nc) file in which the output has been saved. This function

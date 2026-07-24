@@ -178,17 +178,18 @@ sm_cuetab <- function(sm_dir,
                       ablks,
                       cuetab[c((err_ix + 1):nrow(cuetab)), ])
     } # end of while loop to check timing
+    err_ix <- which(terr > err_thr_sec & serr > err_thr_samp)
+    if (length(err_ix) > 0){
+      message(paste0(length(err_ix),
+                     ' data overruns detected with maximum size ',
+                     -min(terr),
+                     ' seconds (',
+                     -min(serr),
+                     ' samples).'))
+    }
   } # end of "if there is more than one block"
   
-  err_ix <- which(terr > err_thr_sec & serr > err_thr_samp)
-  if (length(err_ix) > 0){
-    message(paste0(length(err_ix),
-                   ' data overruns detected with maximum size ',
-                   -min(terr),
-                   ' seconds (',
-                   -min(serr),
-                   ' samples).'))
-  }
+
   # The columns of this initial cuetab are:
   #   %     (SUFFIX: 'wav' (or maybe swv) -- this one is NOT in the matlab version)
   #          1. RECN:  File number
