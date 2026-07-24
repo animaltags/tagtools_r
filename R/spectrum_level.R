@@ -6,15 +6,15 @@
 #' @param sampling_rate The sampling rate of x in Hz. Default value is 1. sampling_rate is the vector of frequencies at which SL is calculated.
 #' @param w The window length. The default value is nfft. If w<nfft, each segment of w samples is zero-padded to nfft.
 #' @param nov The number of samples to overlap each segment. The default value is half of the window length.
-#' @return A list with 2 elements:
+#' @return A list with variables:
 #' \itemize{
-#' \item{\strong{SL: }}The spectrum level at each frequency in dB RMS re root-Hz. The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
+#' \item{\strong{SL: }}The spectrum level at each frequency in dB RMS re root-Hz. The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum. For matrix input, SL will have the same number of columns as the input data, and one row per frequency in freq.
 #' \item{\strong{freq: }} The vector of frequencies at which SL is calculated.
 #' }
 #' @note The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
 #' @export
 #' @examples
-#' list <- spectrum_level(x = beaked_whale$P$data, 
+#' my_spectrum <- spectrum_level(x = beaked_whale$P$data, 
 #' nfft = 4, sampling_rate = beaked_whale$P$sampling_rate)
 #'
 spectrum_level <- function(x, nfft = 512, sampling_rate = 1, w = nfft, nov = round(w / 2)) {
@@ -32,12 +32,14 @@ spectrum_level <- function(x, nfft = 512, sampling_rate = 1, w = nfft, nov = rou
   
   for (k in 1:xdim) {
     if (!is.matrix(x)) {
-      X <- buffer(x[], length(wind), nov, nodelay = TRUE)
+      X <- buffer(x, length(wind), nov, nodelay = TRUE)
     }
     else {
       X <- buffer(x[, k], length(wind), nov, nodelay = TRUE)
     }
-    X <- pracma::detrend(X) * matrix(wind, nrow = length(wind), ncol = ncol(X), byrow = FALSE)
+    X <- # pracma::detrend(X) * 
+      apply(X, 2, FUN = function(k) stats::resid(stats::lm(k ~ c(1:length(k))))) *
+      matrix(wind, nrow = length(wind), ncol = ncol(X), byrow = FALSE)
     
     Freq <- abs( apply(X, MARGIN = 2, FUN = stats::fft) )^2
     P[, k] <- rowSums(Freq[1:(nfft / 2), ])
