@@ -181,7 +181,8 @@ read_smrt_sm <- function(depid,
     # make sensor data lists for each sensor
     swv_sensor_list <- list()
     sensor_names <- data.frame(short = c("ACC", "MAG", "TEMPR"),
-                               nc = c("acceleration", "magnetometer", "temperature"))
+                               full = c("acceleration", "magnetometer", "temperature"),
+                               nc = c("A", "M", "temperature"))
     for (s in c(1:nrow(sensor_names))){
       my_defs <- sensor_defs[grepl(sensor_defs$ch_names, 
                                    pattern = sensor_names$short[s], 
@@ -201,8 +202,8 @@ read_smrt_sm <- function(depid,
                   byrow = FALSE),
                 sampling_rate = sensor_fs,
                 depid = depid,
-                type = sensor_names$nc[s],
-                name = sensor_names$nc[s]) # end of sens_struct
+                type = sensor_names$full[s],
+                name = sensor_names$full[s]) # end of sens_struct
               ) # end of suppress warnings 
         }else{ # if only one axis
           swv_sensor_list[[sensor_names$nc[s]]] <-
@@ -212,8 +213,8 @@ read_smrt_sm <- function(depid,
                               ncol = 1),
                 sampling_rate = sensor_fs,
                 depid = depid,
-                type = sensor_names$nc[s],
-                name = sensor_names$nc[s])# end of sens_struct 
+                type = sensor_names$full[s],
+                name = sensor_names$full[s])# end of sens_struct 
               )# end of suppress warnings 
         } # end of "if one-axis sensor"
         # record this processing step in the sensor structure's "history" field

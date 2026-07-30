@@ -80,7 +80,7 @@ read_smrt_gps <- function(depid,
                   times = gps_raw$time_sec,
                   depid = depid,
                   type = "Position",
-                  name = "pos",
+                  name = "GPS_position",
                   description = "GPS_position")
     gps_data$GPS_position$history <- c(gps_data$GPS_position$history, "read_smrt_gps")
     gps_data$GPS_position$files <- basename(gps_file)
