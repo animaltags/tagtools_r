@@ -18,9 +18,9 @@ spectrum_level(x, nfft = 512, sampling_rate = 1, w = nfft, nov = round(w/2))
 \item{nov}{The number of samples to overlap each segment. The default value is half of the window length.}
 }
 \value{
-A list with 2 elements:
+A list with variables:
 \itemize{
-\item{\strong{SL: }}The spectrum level at each frequency in dB RMS re root-Hz. The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
+\item{\strong{SL: }}The spectrum level at each frequency in dB RMS re root-Hz. The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum. For matrix input, SL will have the same number of columns as the input data, and one row per frequency in freq.
 \item{\strong{freq: }} The vector of frequencies at which SL is calculated.
 }
 }
@@ -31,7 +31,7 @@ This function is used to compute the spectrum level of a signal x.
 The spectrum is single-sided and extends to sampling_rate/2. The reference level is 1.0 (i.e., white noise with unit variance will have a spectrum level of 3-10*log10(sampling_rate). The 3dB is because both the negative and positive spectra are added together so that the total power in the signal is the same as the total power in the spectrum.
 }
 \examples{
-list <- spectrum_level(x = beaked_whale$P$data, 
+my_spectrum <- spectrum_level(x = beaked_whale$P$data, 
 nfft = 4, sampling_rate = beaked_whale$P$sampling_rate)
 
 }

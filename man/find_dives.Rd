@@ -4,7 +4,15 @@
 \alias{find_dives}
 \title{Find time cues for dives}
 \usage{
-find_dives(p, mindepth, sampling_rate = NULL, surface = 1, findall = FALSE)
+find_dives(
+  p,
+  mindepth,
+  sampling_rate = NULL,
+  surface = 1,
+  findall = FALSE,
+  mindepth_dur = 0,
+  na_action = "keep"
+)
 }
 \arguments{
 \item{p}{A depth or altitude time series (a sensor data list or  a vector) in meters.}
@@ -13,9 +21,13 @@ find_dives(p, mindepth, sampling_rate = NULL, surface = 1, findall = FALSE)
 
 \item{sampling_rate}{The sampling rate of the sensor data in Hz (samples per second).}
 
-\item{surface}{(optional) The threshold in meters at which the animal is presumed to have reached the surface. Default value is 1. A smaller value can be used if the dive/altitude data are very accurate and you need to detect shallow dives/flights.}
+\item{surface}{The threshold in meters at which the animal is presumed to have reached the surface. Default value is 1. A smaller value can be used if the dive/altitude data are very accurate and you need to detect shallow dives/flights.}
 
-\item{findall}{(optional) When TRUE, forces the algorithm to include incomplete dives at the start and end of the record. Default is FALSE, which only detects and returns complete dives. If findall is TRUE, the start/end times of first/final dives may be NA, indicating the dive started or ended before or after the data recording period.}
+\item{findall}{When TRUE, forces the algorithm to include incomplete dives at the start and end of the record. Default is FALSE, which only detects and returns complete dives. If findall is TRUE, the start/end times of first/final dives may be NA, indicating the dive started or ended before or after the data recording period.}
+
+\item{mindepth_dur}{Minimum amount of time in seconds during which mindepth must be exceeded for a dive to be detected. Default is 0 (any excursion where mindepth is exceeded is detected). Note that mindepth_dur is the minimum amount of time where mindepth is exceeded (not the duration of the whole dive/flight).}
+
+\item{na_action}{How missing data in \code{p} is treated: "keep" or "omit"? "keep", the default, will return NA for the \code{max} if \code{p} has any NA values during the detected dive/flight, and dive/flight start/ends will not be detected when \code{p} is NA. The other option, "omit", is similar to setting na.rm = TRUE and may be appropriate if the data has a small number of missing values that are missing at random. If \code{na_action} is "omit" and there are long runs of missing values in \code{p}, a warning will be issued (the output max depths are probably not accurate in such a case).}
 }
 \value{
 dives is a data frame with one row for each dive/flight found. The columns of dives are: start (time in seconds of the start of each dive/flight), end (time in seconds of the start of each dive/flight), max (maximum depth/altitude reached in each dive/flight), tmax	(time in seconds at which the animal reaches the max depth/altitude).
