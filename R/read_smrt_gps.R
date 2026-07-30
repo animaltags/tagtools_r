@@ -56,7 +56,7 @@ read_smrt_gps <- function(depid,
                                     'Residual',
                                     'TimeError')
   # make sure they ARE numeric
-  gps_raw[,num_cols] <- suppressWarnings(apply(X = gps_raw[,num_cols], MARGIN = 2, FUN = as.numeric))
+  gps_raw[,num_cols] <- suppressWarnings(apply(X = gps_raw[,num_cols], MARGIN = 2, FUN = as.numeric, simplify = FALSE))
   
   # combine Day and Time to get a datetime timestamp
   gps_raw$datetime <- lubridate::dmy_hms(paste(gps_raw$Day, gps_raw$Time), tz = "UTC")

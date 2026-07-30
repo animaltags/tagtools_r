@@ -93,6 +93,7 @@ sm_assemble_swv <- function(sm_dir,
   # collapse cuetab to amalgamate data-filled blocks ( = ones with status = 1 or 0, not -1)
   # this could be done w/dplyr but keeping the matlab-y loop b/c the number of rows in cuetab are unlikely to be big enough to make it slow
   swv_cues <- swv_cues0[1,]
+  if (nrow(swv_cues0) > 1){ # for tags with only one block (it better be data!)
   for (k in c(2:nrow(swv_cues0))){
     if (swv_cues0$status[k] < 0 || # if this block is a gap OR
         swv_cues0$recn[k] != swv_cues$recn[nrow(swv_cues)] || # if this block is from a new recn OR
@@ -104,6 +105,7 @@ sm_assemble_swv <- function(sm_dir,
       # otherwise, it's data or a filled gap in the same recn so ADD its samples to the existing last row of swv_cues
       swv_cues$n_samples[nrow(swv_cues)] <- swv_cues$n_samples[nrow(swv_cues)] + swv_cues0$n_samples[k] 
     }
+  }
   }
 
   # read in swv data block by block

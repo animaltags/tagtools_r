@@ -13,3 +13,4 @@
 ^CRAN-SUBMISSION$
 ^README\.Rmd$
 ^\.github$
+^vignettes-raw$

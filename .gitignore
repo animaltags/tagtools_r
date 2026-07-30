@@ -50,3 +50,6 @@ vignettes/*.pdf
 tagtoolscpp/
 inst/shiny/
 inst/doc
+
+# large example data
+vignettes-raw/tagdata/

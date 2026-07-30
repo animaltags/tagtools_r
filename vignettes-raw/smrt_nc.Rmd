@@ -47,17 +47,17 @@ While it should be possible to read in your SMRT data files using `tagtools` fun
 
 Before we begin, in addition to knowing where our data files are stored, we will need a bit of metadata.
 
-First, specify the deployment ID (`depid` for short). There is no requirement for this to follow a set format, but it should match the data file names. For example, data from tag "Zica-20191012-144029" would include files like "Zica-20191012-144029001.swv" and "Zica-20191012-144029001.xml".
+First, specify the deployment ID (`depid` for short). There is no requirement for this to follow a set format, but it should match the data file names. For example, data from tag "Zica-20200106-195994" would include files like "Zica-20200106-195994001.swv" and "Zica-20200106-195994001.xml".
 
 ```{r}
-depid <- "Zica-20191012-144029"
+depid <- "Zica-20200106-195994"
 ```
 
 We also need to specify where the data is stored -- minimally a main data directory, and perhaps (especially if the folder with the SM files is not called "SMfiles") the directory where SM files are located.
 
 ```{r}
-my_data_dir <- "/Volumes/Boomin/Zica-20191012-144029"
-my_sm_dir <- paste0(my_data_dir, "/SMFiles")
+my_data_dir <- "tagdata/Zica-20200106-195994"
+my_sm_dir <-file.path(my_data_dir, "SMfiles")
 ```
 
 Finally, it might be wise to pull together the deployment-level metadata now. 
@@ -69,8 +69,8 @@ An initial list of metadata from the tag data files, in a format suitable for st
 ```{r}
 my_info <- make_info(depid = depid, 
                      tagtype = "SMRT", 
-                     species = "zc", # for Ziphius cavirostris (case sensitive)
-                     owner = "gss") # for Greg S Schorr (case sensitive)
+                     species = "zc" # for Ziphius cavirostris (case sensitive)
+                     ) 
 ```
 
 The `tagtools` package includes .csv files with basic information about some biologging tags, potential tag data owners (file name "researchers.csv"), and species (file name "species.csv"). These are of course nowhere near comprehensive, and you will likely need to edit them to add your own information. You can find out where the files are stored (so you can edit them if needed) via a call to `system.file()` with the filename of interest:
@@ -118,6 +118,7 @@ You can set input `quiet = TRUE` to suppress (most of the) copious output about 
 
 ```{r}
 my_nc_file_name <- read_smrt(data_dir = my_data_dir,
+                             info = my_info,
                              depid = depid,
                              sm_dir = my_sm_dir,
                              quiet = FALSE)
