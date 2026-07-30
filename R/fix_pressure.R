@@ -141,7 +141,7 @@ fix_pressure <- function(p, t, sampling_rate, maxp = NULL) {
   if (("history" %in% names(p) == TRUE) | is.null(p$history)) {
     p$history <- "fix_depth"
   } else {
-    p$history <- c(p$history, "fix_depth")
+    p$history <- c(p$history, "fix_pressure")
   }
   return(list(p = p, pc = pc))
 }

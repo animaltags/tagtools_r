@@ -100,6 +100,8 @@ my_info$project_name <- "Super Science Project"
 my_info$provider_name <- "Greg Schorr; Erin Falcone"
 my_info$provider_details <- "Marine Ecology and Telemetry Research" 
 my_info$provider_email <- "gschorr@marecotel.org; efalcone@marecotel.org"
+# my_info$dephist_deploy_location_lat
+# my_info$dephist_deploy_location_lon # add deployment location here too
 ```
 
 Key fields to fill in manually are the ones that identify the tagged species, and give names and contact details for the data owners. Others will be filled in automatically as the data files are read, such as the device ID and recording start time.
@@ -124,8 +126,126 @@ my_nc_file_name <- read_smrt(data_dir = my_data_dir,
                              quiet = FALSE)
 ```
 
+If we want to continue working with the data, we can read it into R with the `tagtools` function `load_nc()`:
+
+```{r}
+smrt_data <- load_nc(my_nc_file_name)
+```
 
 
+# Calibration
+
+The SMRT tag data (and metadata) has now been out of its tag-specific raw data files and stored in netCDF format.
+
+But...there's more processing still to do! It's crucial to calibrate the data to ensure it's in correct engineering units for further analysis.
+
+## Cropping 
+
+It is common to archive (and analyze) only the data collected while the tag was on the animal. (Often tags continue recording after they release from the animal.)
+
+One way to determine the on-animal time is by examination of the depth profile and acceleration data. We can use `plott()` to make a quick graph. Working with your own data, you may want to use `plott(..., interactive = TRUE)` to get a plot where you can easily zoom and mouse-over points of interest to obtain time estimates.
+
+```{r}
+plott(X = list(depth = smrt_data$depth, A = smrt_data$acceleration))
+```
+
+In our case, during the second, shallower dive just before 1.4 hours, there's a big spike in the acceleration data and a concurrent jog in the depth trace (maybe resulting from a sudden movement or impact). Then, the acceleration data is very static until the tag reaches the surface, where it gets noisier (but with each axis's data maintaining a steady average value, unlike when the tag was on the swimming whale). This pattern is characteristic of a tag coming off, then floating to and at the surface.
+
+We want to keep the data starting at the 0th second of the recording, and ending at about 4886 seconds since recording start (1.36 hours). 
+
+So we use `crop_all()` with `tcues` (start- and end-**t**ime **cues**) `c(0, 4886)`.
+
+```{r}
+smrt_data <- crop_all(tcues = c(0, 4886), smrt_data)
+```
+
+We can also note that each sensor data list within `smrt_data` now has entries "crop" and "crop_units,"
+
+```{r}
+smrt_data$depth$crop
+smrt_data$depth$crop_units
+```
+
+and their "history" entries also note that they have been cropped with `crop_to()` (which `crop_all()` applies to each sensor).
+
+```{r}
+smrt_data$depth$history
+```
+
+TODO: need to write/implement...
+
+- fix_offset_pressure
+- d4readattr
+- auto_cal_acc
+- auto_cal_mag
+
+## Depth (Pressure sensor) Data
+
+For SMRT tags, the "raw" pressure data has already undergone a manufacturer calibration to convert to engineering units (m depth), including a correction for the temperature-sensitivity of the pressure sensor. So, for SMRT data, the `fix_pressure()` function doesn't generally improve data calibration. However, it may still be beneficial to apply `fix_offset_pressure()` to adjust surfacings to average closer to the nominal sea-surface depth value of 0.
+
+Need to write fix_offset_pressure()!
+
+```{r}
+
+```
 
 
+## Accelerometer Data
 
+Will have to translate function d4readattr to get CAL!
+
+Then write auto_cal_acc to apply the cal
+
+```{r}
+
+```
+
+
+## Magnetometer Data
+
+Requires CAL and M and internal temp.
+
+```{r}
+#| eval: false
+
+# matlab version for reference
+imag = ~cellfun('isempty', regexp(chan_descrips, 'magnet'));
+imagt = ~cellfun('isempty', regexp(chan_descrips, 'temper'));
+imag = imag & ~imagt ;
+M = sens_struct([X.x{find(imag)}], X.fs(find(imag, 1)), depid, 'mag') ;
+Td = interp2length(T1, M);
+Pd = interp2length(P1, M);
+cal = CAL.MAG ;
+cal.poly = [1 0;1 0;1 0] ;
+fprintf('Calibrating magnetometer data...\n')
+if length(X.x)==7 % if there is an internal temperature channel -- could also search for "mag temp" in channel name. Deviation should improve again
+    Tint = sens_struct(X.x{7}*4096+15, X.fs(7), depid, 'temp');
+    Tint.name = 'Tint' ;
+    Tint.description = 'internal temperature from LIS44' ;
+    [M,cal1] = auto_cal_mag(M, cal, mag_strength, [Td.data Td.data Tint.data Pd.data/100], [60 600 0 0]);
+    M.cal_tsrc = 'T,T,Tint,P/100...Tint.data(1:25) = Tint.data(26)' ;
+else  % otherwise, approximate internal temperature by slowing down external temperature
+    % make Pd.data with no neg to avoid complex numbers
+    Tint = [];
+    Pd_pos = Pd.data;
+    Pd_pos(Pd.data < 0) = 0;
+    [M,cal1] = auto_cal_mag(M, cal, mag_strength, [Td.data Td.data Td.data Pd.data/100 sqrt(Pd_pos/100)], [300 60 800 0 0]);
+    M.cal_tsrc = 'T,T,T,Tsq,P/100,(T-20).^2' ;
+end
+```
+
+
+## Frame-of-Reference Conversion
+
+The tag (of course) records data in its own 3D frame of reference, with the 3D axis orientation just depending on how tri-axial sensors like accelerometers or magnetometers are affixed in the tag.
+
+We (of course) care more about data in an animal-specific frame of reference: we would rather that canonical "forward" mean "in front of the animal." But tags deployed on free-swimming animals via poles, drones or launchers are not always placed so that the tag's axes ("tag frame") line up perfect with the animal's ("animal frame"). We would like to use the data (and some assumptions about how the animal moves) to determine how best to rotate the data to convert it from tag frame to animal frame.
+
+There is potential to use machine-learning methods to automate this process.
+
+Currently, the `tagtools` package also contains two functions that can be used (with oversight from the user!) to help figure it out, for tags deployed on cetaceans (like whales and dolphins).
+
+- `prh_predictor1()` is suited to animals that "log" at the surface: that is, the animal rests horizontally at the surface (at least on average) and dives steeply away from the surface without an initial roll. Sperm whales might be one example.
+- `prh_predictor2()` is suited to animals that make short dives between respirations. Beaked whales might be one example.
+
+*Either actually show the whole process here, or else punt it to existing tutorial materials and just show the conversion.*
