@@ -51,7 +51,7 @@ median_filter <- function(X, n, noend = TRUE) {
     if (("history" %in% names(X) == FALSE) | is.null(X$history)) {
       X$history <- h
     } else {
-      X$history <- c(X$history, ",", h)
+      X$history <- paste(X$history, h, sep = ",")
     }
     Y <- X
   }

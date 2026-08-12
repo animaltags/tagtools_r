@@ -66,7 +66,7 @@ rough_cal_3d <- function(X, fstr) {
   if (!("history" %in% names(X)) || length(X$history) == 0 || is.null(X$history)) {
     X$history <- "rough_cal_3d"
   } else {
-    X$history <- paste(X$history, ",rough_cal_3d")
+    X$history <- paste(X$history, "rough_cal_3d", sep = ",")
   }
   return(list(X = X, G = G))
 }

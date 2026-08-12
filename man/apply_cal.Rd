@@ -4,19 +4,21 @@
 \alias{apply_cal}
 \title{Implement a calibration on tag sensor data}
 \usage{
-apply_cal(X, cal, Tempr = NULL)
+apply_cal(X, cal, Tempr = NULL, nomap = FALSE)
 }
 \arguments{
 \item{X}{A tag sensor data list, or a matrix or vector containing tag sensor data}
 
-\item{cal}{A calibration list for the data in X from, for example, spherical_cal.}
+\item{cal}{A calibration list for the data in X from, for example, \code{\link{spherical_cal}}.}
 
-\item{Tempr}{a tag sensor data list or a vector of temperature measurements for use in temperature compensation.
-If Tempr is not a sensor data list, it must be the same size and sampling rate as the data in \code{X}.
-Tempr is only required if there is a tcomp item in the \code{cal} list.}
+\item{Tempr}{a tag sensor data list or a vector of temperature measurements for use in temperature compensation. Tempr is assumed to have the same sampling duration and sampling rate as the data in \code{X}. Tempr is only required (and only used) if there is a tcomp item in the \code{cal} list.}
+
+\item{nomap}{logical. If TRUE, axis mapping for vector sensors is disabled. Default: FALSE, to apply axis mapping if one is specified in \code{cal}.}
+
+\item{sampling_rate}{of X in Hz. Only required (and only used) if X is *not* a sensor data list}
 }
 \value{
-A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed.
+A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed. \code{cal} elements currently supported are: poly, cross, map, tcomp, tref, tseg, tcomp. Any other elements in \code{cal} will be ignored.
 }
 \description{
 Given an appropriate set of calibration constants and information, this function will apply the calibration procedure to a tag sensor data set. Cal fields currently supported are: poly, cross, map, tcomp, tref

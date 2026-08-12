@@ -23,7 +23,9 @@ mean_absorption <- function(freq, r, depth, Ttab = 13) {
   if (length(depth) > 1) {
     depth <- matrix(seq(min(depth), max(depth), len = 50), nrow = 1)
     if (!is.null(Ttab) & length(Ttab) > 1) {
-      tempr <- pracma::interp1(Ttab[, 1], Ttab[, 2], depth)
+      tempr <- stats:: approx(x = Ttab[,1],
+                              y = Ttab[,2],
+                              xout = depth) # pracma::interp1(Ttab[, 1], Ttab[, 2], depth)
     } else {
       tempr <- matrix(tempr, nrow = nrow(depth), ncol = ncol(depth))
     }

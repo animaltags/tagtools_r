@@ -21,7 +21,7 @@ interp2length(X, Z, fs_in = NULL, fs_out = NULL, n_out = NULL)
 Y is a sensor structure, vector or matrix of interpolated data with the same number of columns as X.
 }
 \description{
-This function is used to reduce the time span of data by cropping out any data that falls before and after two time cues.
+Interpolate regularly sampled data to increase its sampling rate and match its length to another variable.
 }
 \examples{
          plott_base(X = list(harbor_seal$P), fsx = 5)

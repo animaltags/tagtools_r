@@ -82,7 +82,7 @@ read_smrt_gps <- function(depid,
                   type = "Position",
                   name = "GPS_position",
                   description = "GPS_position")
-    gps_data$GPS_position$history <- c(gps_data$GPS_position$history, "read_smrt_gps")
+    gps_data$GPS_position$history <- paste(gps_data$GPS_position$history, "read_smrt_gps", sep = ",")
     gps_data$GPS_position$files <- basename(gps_file)
   }
   
@@ -96,7 +96,7 @@ read_smrt_gps <- function(depid,
                     depid = depid,
                     type = "GPS_satellites")
       )
-    gps_data$GPS_satellites$history <- c(gps_data$GPS_satellites$history, "read_smrt_gps")
+    gps_data$GPS_satellites$history <- paste(gps_data$GPS_satellites$history, "read_smrt_gps", sep = ",")
     gps_data$GPS_satellites$files <- basename(gps_file)
   }
   
@@ -110,7 +110,7 @@ read_smrt_gps <- function(depid,
                   depid = depid,
                   type = "GPS_residual")
       )
-    gps_data$GPS_residual$history <- c(gps_data$GPS_residual$history, "read_smrt_gps")
+    gps_data$GPS_residual$history <- paste(gps_data$GPS_residual$history, "read_smrt_gps", sep = ",")
     gps_data$GPS_residual$files <- basename(gps_file)
   }
   
@@ -124,7 +124,7 @@ read_smrt_gps <- function(depid,
                     depid = depid,
                     type = "GPS_time_error")
       )
-    gps_data$GPS_time_err$history <- c(gps_data$GPS_time_err$history, "read_smrt_gps")
+    gps_data$GPS_time_err$history <- paste(gps_data$GPS_time_err$history, "read_smrt_gps", sep = ",")
     gps_data$GPS_time_err$files <- basename(gps_file)
   }
   

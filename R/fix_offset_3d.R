@@ -61,7 +61,7 @@ fix_offset_3d <- function(X) {
   if (("history" %in% names(X) == TRUE) | (is.null(X$history))) {
     X$history <- "fix_offset_3d"
   } else {
-    X$history <- c(X$history, "fix_offset_3d")
+    X$history <- paste(X$history, "fix_offset_3d", sep = ",")
   }
   return(list(X = X, G = G))
 }

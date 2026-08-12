@@ -1,7 +1,5 @@
 #' Interpolate regularly sampled data to increase its sampling rate and match its length to another variable.
 #' 
-#' This function is used to reduce the time span of data by cropping out any data that falls before and after two time cues.
-#' 
 #' @param X A sensor list, vector, or matrix. If x is or contains  matrix, each column is treated as an independent signal.
 #' @param Z is a sensor structure, vector or matrix whose sampling rate and length is to be matched.
 #' @param fs_in is the sampling rate in Hz of the data in X. This is only needed if X is not a sensor structure.
@@ -83,7 +81,7 @@ interp2length <- function(X, Z, fs_in = NULL, fs_out = NULL, n_out = NULL) {
     Y <- X
     Y$data <- y
     Y$sampling_rate <- fs_out
-    Y$history <- paste(Y$history, ' interp2length from', fs_in, 'Hz to ', fs_out, 'Hz')
+    Y$history <- paste(Y$history, ',interp2length from', fs_in, 'Hz to ', fs_out, 'Hz')
   } else {
     Y = y
   }

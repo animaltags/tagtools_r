@@ -62,7 +62,7 @@ undo_cal1 <- function(X, temperature) {
   if (!("history" %in% names(X)) | length(X$history) == 0 | is.null(X$history)) {
     X$history <- "undo_cal"
   } else {
-    X$history <- paste(X$history, ",undo_cal", sep = " ")
+    X$history <- paste(X$history, "undo_cal", sep = ",")
   }
   return(X)
 }

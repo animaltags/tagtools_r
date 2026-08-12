@@ -219,8 +219,8 @@ read_smrt_sm <- function(depid,
         } # end of "if one-axis sensor"
         # record this processing step in the sensor structure's "history" field
         swv_sensor_list[[sensor_names$nc[s]]]$history <- 
-          c(swv_sensor_list[[sensor_names$nc[s]]]$history,
-            "read_smrt_sm")
+          paste(swv_sensor_list[[sensor_names$nc[s]]]$history,
+            "read_smrt_sm", sep = ",")
         # which files did data come from?
         swv_sensor_list[[sensor_names$nc[s]]]$files <-
           paste0(basename(swv_fnames), collapse = ", ")
@@ -249,8 +249,8 @@ read_smrt_sm <- function(depid,
           )# end of suppress warnings
         # record this processing step in the sensor structure's "history" field
         csv_sensor_list[[sensor_names$name[s]]]$history <- 
-          c(csv_sensor_list[[sensor_names$name[s]]]$history,
-            "read_smrt_sm")
+          paste(csv_sensor_list[[sensor_names$name[s]]]$history,
+            "read_smrt_sm", sep = ",")
         # which files did data come from?
         csv_sensor_list[[sensor_names$name[s]]]$files <-
           paste(paste0(sm_file_info$file_name, ".csv"), collapse = ", ")
