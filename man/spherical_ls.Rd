@@ -26,7 +26,7 @@ A list with elements:
 }
 }
 \description{
-Least squares solver for spherical data-driven calibration. This function is used by \code{\link{auto_cal_acc}} and \code{\link{auto_cal_mag}}, and is a wrapper function for \code{\link{lssolve3}}.
+Least squares solver for spherical data-driven calibration. This function is used by \code{\link{auto_cal_acc}} and \code{auto_cal_mag}, and is a wrapper function for \code{\link{lssolve3}}.
 }
 \examples{
 slso <- spherical_ls(beaked_whale$A$data, 9.81)

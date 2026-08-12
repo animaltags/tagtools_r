@@ -1,6 +1,6 @@
 #' Deduce the calibration constants
 #' 
-#' Least squares solver for spherical data-driven calibration. This function is used by \code{\link{auto_cal_acc}} and \code{\link{auto_cal_mag}}, and is a wrapper function for \code{\link{lssolve3}}.
+#' Least squares solver for spherical data-driven calibration. This function is used by \code{\link{auto_cal_acc}} and \code{auto_cal_mag}, and is a wrapper function for \code{\link{lssolve3}}.
 #' @param X a 3-column data matrix representing measurements of a field vector (i.e., a constant norm). X may be affected by various calibration errors and by additive noise. The objective of this function is to infer the calibration errors in X so as to return an improved estimate of the correct field vector measurements.
 #' @param field_strength is the target field strength in the same units as X.
 #' @param cal is an optional list of calibration information. Only cal$poly and cal$cross are supported.
@@ -35,7 +35,7 @@ spherical_ls <- function(X,
   
   nn <- norm2(X)
   sigma <- vector(mode = "numeric", length = 2)
-  sigma[1] <- sd(nn, na.rm = TRUE) / mean(nn, na.rm = TRUE)
+  sigma[1] <- stats::sd(nn, na.rm = TRUE) / mean(nn, na.rm = TRUE)
   # apply initial cal
   XX <- X %*% g[, c(1:3)] + matrix(g[,4], nrow = nrow(X), ncol = nrow(g))
   
@@ -64,7 +64,7 @@ spherical_ls <- function(X,
   }
   
   nn <- norm2(XX)
-  sigma[2] <- sd(nn, na.rm = TRUE) / mean(nn, na.rm = TRUE)
+  sigma[2] <- stats::sd(nn, na.rm = TRUE) / mean(nn, na.rm = TRUE)
   
   return(list(X = XX, cal = cal, sigma = sigma))
   

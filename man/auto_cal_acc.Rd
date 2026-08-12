@@ -44,6 +44,6 @@ points in A fall as close as possible to a sphere centred at the origin and with
 This algorithm has been tested extensively on DTAG and SMRT data but not on data from other tags. If it doesn't work well for your data, let us know - it may help us improve the tool.
 }
 \examples{
-A_cal <- auto_cal_acc(harbor_seal$A,spherical_cal(harbor_seal$A$data))
+\dontrun{A_cal <- auto_cal_acc(harbor_seal$A,spherical_cal(harbor_seal$A$data))}
 
 }

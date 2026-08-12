@@ -2,20 +2,23 @@
 % Please edit documentation in R/apply_cal.R
 \name{apply_cal}
 \alias{apply_cal}
+\alias{do_cal}
 \title{Implement a calibration on tag sensor data}
 \usage{
-apply_cal(X, cal, Tempr = NULL, nomap = FALSE)
+apply_cal(X, sampling_rate, cal, Tempr = NULL, nomap = FALSE)
+
+do_cal(X, sampling_rate, cal, Tempr = NULL, nomap = FALSE)
 }
 \arguments{
 \item{X}{A tag sensor data list, or a matrix or vector containing tag sensor data}
+
+\item{sampling_rate}{of X in Hz. Only required (and only used) if X is *not* a sensor data list}
 
 \item{cal}{A calibration list for the data in X from, for example, \code{\link{spherical_cal}}.}
 
 \item{Tempr}{a tag sensor data list or a vector of temperature measurements for use in temperature compensation. Tempr is assumed to have the same sampling duration and sampling rate as the data in \code{X}. Tempr is only required (and only used) if there is a tcomp item in the \code{cal} list.}
 
 \item{nomap}{logical. If TRUE, axis mapping for vector sensors is disabled. Default: FALSE, to apply axis mapping if one is specified in \code{cal}.}
-
-\item{sampling_rate}{of X in Hz. Only required (and only used) if X is *not* a sensor data list}
 }
 \value{
 A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed. \code{cal} elements currently supported are: poly, cross, map, tcomp, tref, tseg, tcomp. Any other elements in \code{cal} will be ignored.
@@ -23,7 +26,11 @@ A tag sensor data structure (or a matrix or vector, if X was a matrix or vector)
 \description{
 Given an appropriate set of calibration constants and information, this function will apply the calibration procedure to a tag sensor data set. Cal fields currently supported are: poly, cross, map, tcomp, tref
 }
+\note{
+Matlab animaltag tools have function do_cal, while older DTAG Matlab tools have apply_cal. All function similarly, so we've written \code{\link{apply_cal}} to have all the functionality of the newest \code{do_cal} from Matlab, and added an alias (so if you run \code{do_cal()} in R, it just calls \code{apply_cal()}).
+}
 \examples{
-A_cal <- apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
+A_cal <- apply_cal(harbor_seal$A, cal = spherical_cal(harbor_seal$A$data))
 
+do_cal(harbor_seal$A, cal = spherical_cal(harbor_seal$A$data))
 }

@@ -11,10 +11,11 @@
 #' @return A tag sensor data structure (or a matrix or vector, if X was a matrix or vector) with the calibration implemented. Data size and sampling rate are the same as for the input data \code{X}, but units may have changed. \code{cal} elements currently supported are: poly, cross, map, tcomp, tref, tseg, tcomp. Any other elements in \code{cal} will be ignored.
 #' @export
 #' @examples
-#' A_cal <- apply_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
+#' A_cal <- apply_cal(harbor_seal$A, cal = spherical_cal(harbor_seal$A$data))
 #' 
 
-apply_cal <- function(X, 
+apply_cal <- function(X,
+                      sampling_rate,
                       cal, 
                       Tempr = NULL,
                       nomap = FALSE) {
@@ -54,7 +55,7 @@ apply_cal <- function(X,
     kseg <- round(cal[[k]] * sampling_rate) + 1
     kseg_max <- sapply(kseg, FUN = function(z) max(c(z, 1)))
     kseg <- data.frame(st = sapply(kseg_max, FUN = function(z) min(z , nrow(x)-1), x = x))
-    kseg$et <- c(tail(kseg$st, -1) - 1, nrow(x))
+    kseg$et <- c(utils::tail(kseg$st, -1) - 1, nrow(x))
     if (is.list(X)){
       if ("data" %in% names(X)){
         X$cal_tseg = cal[[k]]
@@ -137,7 +138,7 @@ apply_cal <- function(X,
           next
         }
         nd <- round(sampling_rate * ta[kk])
-        Tempr[,kk] <- rbind(Tempr[c(nd:end), kk],
+        Tempr[,kk] <- rbind(Tempr[c(nd:nrow(Tempr)), kk],
                             matrix(Tempr[nrow(Tempr), kk],
                                    nrow = nd-1,
                                    ncol = 1))
@@ -175,7 +176,7 @@ apply_cal <- function(X,
       x <- x %*% p
     }
     if (is.list(X)) {
-      if (data %in% names(X)){
+      if ("data" %in% names(X)){
         X$cal_cross <- matrix(cal$cross, nrow = nrow(cal$cross))
       }
     }
@@ -188,7 +189,7 @@ apply_cal <- function(X,
       p <- cal[[k]]
       x <- x %*% p
       if (is.list(X)) {
-        if (data %in% names(X)){
+        if ("data" %in% names(X)){
           X$cal_map <- p
           if ("axes" %in% names(cal)){
             X$axes = cal$axes
@@ -227,8 +228,9 @@ apply_cal <- function(X,
   return(X)
 }
 
-#' @rdname do_cal
+#' @rdname apply_cal
+#' @aliases apply_cal
 #' @note Matlab animaltag tools have function do_cal, while older DTAG Matlab tools have apply_cal. All function similarly, so we've written \code{\link{apply_cal}} to have all the functionality of the newest \code{do_cal} from Matlab, and added an alias (so if you run \code{do_cal()} in R, it just calls \code{apply_cal()}).
-#' @examples do_cal(harbor_seal$A,spherical_cal(harbor_seal$A$data))
+#' @examples do_cal(harbor_seal$A, cal = spherical_cal(harbor_seal$A$data))
 #' @export
 do_cal <- apply_cal

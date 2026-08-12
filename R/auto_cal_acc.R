@@ -19,7 +19,7 @@
 #' }
 #' @export
 #' @examples
-#' A_cal <- auto_cal_acc(harbor_seal$A,spherical_cal(harbor_seal$A$data))
+#' \dontrun{A_cal <- auto_cal_acc(harbor_seal$A,spherical_cal(harbor_seal$A$data))}
 #' 
 
 auto_cal_acc <- function(A,
@@ -58,13 +58,13 @@ auto_cal_acc <- function(A,
     do_crop <- FALSE # can't crop if data is pasted together based on use; use says which times to use!
   }
 
-  if (fs > fa){
-    df <- ceiling(fs / fa)
+  if (sampling_rate > fa){
+    df <- ceiling(sampling_rate / fa)
     Ad <- decdc(Ad, df)
-    fsd <- fs / df
+    fsd <- sampling_rate / df
     J = abs(decdc(J, df)) # decimate jerk too
   }else{
-    fsd <- fs
+    fsd <- sampling_rate
   }
   
   fstr <- 9.81 # earth's gravitational acceleration in m/s2
