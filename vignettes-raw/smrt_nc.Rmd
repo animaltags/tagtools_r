@@ -189,7 +189,8 @@ TODO: need to write/implement...
 
 - ~~fix_offset_pressure~~
 - ~~d4readattr~~
-- auto_cal_acc 
+- ~~auto_cal_acc~~ 
+  - NOTE: when and where does the CAL get saved? For DTAG? for SMRT? We may need to save it...current tools I think do not, unless d4findcal looks for deployment specific files (and if it does: when do those get saved?)
 - auto_cal_mag 
 
 ## Depth (Pressure sensor) Data

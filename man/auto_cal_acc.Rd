@@ -11,7 +11,8 @@ auto_cal_acc(
   use = NULL,
   fa = 5,
   jerk_pct = 10,
-  do_crop = TRUE
+  do_crop = TRUE,
+  field_strength = 9.81
 )
 }
 \arguments{
@@ -28,11 +29,13 @@ auto_cal_acc(
 \item{jerk_pct}{jerk selection threshold as a percentage. A small value removes a lot of data points. If your dataset is small/short, or your species is not very active, you may need to increase \code{jerk_pct} from the default value of 10.}
 
 \item{do_crop}{logical; default is TRUE. Include an option to crop the data before doing the data-based calibration calculations? Data to be used for calibration should exclude periods where the tag is not on the animal. If you need to exclude non-contiguous segments through the record, you might use input \code{use} instead.}
+
+\item{field_strength}{Earth's gravitational acceleration in same units as A. Default: 9.81. Users should not need to change this unless A units vary.}
 }
 \value{
 A list with entries:
 \itemize{
-\item{\strong{A: }} the improved accelerometer sensor structure or matrix. It has the same data rate as the input data and is in m/s^2. 
+\item{\strong{A: }} the improved accelerometer sensor data list or matrix. It has the same data rate as the input data and is in m/s^2. 
 \item{\strong{cal: }}  the improved calibration structure.
 }
 }
@@ -44,6 +47,6 @@ points in A fall as close as possible to a sphere centred at the origin and with
 This algorithm has been tested extensively on DTAG and SMRT data but not on data from other tags. If it doesn't work well for your data, let us know - it may help us improve the tool.
 }
 \examples{
-\dontrun{A_cal <- auto_cal_acc(harbor_seal$A,spherical_cal(harbor_seal$A$data))}
+\dontrun{A_cal <- auto_cal_acc(harbor_seal$A, cal = spherical_cal(harbor_seal$A$data))}
 
 }
